@@ -1,6 +1,7 @@
 package uce.edu.web.api.repository;
 
 import java.util.List;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -9,7 +10,7 @@ import uce.edu.web.api.repository.model.Bodega;
 
 @Transactional
 @ApplicationScoped
-public class IBodegaRepoImpl implements IBodegaRepo {
+public class BodegaRepoImpl implements IBodegaRepo {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -40,6 +41,20 @@ public class IBodegaRepoImpl implements IBodegaRepo {
         Bodega bodega = entityManager.find(Bodega.class, codigo);
         if (bodega != null) {
             entityManager.remove(bodega);
+        }
+    }
+
+    @Override
+    public void actualizarParcialPorCodigo(Integer codigo, Bodega bodega) {
+        Bodega existingBodega = entityManager.find(Bodega.class, codigo);
+        if (existingBodega != null) {
+            if (bodega.getNombre() != null) {
+                existingBodega.setNombre(bodega.getNombre());
+            }
+            if (bodega.getUbicacion() != null) {
+                existingBodega.setUbicacion(bodega.getUbicacion());
+            }
+            entityManager.merge(existingBodega);
         }
     }
 

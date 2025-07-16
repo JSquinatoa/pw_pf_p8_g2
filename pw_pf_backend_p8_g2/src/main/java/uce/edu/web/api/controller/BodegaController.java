@@ -2,14 +2,24 @@ package uce.edu.web.api.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.eclipse.microprofile.openapi.annotations.Operation;
+
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.eclipse.microprofile.openapi.annotations.Operation;
 import uce.edu.web.api.service.IBodegaService;
-import uce.edu.web.api.service.to.BodegaTo;
 import uce.edu.web.api.service.mapper.BodegaMapper;
+import uce.edu.web.api.service.to.BodegaTo;
 
 @Path("/bodegas")
 @Produces(MediaType.APPLICATION_JSON)
@@ -53,6 +63,17 @@ public class BodegaController {
     public Response actualizarPorCodigo(@PathParam("codigo") Integer codigo, BodegaTo bodegaTo) {
         bodegaTo.setCodigo(codigo);
         this.bodegaService.actualizarPorCodigo(BodegaMapper.toBodega(bodegaTo));
+        return Response.status(204).build();
+    }
+
+    @PATCH
+    @Path("/{codigo}")
+    @Operation(
+        summary= "Actualizar parcialmente Bodega por Código",
+        description= "Esta capacidad permite actualizar parcialmente una bodega por su código"
+    )
+    public Response actualizarParcialPorCodigo(@PathParam("codigo") Integer codigo, BodegaTo bodegaTo) {
+        this.bodegaService.actualizarParcialPorCodigo(codigo, BodegaMapper.toBodega(bodegaTo));
         return Response.status(204).build();
     }
 
