@@ -22,27 +22,23 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prod_id")
     private Integer id;
-
     @Column(name = "prod_codigoBarras")
     private String codigoBarras;
-
     @Column(name = "prod_nombre")
     private String nombre;
-
     @Column(name = "prod_categoria")
     private String categoria;
-
     @Column(name = "prod_stock")
     private Integer stock;
-
     @Column(name = "prod_precio")
     private Double precio;
 
+    // Relaciones
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "producto_impuesto", joinColumns = @JoinColumn(name = "prod_id"), inverseJoinColumns = @JoinColumn(name = "imp_id"))
-    private List<Impuesto> impuestos= new ArrayList<>();
+    private List<Impuesto> impuestos = new ArrayList<>();
 
-    
+    // GET y SET
     public Integer getId() {
         return id;
     }

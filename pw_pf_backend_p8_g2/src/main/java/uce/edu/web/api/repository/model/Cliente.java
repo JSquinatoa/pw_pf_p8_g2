@@ -25,8 +25,6 @@ public class Cliente {
     @Column(name = "clie_correo")
     private String correo;
 
-    // Relaciones
-
     // GET y SET
     public String getCedula() {
         return cedula;
