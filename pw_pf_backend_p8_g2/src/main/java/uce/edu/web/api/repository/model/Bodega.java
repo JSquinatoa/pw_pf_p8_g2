@@ -25,6 +25,8 @@ public class Bodega {
     @Column(name = "bode_ubicacion")
     private String ubicacion;
 
+    
+
     public Integer getId() {
         return id;
     }
