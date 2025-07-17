@@ -3,7 +3,6 @@ package uce.edu.web.api.service.to;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ClienteTo {
 
     private String cedula;
@@ -81,4 +80,3 @@ public class ClienteTo {
     }
 
 }
-

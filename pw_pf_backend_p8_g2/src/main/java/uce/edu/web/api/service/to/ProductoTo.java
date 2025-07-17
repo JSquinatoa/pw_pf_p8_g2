@@ -15,6 +15,7 @@ public class ProductoTo {
     private Double precio;
     private Map<String, String> _links = new HashMap<>();
 
+    // GET y SET
     public Integer getId() {
         return id;
     }

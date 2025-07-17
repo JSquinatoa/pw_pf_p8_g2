@@ -4,7 +4,8 @@ public class ImpuestoTo {
     private Integer id;
     private String nombre;
     private Double porcentaje;
-    
+
+    // GET y SET
     public Integer getId() {
         return id;
     }

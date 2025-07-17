@@ -9,6 +9,7 @@ import uce.edu.web.api.repository.model.Producto;
 
 @ApplicationScoped
 public class ProductoServiceImpl implements IProductoService {
+    
     @Inject
     public IProductoRepo productoRepo;
 
