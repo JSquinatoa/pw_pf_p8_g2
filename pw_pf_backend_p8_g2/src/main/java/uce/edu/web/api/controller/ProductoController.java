@@ -90,7 +90,7 @@ public class ProductoController {
     @POST
     @Path("")
     @Operation(summary = "Crear Producto", description = "Esta capacidad permite crear un producto")
-    public Response crear(ProductoTo productoTo) {
+    public Response crear(@RequestBody ProductoTo productoTo) {
         /*
          * Producto producto = ProductoMapper.toProducto(productoTo);
          * this.productoService.guardar(producto);
@@ -105,7 +105,7 @@ public class ProductoController {
     @PUT
     @Path("/{id}")
     @Operation(summary = "Actualizar Producto Completo por Id", description = "Esta capacidad permite actualizar completamente un producto por su Id")
-    public Response actualizarPorId(@PathParam("id") Integer id, ProductoTo productoTo) {
+    public Response actualizarPorId(@PathParam("id") Integer id, @RequestBody ProductoTo productoTo) {
         productoTo.setId(id);
         this.productoService.actualizarPorId(ProductoMapper.toEntity(productoTo));
         return Response.status(Response.Status.OK).build();
