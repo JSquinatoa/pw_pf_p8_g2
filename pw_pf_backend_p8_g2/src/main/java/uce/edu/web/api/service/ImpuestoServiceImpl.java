@@ -9,6 +9,7 @@ import uce.edu.web.api.repository.model.Impuesto;
 
 @ApplicationScoped
 public class ImpuestoServiceImpl implements IImpuestoService {
+    
     @Inject
     private IImpuestoRepo impuestoRepo;
 

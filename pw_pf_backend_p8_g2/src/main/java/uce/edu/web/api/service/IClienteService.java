@@ -15,7 +15,7 @@ public interface IClienteService {
     public void actualizarParcialPorCedula(Cliente cliente);
 
     public void borrarPorCedula(String cedula);
-    
+
     public void guardar(Cliente cliente);
 
 }

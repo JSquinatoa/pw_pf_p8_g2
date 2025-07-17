@@ -5,7 +5,7 @@ import java.util.List;
 import uce.edu.web.api.repository.model.Producto;
 
 public interface IProductoService {
-    
+
     public Producto buscarPorId(Integer id);
 
     public Producto buscarPorCodigoBarras(String codigoBarras);

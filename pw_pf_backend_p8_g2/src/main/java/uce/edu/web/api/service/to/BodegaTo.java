@@ -10,7 +10,7 @@ public class BodegaTo {
     private String nombre;
     private String ubicacion;
 
-    private Map<String,String> _links = new HashMap<>();
+    private Map<String, String> _links = new HashMap<>();
 
     // Getters and Setters
 
@@ -21,7 +21,7 @@ public class BodegaTo {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -53,6 +53,5 @@ public class BodegaTo {
     public void set_links(Map<String, String> _links) {
         this._links = _links;
     }
-
 
 }

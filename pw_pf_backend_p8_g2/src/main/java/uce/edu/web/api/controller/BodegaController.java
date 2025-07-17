@@ -31,35 +31,25 @@ public class BodegaController {
 
     @GET
     @Path("/{codigo}")
-    @Operation(
-        summary= "Consultar Bodega por Código",
-        description= "Esta capacidad permite consultar una bodega por su código"
-    )
+    @Operation(summary = "Consultar Bodega por Código", description = "Esta capacidad permite consultar una bodega por su código")
     public Response consularPorCodigo(@PathParam("codigo") Integer codigo) {
-
         BodegaTo bodega = BodegaMapper.toTo(this.bodegaService.seleccionarPorCodigo(codigo));
         return Response.status(227).entity(bodega).build();
     }
 
     @GET
     @Path("")
-    @Operation(
-        summary= "Consultar todas las Bodegas",
-        description= "Esta capacidad permite consultar todas las bodegas"
-    )
+    @Operation(summary = "Consultar todas las Bodegas", description = "Esta capacidad permite consultar todas las bodegas")
     public Response consultarTodos() {
         List<BodegaTo> bodegas = this.bodegaService.seleccionarTodos().stream()
-            .map(BodegaMapper::toTo)
-            .collect(Collectors.toList());
+                .map(BodegaMapper::toTo)
+                .collect(Collectors.toList());
         return Response.status(227).entity(bodegas).build();
     }
 
     @PUT
     @Path("/{codigo}")
-    @Operation(
-        summary= "Actualizar Bodega por Código",
-        description= "Esta capacidad permite actualizar una bodega por su código"
-    )
+    @Operation(summary = "Actualizar Bodega por Código", description = "Esta capacidad permite actualizar una bodega por su código")
     public Response actualizarPorCodigo(@PathParam("codigo") Integer codigo, BodegaTo bodegaTo) {
         bodegaTo.setCodigo(codigo);
         this.bodegaService.actualizarPorCodigo(BodegaMapper.toBodega(bodegaTo));
@@ -68,10 +58,7 @@ public class BodegaController {
 
     @PATCH
     @Path("/{codigo}")
-    @Operation(
-        summary= "Actualizar parcialmente Bodega por Código",
-        description= "Esta capacidad permite actualizar parcialmente una bodega por su código"
-    )
+    @Operation(summary = "Actualizar parcialmente Bodega por Código", description = "Esta capacidad permite actualizar parcialmente una bodega por su código")
     public Response actualizarParcialPorCodigo(@PathParam("codigo") Integer codigo, BodegaTo bodegaTo) {
         this.bodegaService.actualizarParcialPorCodigo(codigo, BodegaMapper.toBodega(bodegaTo));
         return Response.status(204).build();
@@ -79,10 +66,7 @@ public class BodegaController {
 
     @POST
     @Path("")
-    @Operation(
-        summary= "Insertar nueva Bodega",
-        description= "Esta capacidad permite insertar una nueva bodega"
-    )
+    @Operation(summary = "Insertar nueva Bodega", description = "Esta capacidad permite insertar una nueva bodega")
     public Response insertar(BodegaTo bodegaTo) {
         this.bodegaService.insertar(BodegaMapper.toBodega(bodegaTo));
         return Response.status(201).build();
@@ -90,10 +74,7 @@ public class BodegaController {
 
     @DELETE
     @Path("/{codigo}")
-    @Operation(
-        summary= "Eliminar Bodega por Código",
-        description= "Esta capacidad permite eliminar una bodega por su código"
-    )
+    @Operation(summary = "Eliminar Bodega por Código", description = "Esta capacidad permite eliminar una bodega por su código")
     public Response eliminarPorCodigo(@PathParam("codigo") Integer codigo) {
         this.bodegaService.eliminarPorCodigo(codigo);
         return Response.status(204).build();

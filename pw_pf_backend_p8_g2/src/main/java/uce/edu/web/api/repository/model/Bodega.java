@@ -15,18 +15,14 @@ public class Bodega {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bode_id")
     private Integer id;
-
     @Column(name = "bode_codigo")
     private Integer codigo;
-
     @Column(name = "bode_nombre")
     private String nombre;
-
     @Column(name = "bode_ubicacion")
     private String ubicacion;
 
-    
-
+    // GET y SET
     public Integer getId() {
         return id;
     }

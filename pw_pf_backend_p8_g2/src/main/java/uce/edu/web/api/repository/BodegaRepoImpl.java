@@ -30,7 +30,6 @@ public class BodegaRepoImpl implements IBodegaRepo {
         entityManager.merge(bodega);
     }
 
-
     @Override
     public void insertar(Bodega bodega) {
         entityManager.persist(bodega);

@@ -20,17 +20,17 @@ public class Impuesto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "imp_id")
     private Integer id;
-
     @Column(name = "imp_nombre")
     private String nombre;
-
     @Column(name = "imp_porcentaje")
     private Double porcentaje;
 
+    // Relaciones
     @ManyToMany(mappedBy = "impuestos")
     @JsonIgnore
     private List<Producto> productos;
 
+    // GET y SET
     public Integer getId() {
         return id;
     }
