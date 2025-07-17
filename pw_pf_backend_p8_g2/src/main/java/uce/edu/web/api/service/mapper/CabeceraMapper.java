@@ -5,7 +5,7 @@ import uce.edu.web.api.service.to.CabeceraTo;
 
 public class CabeceraMapper {
 
-    public CabeceraTo toTo(Cabecera cabecera) {
+    public static CabeceraTo toTo(Cabecera cabecera) {
         if (cabecera == null) {
             return null;
         }
@@ -23,7 +23,7 @@ public class CabeceraMapper {
         return cTo;
     }
 
-    public Cabecera toEntity(CabeceraTo cabeceraTo) {
+    public static Cabecera toEntity(CabeceraTo cabeceraTo) {
         Cabecera c = new Cabecera();
         c.setId(cabeceraTo.getId());
         c.setRucEmpresa(cabeceraTo.getRucEmpresa());

@@ -39,7 +39,7 @@ public class Detalle {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "detalle_factura")
-    //private Factura factura;
+    private Reporte reporte;
 
     public Integer getCodigoBarras() {
         return codigoBarras;
@@ -81,7 +81,14 @@ public class Detalle {
         this.subTotal = subTotal;
     }
 
-   
+    public Reporte getReporte() {
+        return reporte;
+    }
+
+    public void setReporte(Reporte reporte) {
+        this.reporte = reporte;
+    }
+ 
 
     
 }

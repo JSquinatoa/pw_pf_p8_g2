@@ -37,9 +37,17 @@ public class Cabecera {
     private String correo;
 
     // Relaciones 
-    @OneToOne(mappedBy = "cabecera")
-    private Factura factura;
+    @OneToOne
+    private Reporte reporte;
     
+    public Reporte getReporte() {
+        return reporte;
+    }
+
+    public void setReporte(Reporte reporte) {
+        this.reporte = reporte;
+    }
+
     // GET y SET
     public Integer getId() {
         return id;
@@ -119,14 +127,6 @@ public class Cabecera {
 
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    public Factura getFactura() {
-        return factura;
-    }
-
-    public void setFactura(Factura factura) {
-        this.factura = factura;
     }
 
 }
