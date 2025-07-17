@@ -1,0 +1,27 @@
+package uce.edu.web.api.repository;
+
+import java.util.List;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
+import uce.edu.web.api.repository.model.Detalle;
+
+@ApplicationScoped
+@Transactional
+public class IDetalleRepoImpl implements IDetalleRepo{
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Override
+    public List<Detalle> buscarPorCodigoBarras(Integer id) {
+        TypedQuery<Detalle> myQuery = this.entityManager
+                .createQuery("SELECT h FROM Detalle h WHERE h.factura.id =:id", Detalle.class);
+        myQuery.setParameter("id", id);
+        return myQuery.getResultList();
+    }
+    
+}
