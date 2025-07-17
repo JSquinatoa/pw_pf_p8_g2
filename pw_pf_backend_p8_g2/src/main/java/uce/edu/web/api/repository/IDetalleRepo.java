@@ -8,4 +8,5 @@ public interface IDetalleRepo {
 
     List<Detalle> buscarPorCodigoBarras(Integer id);
     
+    public void insertar(Detalle detalle);
 }

@@ -8,4 +8,6 @@ public interface IDetalleService {
 
     public List<Detalle> buscarPorCodigoBarras(Integer id);
     
+    public void guardar(Detalle detalle);
+    
 }

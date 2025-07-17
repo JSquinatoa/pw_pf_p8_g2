@@ -18,6 +18,11 @@ public class IDetalleServiceImpl implements IDetalleService {
         return this.detalleRepo.buscarPorCodigoBarras(id);
     }
 
+    @Override
+    public void guardar(Detalle detalle) {
+        this.detalleRepo.insertar(detalle);
+    }
+
    
     
 }

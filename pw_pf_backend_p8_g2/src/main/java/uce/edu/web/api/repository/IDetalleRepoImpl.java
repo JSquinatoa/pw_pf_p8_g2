@@ -23,5 +23,10 @@ public class IDetalleRepoImpl implements IDetalleRepo{
         myQuery.setParameter("id", id);
         return myQuery.getResultList();
     }
+
+    @Override
+    public void insertar(Detalle detalle) {
+        this.entityManager.persist(detalle);
+    }
     
 }
