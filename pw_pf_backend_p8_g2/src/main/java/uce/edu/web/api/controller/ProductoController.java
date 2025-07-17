@@ -63,6 +63,7 @@ public class ProductoController {
     @Path("")
     @Operation(summary = "Crear Producto", description = "Esta capacidad permite crear un producto")
     public Response crear(@RequestBody ProductoTo productoTo) {
+
         this.productoService.guardar(ProductoMapper.toEntity(productoTo));
         return Response.status(Response.Status.CREATED).build();
     }

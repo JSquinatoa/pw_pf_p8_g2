@@ -1,17 +1,27 @@
 package uce.edu.web.api.service.to;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class BodegaTo {
 
+    private Integer id;
     private Integer codigo;
     private String nombre;
     private String ubicacion;
 
     private Map<String, String> _links = new HashMap<>();
 
-    // GET y SET
+    // Getters and Setters
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getCodigo() {
         return codigo;
     }
