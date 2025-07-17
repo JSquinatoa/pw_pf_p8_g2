@@ -12,6 +12,7 @@ import uce.edu.web.api.repository.model.Producto;
 @Transactional
 @ApplicationScoped
 public class ProductoImpl implements IProductoRepo {
+
     @PersistenceContext
     private EntityManager entityManager;
 

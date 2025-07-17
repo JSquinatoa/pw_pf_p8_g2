@@ -10,7 +10,8 @@ import uce.edu.web.api.repository.model.Impuesto;
 
 @Transactional
 @ApplicationScoped
-public class ImpuestoImpl implements IImpuestoRepo {
+public class ImpuestoRepoImpl implements IImpuestoRepo {
+
     @PersistenceContext
     private EntityManager entityManager;
 

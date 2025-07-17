@@ -19,4 +19,5 @@ public interface IProductoRepo {
     public void insertar(Producto producto);
 
     public void eliminarPorId(Integer id);
+    
 }
