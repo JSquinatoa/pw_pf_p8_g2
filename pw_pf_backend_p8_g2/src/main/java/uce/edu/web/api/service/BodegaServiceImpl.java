@@ -14,42 +14,55 @@ public class BodegaServiceImpl implements IBodegaService {
     private IBodegaRepo bodegaRepo;
 
     @Override
+    public Bodega seleccionarPorId(Integer id) {
+        return this.bodegaRepo.seleccionarPorId(id);
+    }
+
+    @Override
     public Bodega seleccionarPorCodigo(Integer codigo) {
-        return bodegaRepo.seleccionarPorCodigo(codigo);
+        return this.bodegaRepo.seleccionarPorCodigo(codigo);
     }
 
     @Override
     public List<Bodega> seleccionarTodos() {
-        return bodegaRepo.seleccionarTodos();
+        return this.bodegaRepo.seleccionarTodos();
     }
 
     @Override
+    public void actualizarPorId(Bodega bodega) {
+        this.bodegaRepo.actualizarPorId(bodega);
+    }
+    
+
+    @Override
     public void actualizarPorCodigo(Bodega bodega) {
-        bodegaRepo.actualizarPorCodigo(bodega);
+        this.bodegaRepo.actualizarPorCodigo(bodega);
+    }
+
+    @Override
+    public void actualizarParcialPorId(Bodega bodega) {
+        this.bodegaRepo.actualizarParcialPorId(bodega);
+    }
+
+    @Override
+    public void actualizarParcialPorCodigo(Bodega bodega) {
+        this.bodegaRepo.actualizarParcialPorCodigo(bodega);
     }
 
     @Override
     public void insertar(Bodega bodega) {
-        bodegaRepo.insertar(bodega);
+        this.bodegaRepo.insertar(bodega);
+    }
+
+    @Override
+    public void eliminarPorId(Integer id) {
+        this.bodegaRepo.eliminarPorId(id);
     }
 
     @Override
     public void eliminarPorCodigo(Integer codigo) {
-        bodegaRepo.eliminarPorCodigo(codigo);
+        this.bodegaRepo.eliminarPorCodigo(codigo);
     }
 
-    @Override
-    public void actualizarParcialPorCodigo(Integer codigo, Bodega bodega) {
-        Bodega existingBodega = bodegaRepo.seleccionarPorCodigo(codigo);
-        if (existingBodega != null) {
-            if (bodega.getNombre() != null) {
-                existingBodega.setNombre(bodega.getNombre());
-            }
-            if (bodega.getUbicacion() != null) {
-                existingBodega.setUbicacion(bodega.getUbicacion());
-            }
-            bodegaRepo.actualizarPorCodigo(existingBodega);
-        }
-    }
 
 }

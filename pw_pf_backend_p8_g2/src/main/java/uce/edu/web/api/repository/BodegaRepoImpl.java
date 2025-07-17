@@ -15,14 +15,28 @@ public class BodegaRepoImpl implements IBodegaRepo {
     @PersistenceContext
     private EntityManager entityManager;
 
+        @Override
+    public Bodega seleccionarPorId(Integer id) {
+        return entityManager.find(Bodega.class, id);
+    }
+
     @Override
     public Bodega seleccionarPorCodigo(Integer codigo) {
-        return entityManager.find(Bodega.class, codigo);
+        return entityManager.createQuery("SELECT b FROM Bodega b WHERE b.codigo = :codigo", Bodega.class)
+                .setParameter("codigo", codigo)
+                .getSingleResult();
     }
+
 
     @Override
     public List<Bodega> seleccionarTodos() {
         return entityManager.createQuery("SELECT b FROM Bodega b", Bodega.class).getResultList();
+    }
+
+    
+    @Override
+    public void actualizarPorId(Bodega bodega) {
+        entityManager.merge(bodega);
     }
 
     @Override
@@ -31,30 +45,30 @@ public class BodegaRepoImpl implements IBodegaRepo {
     }
 
     @Override
+    public void actualizarParcialPorId(Bodega bodega) {
+            entityManager.merge(bodega);
+    }
+
+    @Override
+    public void actualizarParcialPorCodigo(Bodega bodega) {
+            entityManager.merge(bodega);
+    }
+
+    @Override
     public void insertar(Bodega bodega) {
         entityManager.persist(bodega);
     }
 
     @Override
-    public void eliminarPorCodigo(Integer codigo) {
-        Bodega bodega = entityManager.find(Bodega.class, codigo);
-        if (bodega != null) {
-            entityManager.remove(bodega);
-        }
+    public void eliminarPorId(Integer id) {
+        entityManager.remove(this.seleccionarPorId(id));
     }
 
     @Override
-    public void actualizarParcialPorCodigo(Integer codigo, Bodega bodega) {
-        Bodega existingBodega = entityManager.find(Bodega.class, codigo);
-        if (existingBodega != null) {
-            if (bodega.getNombre() != null) {
-                existingBodega.setNombre(bodega.getNombre());
-            }
-            if (bodega.getUbicacion() != null) {
-                existingBodega.setUbicacion(bodega.getUbicacion());
-            }
-            entityManager.merge(existingBodega);
-        }
+    public void eliminarPorCodigo(Integer codigo) {
+        entityManager.remove(this.seleccionarPorCodigo(codigo));
     }
+
+
 
 }
