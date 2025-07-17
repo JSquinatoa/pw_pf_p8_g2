@@ -37,7 +37,9 @@ public class ClienteController {
     @Operation(summary = "Consultar un cliente por cedula", description = "Esta capacidad permite consultar un cliente por cedula")
     public Response consultarPorCedula(@PathParam("cedula") String cedula, @Context UriInfo uriInfo) {
         ClienteTo clieTo = ClienteMapper.toTo(this.iClienteService.buscarPorCedula(cedula));
-        return Response.status(Response.Status.OK).entity(clieTo).build();
+        return (clieTo != null)
+                ? Response.status(Response.Status.OK).entity(clieTo).build()
+                : Response.status(Response.Status.NOT_FOUND).entity("Entidad no encontrada").build();
     }
 
     @GET
@@ -71,7 +73,7 @@ public class ClienteController {
     @Operation(summary = "Actualizar un Cliente Parcialmente", description = "Esta capacidad me permite actualizar parcialemnte a un CLiente por su cedula")
     public Response actualizarParcialmentePorCedula(@RequestBody ClienteTo clienteTo,
             @PathParam("cedula") String cedula) {
-                
+
         clienteTo.setCedula(cedula);
         ClienteTo cTo = ClienteMapper.toTo(this.iClienteService.buscarPorCedula(cedula));
 

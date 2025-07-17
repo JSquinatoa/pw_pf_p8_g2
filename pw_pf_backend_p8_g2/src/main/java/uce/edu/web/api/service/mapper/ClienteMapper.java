@@ -6,6 +6,9 @@ import uce.edu.web.api.service.to.ClienteTo;
 public class ClienteMapper {
 
     public static ClienteTo toTo(Cliente cliente) {
+        if (cliente == null) {
+            return null;            
+        }
         ClienteTo cTo = new ClienteTo();
         cTo.setCedula(cliente.getCedula());
         cTo.setNombre(cliente.getNombre());
