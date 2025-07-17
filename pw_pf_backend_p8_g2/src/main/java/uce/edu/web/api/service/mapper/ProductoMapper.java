@@ -4,6 +4,7 @@ import uce.edu.web.api.repository.model.Producto;
 import uce.edu.web.api.service.to.ProductoTo;
 
 public class ProductoMapper {
+
     public static ProductoTo toTo(Producto producto) {
         if (producto == null) {
             return null;
@@ -20,7 +21,7 @@ public class ProductoMapper {
         return pTo;
     }
 
-    public static Producto toProducto(ProductoTo productoTo) {
+    public static Producto toEntity(ProductoTo productoTo) {
         if (productoTo == null) {
             return null;
         }
@@ -35,4 +36,5 @@ public class ProductoMapper {
 
         return p;
     }
+
 }

@@ -69,7 +69,9 @@ public class ClienteController {
     @PATCH
     @Path("/{cedula}")
     @Operation(summary = "Actualizar un Cliente Parcialmente", description = "Esta capacidad me permite actualizar parcialemnte a un CLiente por su cedula")
-    public Response actualizarParcialmentePorCedula(@RequestBody ClienteTo clienteTo, @PathParam("cedula") String cedula) {
+    public Response actualizarParcialmentePorCedula(@RequestBody ClienteTo clienteTo,
+            @PathParam("cedula") String cedula) {
+                
         clienteTo.setCedula(cedula);
         ClienteTo cTo = ClienteMapper.toTo(this.iClienteService.buscarPorCedula(cedula));
 
@@ -103,4 +105,5 @@ public class ClienteController {
         this.iClienteService.borrarPorCedula(cedula);
         return Response.status(Response.Status.OK).build();
     }
+
 }
