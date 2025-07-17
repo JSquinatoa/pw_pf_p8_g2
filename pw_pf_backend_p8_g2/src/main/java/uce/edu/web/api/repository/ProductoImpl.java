@@ -4,7 +4,6 @@ import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import uce.edu.web.api.repository.model.Producto;
@@ -17,20 +16,8 @@ public class ProductoImpl implements IProductoRepo {
     private EntityManager entityManager;
 
     @Override
-    public Producto seleccionarPorId(Integer id) {
-        return entityManager.find(Producto.class, id);
-    }
-
-    @Override
-    public Producto seleccionarPorCodigoBarras(String codigoBarras) {
-        try {
-            return entityManager.createQuery(
-                    "SELECT p FROM Producto p WHERE p.codigoBarras = :codigoBarras", Producto.class)
-                    .setParameter("codigoBarras", codigoBarras)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+    public Producto seleccionarPorCodigoBarras(Integer codigoBarras) {
+        return entityManager.find(Producto.class, codigoBarras);
     }
 
     @Override
@@ -39,7 +26,7 @@ public class ProductoImpl implements IProductoRepo {
     }
 
     @Override
-    public void actualizarPorId(Producto producto) {
+    public void actualizarPorCodigoBarras(Producto producto) {
         entityManager.merge(producto);
     }
 
@@ -49,12 +36,12 @@ public class ProductoImpl implements IProductoRepo {
     }
 
     @Override
-    public void eliminarPorId(Integer id) {
-        this.entityManager.remove(this.seleccionarPorId(id));
+    public void eliminarPorCodigoBarras(Integer codigoBarras) {
+        this.entityManager.remove(this.seleccionarPorCodigoBarras(codigoBarras));
     }
 
     @Override
-    public void actualizarParcialPorId(Producto producto) {
+    public void actualizarParcialPorCodigoBarras(Producto producto) {
         entityManager.merge(producto);
     }
 

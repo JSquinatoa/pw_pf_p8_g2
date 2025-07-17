@@ -6,18 +6,16 @@ import uce.edu.web.api.repository.model.Producto;
 
 public interface IProductoService {
 
-    public Producto buscarPorId(Integer id);
-
-    public Producto buscarPorCodigoBarras(String codigoBarras);
+    public Producto buscarPorCodigoBarras(Integer codigoBarras);
 
     public List<Producto> buscarTodos();
 
-    public void actualizarPorId(Producto producto);
+    public void actualizarPorCodigoBarras(Producto producto);
 
-    public void actualizarParcialPorId(Producto producto);
+    public void actualizarParcialPorCodigoBarras(Producto producto);
 
-    public void borrarPorId(Integer id);
+    public void borrarPorCodigoBarras(Integer codigoBarras);
 
-    public void guardar(Producto producto);
+    public void guardar(Producto producto); 
 
 }

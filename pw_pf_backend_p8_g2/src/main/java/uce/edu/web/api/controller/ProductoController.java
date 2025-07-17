@@ -39,30 +39,9 @@ public class ProductoController {
     private IImpuestoService impuestoService;
 
     @GET
-    @Path("/{id}")
-    @Operation(summary = "Consultar Productos por Id", description = "Esta capacidad permite consultar un producto por su Id")
-    public Response buscarPorId(@PathParam("id") Integer id, @Context UriInfo uriInfo) {
-        /*
-         * Producto producto = this.productoService.buscarPorId(id);
-         * if (producto == null) {
-         * return Response.status(Response.Status.NOT_FOUND).build();
-         * }
-         */
-        ProductoTo productoTo = ProductoMapper.toTo(this.productoService.buscarPorId(id));
-        productoTo.buildURI(uriInfo);
-        return Response.status(Response.Status.OK).entity(productoTo).build();
-    }
-
-    @GET
     @Path("/{codigoBarras}")
-    @Operation(summary = "Consultar Productos por Código", description = "Esta capacidad permite consultar un producto por su código")
-    public Response buscarPorCodigo(@PathParam("codigoBarras") String codigoBarras, @Context UriInfo uriInfo) {
-        /*
-         * Producto producto = this.productoService.buscarPorCodigoBarras(codigoBarras);
-         * if (producto == null) {
-         * return Response.status(Response.Status.NOT_FOUND).build();
-         * }
-         */
+    @Operation(summary = "Consultar Productos por Id", description = "Esta capacidad permite consultar un producto por su Id")
+    public Response buscarPorCodigoBarras(@PathParam("codigoBarras") Integer codigoBarras, @Context UriInfo uriInfo) {
         ProductoTo productoTo = ProductoMapper.toTo(this.productoService.buscarPorCodigoBarras(codigoBarras));
         productoTo.buildURI(uriInfo);
         return Response.status(Response.Status.OK).entity(productoTo).build();
@@ -72,13 +51,6 @@ public class ProductoController {
     @Path("")
     @Operation(summary = "Consultar todas los Productos", description = "Esta capacidad permite consultar todos las productos")
     public Response buscarTodos(@Context UriInfo uriInfo) {
-        /*
-         * List<Producto> productos = this.productoService.buscarTodos();
-         * List<ProductoTo> productosTo = productos.stream()
-         * .map(ProductoMapper::toTo)
-         * .peek(pTo -> pTo.buildURI(uriInfo))
-         * .collect(Collectors.toList());
-         */
         List<ProductoTo> prodToList = this.productoService.buscarTodos().stream().map(ProductoMapper::toTo)
                 .collect(Collectors.toList());
         for (ProductoTo prodTo : prodToList) {
@@ -90,85 +62,70 @@ public class ProductoController {
     @POST
     @Path("")
     @Operation(summary = "Crear Producto", description = "Esta capacidad permite crear un producto")
-    public Response crear(ProductoTo productoTo) {
-        /*
-         * Producto producto = ProductoMapper.toProducto(productoTo);
-         * this.productoService.guardar(producto);
-         * ProductoTo createdProductoTo = ProductoMapper.toTo(producto);
-         * createdProductoTo.buildURI(uriInfo);
-         */
+    public Response crear(@RequestBody ProductoTo productoTo) {
         this.productoService.guardar(ProductoMapper.toEntity(productoTo));
-
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/{codigoBarras}")
     @Operation(summary = "Actualizar Producto Completo por Id", description = "Esta capacidad permite actualizar completamente un producto por su Id")
-    public Response actualizarPorId(@PathParam("id") Integer id, ProductoTo productoTo) {
-        productoTo.setId(id);
-        this.productoService.actualizarPorId(ProductoMapper.toEntity(productoTo));
+    public Response actualizarPorCodigoBarras(@PathParam("codigoBarras") Integer codigoBarras,
+            @RequestBody ProductoTo productoTo) {
+        productoTo.setCodigoBarras(codigoBarras);
+        this.productoService.actualizarParcialPorCodigoBarras(ProductoMapper.toEntity(productoTo));
         return Response.status(Response.Status.OK).build();
     }
 
     @PATCH
-    @Path("/{id}")
-    @Operation(summary = "Actualizar Producto Parcial por Id", description = "Esta capacidad permite actualizar parcialmente un producto por su Id")
-    public Response actualizarParcialPorId(@PathParam("id") Integer id, @RequestBody ProductoTo productoTo) {
-        productoTo.setId(id);
-        ProductoTo prodTo = ProductoMapper.toTo(this.productoService.buscarPorId(id));
+    @Path("/{codigoBarras}")
+    @Operation(summary = "Actualizar Producto Parcial por Código de Barras")
+    public Response actualizarParcialPorCodigoBarras(
+            @PathParam("codigoBarras") Integer codigoBarras,
+            @RequestBody ProductoTo productoTo) {
 
-/*         if (producto == null) {
+        ProductoTo productoExistenteTo = ProductoMapper.toTo(
+                this.productoService.buscarPorCodigoBarras(codigoBarras));
+
+        if (productoExistenteTo == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
-        } */
-
-        if (productoTo.getCodigoBarras() != null) {
-            prodTo.setCodigoBarras(productoTo.getCodigoBarras());
         }
+
         if (productoTo.getNombre() != null) {
-            prodTo.setNombre(productoTo.getNombre());
+            productoExistenteTo.setNombre(productoTo.getNombre());
         }
         if (productoTo.getCategoria() != null) {
-            prodTo.setCategoria(productoTo.getCategoria());
+            productoExistenteTo.setCategoria(productoTo.getCategoria());
         }
         if (productoTo.getStock() != null) {
-            prodTo.setStock(productoTo.getStock());
+            productoExistenteTo.setStock(productoTo.getStock());
         }
         if (productoTo.getPrecio() != null) {
-            prodTo.setPrecio(productoTo.getPrecio());
+            productoExistenteTo.setPrecio(productoTo.getPrecio());
         }
 
-/*         this.productoService.actualizarPorId(producto);
-        ProductoTo updatedProductoTo = ProductoMapper.toTo(producto);
-        updatedProductoTo.buildURI(uriInfo); */
-        this.productoService.actualizarParcialPorId(ProductoMapper.toEntity(productoTo));
-        return Response.status(Response.Status.OK).build();
+        this.productoService.actualizarParcialPorCodigoBarras(
+                ProductoMapper.toEntity(productoExistenteTo));
+
+        return Response.status(Response.Status.OK)
+                .build();
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{codigoBarras}")
     @Operation(summary = "Borrar Producto por Id", description = "Esta capacidad permite borrar un producto por su Id")
-    public Response borrarporId(@PathParam("id") Integer id) {
-/*         Producto productoExistente = this.productoService.buscarPorId(id);
-        if (productoExistente == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } */
-        this.productoService.borrarPorId(id);
+    public Response borrarPorCodigoBarras(@PathParam("codigoBarras") Integer codigoBarras) {
+        this.productoService.borrarPorCodigoBarras(codigoBarras);
         return Response.status(Response.Status.OK).build();
     }
 
     @GET
-    @Path("/{id}/impuestos")
+    @Path("/{codigoBarras}/impuestos")
     @Operation(summary = "Consultar Impuestos de un Producto", description = "Esta capacidad permite consultar los impuestos asociados a un producto por su Id")
-    public Response buscarImpuestosPorProductoId(@PathParam("id") Integer id) {
-/*         Producto producto = this.productoService.buscarPorId(id);
-        if (producto == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } */
-        List<ImpuestoTo> impsToList = this.impuestoService.buscarTodos().stream().map(ImpuestoMapper::toTo).collect(Collectors.toList());
-        /* producto.getImpuestos().stream()
-                .map(ImpuestoMapper::toTo)
-                .collect(Collectors.toList()); */
+    public Response buscarImpuestosPorProductoId(@PathParam("codigoBarras") Integer codigoBarras) {
+
+        List<ImpuestoTo> impsToList = this.impuestoService.buscarTodos().stream().map(ImpuestoMapper::toTo)
+                .collect(Collectors.toList());
 
         return Response.status(Response.Status.OK).entity(impsToList).build();
     }

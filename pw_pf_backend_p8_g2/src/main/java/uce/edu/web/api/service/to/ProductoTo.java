@@ -7,8 +7,7 @@ import jakarta.ws.rs.core.UriInfo;
 import uce.edu.web.api.controller.ProductoController;
 
 public class ProductoTo {
-    private Integer id;
-    private String codigoBarras;
+    private Integer codigoBarras;
     private String nombre;
     private String categoria;
     private Integer stock;
@@ -16,19 +15,11 @@ public class ProductoTo {
     private Map<String, String> _links = new HashMap<>();
 
     // GET y SET
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCodigoBarras() {
+    public Integer getCodigoBarras() {
         return codigoBarras;
     }
 
-    public void setCodigoBarras(String codigoBarras) {
+    public void setCodigoBarras(Integer codigoBarras) {
         this.codigoBarras = codigoBarras;
     }
 
@@ -75,9 +66,11 @@ public class ProductoTo {
     public void buildURI(UriInfo uriInfo) {
         this.get_links().put("impuestos", uriInfo.getBaseUriBuilder()
                 .path(ProductoController.class)
-                .path(this.getId().toString())
+                .path(this.getCodigoBarras().toString())
                 .path("impuestos")
                 .build()
                 .toString());
     }
+
+
 }

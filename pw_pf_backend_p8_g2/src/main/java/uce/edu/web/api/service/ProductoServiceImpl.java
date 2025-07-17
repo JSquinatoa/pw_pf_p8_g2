@@ -13,13 +13,9 @@ public class ProductoServiceImpl implements IProductoService {
     @Inject
     public IProductoRepo productoRepo;
 
-    @Override
-    public Producto buscarPorId(Integer id) {
-        return this.productoRepo.seleccionarPorId(id);
-    }
 
     @Override
-    public Producto buscarPorCodigoBarras(String codigoBarras) {
+    public Producto buscarPorCodigoBarras(Integer codigoBarras) {
         return this.productoRepo.seleccionarPorCodigoBarras(codigoBarras);
     }
 
@@ -29,18 +25,18 @@ public class ProductoServiceImpl implements IProductoService {
     }
 
     @Override
-    public void actualizarPorId(Producto producto) {
-        this.productoRepo.actualizarPorId(producto);
+    public void actualizarPorCodigoBarras(Producto producto) {
+        this.productoRepo.actualizarPorCodigoBarras(producto);
     }
 
     @Override
-    public void actualizarParcialPorId(Producto producto) {
-        this.productoRepo.actualizarParcialPorId(producto);
+    public void actualizarParcialPorCodigoBarras(Producto producto) {
+        this.productoRepo.actualizarParcialPorCodigoBarras(producto);
     }
 
     @Override
-    public void borrarPorId(Integer id) {
-        this.productoRepo.eliminarPorId(id);
+    public void borrarPorCodigoBarras(Integer codigoBarras) {
+        this.productoRepo.eliminarPorCodigoBarras(codigoBarras);
     }
 
     @Override

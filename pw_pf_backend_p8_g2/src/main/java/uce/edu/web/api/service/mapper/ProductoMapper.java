@@ -11,7 +11,6 @@ public class ProductoMapper {
         }
 
         ProductoTo pTo = new ProductoTo();
-        pTo.setId(producto.getId());
         pTo.setCodigoBarras(producto.getCodigoBarras());
         pTo.setNombre(producto.getNombre());
         pTo.setCategoria(producto.getCategoria());
@@ -27,7 +26,6 @@ public class ProductoMapper {
         }
 
         Producto p = new Producto();
-        p.setId(productoTo.getId());
         p.setCodigoBarras(productoTo.getCodigoBarras());
         p.setNombre(productoTo.getNombre());
         p.setCategoria(productoTo.getCategoria());

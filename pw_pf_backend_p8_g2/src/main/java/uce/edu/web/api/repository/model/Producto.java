@@ -20,10 +20,8 @@ public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prod_id")
-    private Integer id;
     @Column(name = "prod_codigoBarras")
-    private String codigoBarras;
+    private Integer codigoBarras;
     @Column(name = "prod_nombre")
     private String nombre;
     @Column(name = "prod_categoria")
@@ -35,23 +33,14 @@ public class Producto {
 
     // Relaciones
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "producto_impuesto", joinColumns = @JoinColumn(name = "prod_id"), inverseJoinColumns = @JoinColumn(name = "imp_id"))
+    @JoinTable(name = "producto_impuesto", joinColumns = @JoinColumn(name = "prod_codigoBarras"), inverseJoinColumns = @JoinColumn(name = "imp_id"))
     private List<Impuesto> impuestos = new ArrayList<>();
 
-    // GET y SET
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCodigoBarras() {
+    public Integer getCodigoBarras() {
         return codigoBarras;
     }
 
-    public void setCodigoBarras(String codigoBarras) {
+    public void setCodigoBarras(Integer codigoBarras) {
         this.codigoBarras = codigoBarras;
     }
 
