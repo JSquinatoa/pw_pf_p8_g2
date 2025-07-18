@@ -11,16 +11,15 @@ import uce.edu.web.api.repository.model.Detalle;
 
 @ApplicationScoped
 @Transactional
-public class IDetalleRepoImpl implements IDetalleRepo{
+public class DetalleRepoImpl implements IDetalleRepo{
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public List<Detalle> buscarPorCodigoBarras(Integer id) {
-        TypedQuery<Detalle> myQuery = this.entityManager
-                .createQuery("SELECT h FROM Detalle h WHERE h.factura.id =:id", Detalle.class);
-        myQuery.setParameter("id", id);
+    public List<Detalle> seleccionarDetallesPorIdReporte(Integer numDocu) {
+        TypedQuery<Detalle> myQuery = this.entityManager.createQuery("SELECT h FROM Detalle h WHERE h.factura.id =:numDocu", Detalle.class);
+        myQuery.setParameter("numDocu", numDocu);
         return myQuery.getResultList();
     }
 

@@ -14,33 +14,33 @@ public class ReporteServiceImpl implements IReporteService{
     private IReporteRepo reporteRepo;
 
     @Override
-    public Reporte buscarReportePorId(Integer numDocu) {
-        return reporteRepo.seleccionarReportePorId(numDocu);
+    public Reporte buscarPorId(Integer numDocu) {
+        return reporteRepo.seleccionarPorId(numDocu);
     }
 
     @Override
-    public List<Reporte> buscarTodosReportes() {
-        return reporteRepo.seleccionarTodosReportes();
+    public List<Reporte> buscarTodos() {
+        return reporteRepo.seleccionarTodos();
     }
 
     @Override
-    public void guardarReporte(Reporte reporte) {
-         reporteRepo.insertarReporte(reporte);
+    public void guardar(Reporte reporte) {
+         reporteRepo.insertar(reporte);
     }
 
     @Override
-    public void actualizarReportePorId(Reporte reporte) {
-        reporteRepo.actualizarReportePorId(reporte);
+    public void actualizarPorId(Reporte reporte) {
+        reporteRepo.actualizarPorId(reporte);
     }
 
     @Override
-    public void actualizarParcialReporte(Reporte reporte) {
-        reporteRepo.actualizarParcialReporte(reporte);
+    public void actualizarParcialPorId(Reporte reporte) {
+        reporteRepo.actualizarParcialPorId(reporte);
     }
 
     @Override
     public void borrarPorId(Integer numDocu) {
-        reporteRepo.borrarPorId(numDocu);
+        reporteRepo.eliminarPorId(numDocu);
     }
 
 }

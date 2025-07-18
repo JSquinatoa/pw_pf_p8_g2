@@ -4,7 +4,7 @@ import uce.edu.web.api.repository.model.Cabecera;
 
 public interface ICabeceraRepo {
 
-    public Cabecera seleccionarCabeceraPorIdFactura(Integer idFactura);
+    public Cabecera seleccionarCabeceraPorIdReporte(Integer numDocu);
 
     public void insertar(Cabecera cabecera);
     

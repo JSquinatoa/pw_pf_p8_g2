@@ -6,6 +6,9 @@ import uce.edu.web.api.service.to.ReporteTo;
 public class ReporteMapper {
 
     public static ReporteTo toTo(Reporte reporte){
+        if (reporte == null) {
+            return null;            
+        }
         ReporteTo rTo = new ReporteTo();
         rTo.setNumDocu(reporte.getNumDocu());
         rTo.setIdCli(reporte.getIdCli());

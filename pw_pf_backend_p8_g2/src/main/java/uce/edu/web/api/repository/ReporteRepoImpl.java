@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import uce.edu.web.api.repository.model.Reporte;
 
@@ -16,34 +17,34 @@ public class ReporteRepoImpl implements IReporteRepo {
     EntityManager entityManager;
 
     @Override
-    public Reporte seleccionarReportePorId(Integer numDocu) {
+    public Reporte seleccionarPorId(Integer numDocu) {
         return this.entityManager.find(Reporte.class, numDocu);
     }
 
     @Override
-    public List<Reporte> seleccionarTodosReportes() {
-        return this.entityManager.createQuery("SELECT r FROM Reporte r", Reporte.class).getResultList();
-       
+    public List<Reporte> seleccionarTodos() {
+        TypedQuery<Reporte> myQuery = this.entityManager.createQuery("SELECT r FROM Reporte r", Reporte.class);
+        return myQuery.getResultList();
     }
 
     @Override
-    public void insertarReporte(Reporte reporte) {
+    public void insertar(Reporte reporte) {
         this.entityManager.persist(reporte);
     }
 
     @Override
-    public void actualizarReportePorId(Reporte reporte) {
+    public void actualizarPorId(Reporte reporte) {
         this.entityManager.merge(reporte);
     }
 
     @Override
-    public void actualizarParcialReporte(Reporte reporte) {
+    public void actualizarParcialPorId(Reporte reporte) {
         this.entityManager.merge(reporte);
     }
 
     @Override
-    public void borrarPorId(Integer numDocu) {
-        this.entityManager.remove(this.seleccionarReportePorId(numDocu));
+    public void eliminarPorId(Integer numDocu) {
+        this.entityManager.remove(this.seleccionarPorId(numDocu));
     }
 
 }

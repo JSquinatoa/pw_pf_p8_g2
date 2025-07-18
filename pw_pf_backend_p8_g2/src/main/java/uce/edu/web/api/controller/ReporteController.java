@@ -34,25 +34,25 @@ import uce.edu.web.api.service.to.ReporteTo;
 public class ReporteController {
 
     @Inject
-    private IReporteService reporteService;
+    private IReporteService iReporteService;
 
     @Inject
-    private ICabeceraService cabeceraService;
+    private ICabeceraService iCabeceraService;
 
     @Inject
-    private IDetalleService detalleService;
+    private IDetalleService iDetalleService;
 
     @GET
     @Path("/{id}")
     public Response consultarPorId(@PathParam("id") Integer numDocu, @Context UriInfo uriInfo) {
-        ReporteTo reporteTo = ReporteMapper.toTo(this.reporteService.buscarReportePorId(numDocu));
+        ReporteTo reporteTo = ReporteMapper.toTo(this.iReporteService.buscarPorId(numDocu));
         reporteTo.buildURI(uriInfo);
         return Response.status(200).entity(reporteTo).build();
     }
 
     @GET
     public Response consultarTodos() {
-        List<ReporteTo> reportes = this.reporteService.buscarTodosReportes().stream().map(ReporteMapper::toTo)
+        List<ReporteTo> reportes = this.iReporteService.buscarTodos().stream().map(ReporteMapper::toTo)
                 .collect(Collectors.toList());
         return Response.status(200).entity(reportes).build();
     }
@@ -61,7 +61,7 @@ public class ReporteController {
     @Path("/{numDocu}")
     public Response modificarPorId(@RequestBody ReporteTo reporteTo, @PathParam("numDocu") Integer numDocu) {
         reporteTo.setNumDocu(numDocu);
-        this.reporteService.actualizarParcialReporte(ReporteMapper.toEntity(reporteTo));
+        this.iReporteService.actualizarPorId(ReporteMapper.toEntity(reporteTo));
         return Response.status(200).build();
     }
 
@@ -69,7 +69,7 @@ public class ReporteController {
     @Path("/{numDocu}")
     public Response modificarParcialPorId(@RequestBody ReporteTo reporteTo, @PathParam("numDocu") Integer numDocu) {
         reporteTo.setNumDocu(numDocu);
-        ReporteTo rTo = ReporteMapper.toTo(this.reporteService.buscarReportePorId(numDocu));
+        ReporteTo rTo = ReporteMapper.toTo(this.iReporteService.buscarPorId(numDocu));
 
         if (reporteTo.getIdCli() != null) {
             rTo.setIdCli(reporteTo.getIdCli());
@@ -86,27 +86,27 @@ public class ReporteController {
         if (reporteTo.getTotalImpuestos() != null) {
             rTo.setTotalImpuestos(reporteTo.getTotalImpuestos());
         }        
-        this.reporteService.actualizarParcialReporte(ReporteMapper.toEntity(rTo));
+        this.iReporteService.actualizarParcialPorId(ReporteMapper.toEntity(rTo));
         return Response.status(200).build();
     }
 
     @DELETE
     @Path("/{numDocu}")
     public void borrarPorId(@PathParam("numDocu") Integer numDocu){
-        this.reporteService.borrarPorId(numDocu);
+        this.iReporteService.borrarPorId(numDocu);
     }
 
     @GET
     @Path("/{numDocu}/cabecera")
     public CabeceraTo obtenerCabeceraPorId(@PathParam("numDocu") Integer numDocu) {
-        return CabeceraMapper.toTo(this.cabeceraService.buscarCabeceraPorIdFactura(numDocu));
+        return CabeceraMapper.toTo(this.iCabeceraService.buscarCabeceraPorIdReporte(numDocu));
 
     }
 
     @GET
     @Path("/{numDocu}/detalle")
     public List<DetalleTo> obtenerDetallePorId(@PathParam("numDocu") Integer numDocu) {
-        return this.detalleService.buscarPorCodigoBarras(numDocu).stream().map(DetalleMapper::toTo).collect(Collectors.toList());
+        return this.iDetalleService.buscarDetallesPorIdReporte(numDocu).stream().map(DetalleMapper::toTo).collect(Collectors.toList());
     }
 
 

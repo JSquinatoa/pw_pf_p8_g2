@@ -8,14 +8,14 @@ import uce.edu.web.api.repository.IDetalleRepo;
 import uce.edu.web.api.repository.model.Detalle;
 
 @ApplicationScoped
-public class IDetalleServiceImpl implements IDetalleService {
+public class DetalleServiceImpl implements IDetalleService {
 
     @Inject
     private IDetalleRepo detalleRepo;
 
     @Override
-    public List<Detalle> buscarPorCodigoBarras(Integer id) {
-        return this.detalleRepo.buscarPorCodigoBarras(id);
+    public List<Detalle> buscarDetallesPorIdReporte(Integer numDocu) {
+        return this.detalleRepo.seleccionarDetallesPorIdReporte(numDocu);
     }
 
     @Override
@@ -23,6 +23,4 @@ public class IDetalleServiceImpl implements IDetalleService {
         this.detalleRepo.insertar(detalle);
     }
 
-   
-    
 }

@@ -19,44 +19,50 @@ public class Reporte {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rept_id")
+    @Column(name = "rept_numDocu")
     private Integer numDocu;
-
-    @Column(name = "reporte_idcl")
+    @Column(name = "reporte_idCli")
     private Integer idCli;
-
-    @Column(name = "reporte_nombrecl")
+    @Column(name = "reporte_nombreCliente")
     private String nombreCliente;
-
-    @Column(name = "reporte_cantidad")
+    @Column(name = "reporte_cantidadItems")
     private Integer cantidadItems;
-
-    @Column(name = "reporte_impuestos")
+    @Column(name = "reporte_totalImpuestos")
     private Double totalImpuestos;
-
     @Column(name = "reporte_total")
     private Double total;
 
+    // Relaciones
     @OneToOne(mappedBy = "reporte")
     private List<Cabecera> cabecera;
 
     @OneToMany(mappedBy = "reporte")
     private List<Detalle> detalle;
 
+    // GET y SET
+
     public Integer getNumDocu() {
         return numDocu;
     }
 
-    public void setNumDocu(Integer id) {
-        this.numDocu = id;
+    public void setNumDocu(Integer numDocu) {
+        this.numDocu = numDocu;
     }
 
     public Integer getIdCli() {
         return idCli;
     }
 
-    public void setIdCli(Integer id_cliente) {
-        this.idCli = id_cliente;
+    public void setIdCli(Integer idCli) {
+        this.idCli = idCli;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 
     public Integer getCantidadItems() {
@@ -99,12 +105,4 @@ public class Reporte {
         this.detalle = detalle;
     }
 
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
-    
 }

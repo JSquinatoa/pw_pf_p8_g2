@@ -6,7 +6,7 @@ import uce.edu.web.api.repository.model.Detalle;
 
 public interface IDetalleRepo {
 
-    List<Detalle> buscarPorCodigoBarras(Integer id);
+    List<Detalle> seleccionarDetallesPorIdReporte(Integer numDocu);
     
     public void insertar(Detalle detalle);
 }
