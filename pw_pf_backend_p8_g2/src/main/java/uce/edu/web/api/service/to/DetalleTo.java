@@ -2,6 +2,7 @@ package uce.edu.web.api.service.to;
 
 public class DetalleTo {
 
+    private Integer numDocu;
     private Integer codigoBarras;
     private String nombre;
     private Integer cantidad;
@@ -9,6 +10,15 @@ public class DetalleTo {
     private Double subTotal;
 
     // GET y SET
+
+    public Integer getNumDocu() {
+        return numDocu;
+    }
+
+    public void setNumDocu(Integer numDocu) {
+        this.numDocu = numDocu;
+    }
+
     public Integer getCodigoBarras() {
         return codigoBarras;
     }

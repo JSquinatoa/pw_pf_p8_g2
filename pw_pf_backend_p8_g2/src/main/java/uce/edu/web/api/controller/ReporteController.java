@@ -21,6 +21,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import uce.edu.web.api.repository.model.Cabecera;
+import uce.edu.web.api.repository.model.Detalle;
 import uce.edu.web.api.service.ICabeceraService;
 import uce.edu.web.api.service.IDetalleService;
 import uce.edu.web.api.service.IReporteService;
@@ -123,7 +124,7 @@ public class ReporteController {
 
     @POST
     @Path("/cabecera")
-    @Operation(summary = "Crear una Cabecera", description = "Este endpoint permite crear una cabecera para una factura específica.")
+    @Operation(summary = "Crear una Cabecera", description = "Esta capacidad permite crear una cabecera para una factura específica.")
     public Response crearCabecera(CabeceraTo cabeceraTo) {
         CabeceraTo existente = null;
         try {
@@ -140,6 +141,14 @@ public class ReporteController {
 
         iCabeceraService.guardar(CabeceraMapper.toEntity(cabeceraTo));
         return Response.status(Response.Status.CREATED).entity(cabeceraTo).build();
+    }
+
+    @POST
+    @Path("/detalle")
+    @Operation(summary = "Crear un Detalle", description = "EsteEsta capacidad permite crear un detalle asociado a un reporte (cabecera).")
+    public Response crearDetalle(DetalleTo detalleTo) {
+        this.iDetalleService.guardar(DetalleMapper.toEntity(detalleTo));
+        return Response.status(Response.Status.CREATED).entity(detalleTo).build();
     }
 
 }

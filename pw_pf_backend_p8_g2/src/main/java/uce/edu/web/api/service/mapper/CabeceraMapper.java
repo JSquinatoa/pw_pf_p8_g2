@@ -31,9 +31,6 @@ public class CabeceraMapper {
     }
 
     public static Cabecera toEntity(CabeceraTo cabeceraTo) {
-        if (cabeceraTo == null) {
-            return null;
-        }
         Cabecera c = new Cabecera();
         c.setId(cabeceraTo.getId());
         c.setRucEmpresa(cabeceraTo.getRucEmpresa());

@@ -19,19 +19,14 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 public class Detalle {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "detalle_codigoBarras")
     private Integer codigoBarras;
-
     @Column(name = "detalle_nombre")
-    private String nombre;
-    
+    private String nombre;    
     @Column(name = "detalle_cantidad")
     private Integer cantidad;
-
     @Column(name = "detalle_precio")
     private Double precio;
-
     @Column(name = "detalle_subTotal")
     private Double subTotal;
 
@@ -88,7 +83,5 @@ public class Detalle {
     public void setReporte(Reporte reporte) {
         this.reporte = reporte;
     }
- 
-
-    
+     
 }
