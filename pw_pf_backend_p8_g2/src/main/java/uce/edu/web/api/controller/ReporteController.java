@@ -20,8 +20,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import uce.edu.web.api.repository.model.Cabecera;
-import uce.edu.web.api.repository.model.Detalle;
 import uce.edu.web.api.service.ICabeceraService;
 import uce.edu.web.api.service.IDetalleService;
 import uce.edu.web.api.service.IReporteService;
@@ -48,6 +46,7 @@ public class ReporteController {
 
     @GET
     @Path("/{id}")
+    @Operation(summary = "Consultar un reporte por id", description = "Esta capacidad permite consultar un reporte por su id")
     public Response consultarPorId(@PathParam("id") Integer numDocu, @Context UriInfo uriInfo) {
         ReporteTo reporteTo = ReporteMapper.toTo(this.iReporteService.buscarPorId(numDocu));
         reporteTo.buildURI(uriInfo);
@@ -56,21 +55,26 @@ public class ReporteController {
 
     @GET
     @Path("")
-    public Response consultarTodos() {
-        List<ReporteTo> reportes = this.iReporteService.buscarTodos().stream().map(ReporteMapper::toTo)
+    @Operation(summary = "Consultar todos los reportes", description = "Esta capacidad permite consultar todos los reportes")
+    public Response consultarTodos(@Context UriInfo uriInfo) {
+        List<ReporteTo> reportes = this.iReporteService.buscarTodos().stream()
+                .map(ReporteMapper::toTo)
+                .peek(reporteTo -> reporteTo.buildURI(uriInfo))
                 .collect(Collectors.toList());
         return Response.status(200).entity(reportes).build();
     }
 
     @POST
     @Path("")
-    public Response modificarPorId(@RequestBody ReporteTo reporteTo/* , @PathParam("numDocu") Integer numDocu */) {
+    @Operation(summary = "Crear un Reporte", description = "Esta capacidad permite crear un reporte")
+    public Response modificarPorId(@RequestBody ReporteTo reporteTo) {
         this.iReporteService.guardar(ReporteMapper.toEntity(reporteTo));
         return Response.status(200).build();
     }
 
     @PUT
     @Path("/{numDocu}")
+    @Operation(summary = "Actulizar un Reporte por id", description = "Esta capacidad permite actulizar un reporte por id")
     public Response modificarPorId(@RequestBody ReporteTo reporteTo, @PathParam("numDocu") Integer numDocu) {
         reporteTo.setNumDocu(numDocu);
         this.iReporteService.actualizarPorId(ReporteMapper.toEntity(reporteTo));
@@ -79,6 +83,7 @@ public class ReporteController {
 
     @PATCH
     @Path("/{numDocu}")
+    @Operation(summary = "Actulizar un Reporte Parcialmente por id ", description = "Esta capaciddad permite actulizar un reporte parcialmente por id")
     public Response modificarParcialPorId(@RequestBody ReporteTo reporteTo, @PathParam("numDocu") Integer numDocu) {
         reporteTo.setNumDocu(numDocu);
         ReporteTo rTo = ReporteMapper.toTo(this.iReporteService.buscarPorId(numDocu));
@@ -104,12 +109,14 @@ public class ReporteController {
 
     @DELETE
     @Path("/{numDocu}")
+    @Operation(summary = "Eliminar un reporte por id", description = "Esta capaciadad permite eliminar un reporte por id")
     public void borrarPorId(@PathParam("numDocu") Integer numDocu) {
         this.iReporteService.borrarPorId(numDocu);
     }
 
     @GET
     @Path("/{numDocu}/cabecera")
+    @Operation(summary = "Consultar la cabecera del reporte", description = "Esta capacidad me permite consultar la cabecera del reporte")
     public CabeceraTo obtenerCabeceraPorId(@PathParam("numDocu") Integer numDocu) {
         return CabeceraMapper.toTo(this.iCabeceraService.buscarCabeceraPorIdReporte(numDocu));
 
@@ -117,6 +124,7 @@ public class ReporteController {
 
     @GET
     @Path("/{numDocu}/detalle")
+    @Operation(summary = "Obtener detalles del reporte", description = "Esta capacidad permite consultar el detalle completo del reporte")
     public List<DetalleTo> obtenerDetallePorId(@PathParam("numDocu") Integer numDocu) {
         return this.iDetalleService.buscarDetallesPorIdReporte(numDocu).stream().map(DetalleMapper::toTo)
                 .collect(Collectors.toList());
@@ -124,7 +132,7 @@ public class ReporteController {
 
     @POST
     @Path("/cabecera")
-    @Operation(summary = "Crear una Cabecera", description = "Esta capacidad permite crear una cabecera para una factura específica.")
+    @Operation(summary = "Crear una Cabecera", description = "Esta capacidad permite crear una cabecera para un reporte específico")
     public Response crearCabecera(CabeceraTo cabeceraTo) {
         CabeceraTo existente = null;
         try {
@@ -145,7 +153,7 @@ public class ReporteController {
 
     @POST
     @Path("/detalle")
-    @Operation(summary = "Crear un Detalle", description = "EsteEsta capacidad permite crear un detalle asociado a un reporte (cabecera).")
+    @Operation(summary = "Crear un Detalle", description = "EsteEsta capacidad permite crear un detalle asociado a un reporte")
     public Response crearDetalle(DetalleTo detalleTo) {
         this.iDetalleService.guardar(DetalleMapper.toEntity(detalleTo));
         return Response.status(Response.Status.CREATED).entity(detalleTo).build();
