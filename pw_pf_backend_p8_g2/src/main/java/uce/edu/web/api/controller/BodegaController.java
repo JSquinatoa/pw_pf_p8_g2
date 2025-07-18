@@ -73,7 +73,9 @@ public class BodegaController {
     @Path("/codigo/{codigo}")
     @Operation(summary = "Actualizar Bodega por Código", description = "Esta capacidad permite actualizar una bodega por su código")
     public Response actualizarPorCodigo(@PathParam("codigo") Integer codigo, @RequestBody BodegaTo bodegaTo) {
-        bodegaTo.setCodigo(codigo);
+        BodegaTo bTo = BodegaMapper.toTo(this.iBodegaService.buscarPorCodigo(codigo));
+        bodegaTo.setId(bTo.getId());
+        bodegaTo.setCodigo(bTo.getCodigo());
         this.iBodegaService.actualizarPorCodigo(BodegaMapper.toBodega(bodegaTo));
         return Response.status(Response.Status.NO_CONTENT).build();
     }
