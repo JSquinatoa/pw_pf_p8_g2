@@ -18,7 +18,7 @@ public class DetalleRepoImpl implements IDetalleRepo{
 
     @Override
     public List<Detalle> seleccionarDetallesPorIdReporte(Integer numDocu) {
-        TypedQuery<Detalle> myQuery = this.entityManager.createQuery("SELECT h FROM Detalle h WHERE h.factura.id =:numDocu", Detalle.class);
+        TypedQuery<Detalle> myQuery = this.entityManager.createQuery("SELECT h FROM Detalle h WHERE h.reporte.numDocu =:numDocu", Detalle.class);
         myQuery.setParameter("numDocu", numDocu);
         return myQuery.getResultList();
     }

@@ -34,7 +34,7 @@ public class Reporte {
 
     // Relaciones
     @OneToOne(mappedBy = "reporte")
-    private List<Cabecera> cabecera;
+    private Cabecera cabecera;
 
     @OneToMany(mappedBy = "reporte")
     private List<Detalle> detalle;
@@ -89,11 +89,11 @@ public class Reporte {
         this.total = total;
     }
 
-    public List<Cabecera> getCabecera() {
+    public Cabecera getCabecera() {
         return cabecera;
     }
 
-    public void setCabecera(List<Cabecera> cabecera) {
+    public void setCabecera(Cabecera cabecera) {
         this.cabecera = cabecera;
     }
 

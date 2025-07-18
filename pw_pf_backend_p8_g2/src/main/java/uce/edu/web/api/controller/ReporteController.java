@@ -11,6 +11,7 @@ import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -51,6 +52,7 @@ public class ReporteController {
     }
 
     @GET
+    @Path("")
     public Response consultarTodos() {
         List<ReporteTo> reportes = this.iReporteService.buscarTodos().stream().map(ReporteMapper::toTo)
                 .collect(Collectors.toList());
@@ -58,10 +60,17 @@ public class ReporteController {
     }
 
     @POST
+    @Path("")
+    public Response modificarPorId(@RequestBody ReporteTo reporteTo/* , @PathParam("numDocu") Integer numDocu */) {
+        this.iReporteService.guardar(ReporteMapper.toEntity(reporteTo));
+        return Response.status(200).build();
+    }
+
+    @PUT
     @Path("/{numDocu}")
-    public Response modificarPorId(@RequestBody ReporteTo reporteTo, @PathParam("numDocu") Integer numDocu) {
+    public Response modificarPorId(@RequestBody ReporteTo reporteTo, @PathParam("numDocu") Integer numDocu){
         reporteTo.setNumDocu(numDocu);
-        this.iReporteService.actualizarPorId(ReporteMapper.toEntity(reporteTo));
+        this.iReporteService.actualizarPorId(ReporteMapper.toEntity(reporteTo));        
         return Response.status(200).build();
     }
 
@@ -109,8 +118,4 @@ public class ReporteController {
         return this.iDetalleService.buscarDetallesPorIdReporte(numDocu).stream().map(DetalleMapper::toTo).collect(Collectors.toList());
     }
 
-
 }
-
-
-

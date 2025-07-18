@@ -16,7 +16,7 @@ public class CabeceraRepoImpl implements ICabeceraRepo {
 
     @Override
     public Cabecera seleccionarCabeceraPorIdReporte(Integer numDocu) {
-        TypedQuery<Cabecera> myQuery = entityManager.createQuery("SELECT c FROM Cabecera c WHERE c.factura.id = :numDocu", Cabecera.class);
+        TypedQuery<Cabecera> myQuery = entityManager.createQuery("SELECT c FROM Cabecera c WHERE c.reporte.numDocu = :numDocu", Cabecera.class);
         myQuery.setParameter("numDocu", numDocu);
         return myQuery.getSingleResult();
     }
