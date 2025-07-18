@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class CabeceraTo {
 
     private Integer id;
+    private Integer reporteId;
     private String rucEmpresa;
     private String numDocumeto;
     private String establecimiento;
@@ -22,6 +23,14 @@ public class CabeceraTo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getReporteId() {
+        return reporteId;
+    }
+
+    public void setReporteId(Integer reporteId) {
+        this.reporteId = reporteId;
     }
 
     public String getRucEmpresa() {

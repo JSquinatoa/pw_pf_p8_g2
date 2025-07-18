@@ -21,15 +21,15 @@ public class Reporte {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rept_numDocu")
     private Integer numDocu;
-    @Column(name = "reporte_idCli")
+    @Column(name = "rept_idCli")
     private Integer idCli;
-    @Column(name = "reporte_nombreCliente")
+    @Column(name = "rept_nombreCliente")
     private String nombreCliente;
-    @Column(name = "reporte_cantidadItems")
+    @Column(name = "rept_cantidadItems")
     private Integer cantidadItems;
-    @Column(name = "reporte_totalImpuestos")
+    @Column(name = "rept_totalImpuestos")
     private Double totalImpuestos;
-    @Column(name = "reporte_total")
+    @Column(name = "rept_total")
     private Double total;
 
     // Relaciones

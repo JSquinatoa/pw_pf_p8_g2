@@ -10,8 +10,8 @@ import uce.edu.web.api.controller.ReporteController;
 public class ReporteTo {
 
     private Integer numDocu;
-    private String nombreCliente;
     private Integer idCli;
+    private String nombreCliente;
     private Integer cantidadItems;
     private Double totalImpuestos;
     private Double total;

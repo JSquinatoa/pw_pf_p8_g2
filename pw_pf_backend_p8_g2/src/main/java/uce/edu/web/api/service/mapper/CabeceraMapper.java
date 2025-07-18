@@ -1,6 +1,7 @@
 package uce.edu.web.api.service.mapper;
 
 import uce.edu.web.api.repository.model.Cabecera;
+import uce.edu.web.api.repository.model.Reporte;
 import uce.edu.web.api.service.to.CabeceraTo;
 
 public class CabeceraMapper {
@@ -20,10 +21,19 @@ public class CabeceraMapper {
         cTo.setNombreCliente(cabecera.getNombreCliente());
         cTo.setDireccion(cabecera.getDireccion());
         cTo.setCorreo(cabecera.getCorreo());
+
+        // Aquí seteas el reporteId si el reporte no es null
+        if (cabecera.getReporte() != null) {
+            cTo.setReporteId(cabecera.getReporte().getNumDocu());
+        }
+
         return cTo;
     }
 
     public static Cabecera toEntity(CabeceraTo cabeceraTo) {
+        if (cabeceraTo == null) {
+            return null;
+        }
         Cabecera c = new Cabecera();
         c.setId(cabeceraTo.getId());
         c.setRucEmpresa(cabeceraTo.getRucEmpresa());
@@ -35,7 +45,16 @@ public class CabeceraMapper {
         c.setNombreCliente(cabeceraTo.getNombreCliente());
         c.setDireccion(cabeceraTo.getDireccion());
         c.setCorreo(cabeceraTo.getCorreo());
+
+        // Aquí creas un objeto Reporte solo con el ID, para la relación
+        if (cabeceraTo.getReporteId() != null) {
+            Reporte reporte = new Reporte();
+            reporte.setNumDocu(cabeceraTo.getReporteId());
+            c.setReporte(reporte);
+        } else {
+            c.setReporte(null);
+        }
+
         return c;
     }
-
 }

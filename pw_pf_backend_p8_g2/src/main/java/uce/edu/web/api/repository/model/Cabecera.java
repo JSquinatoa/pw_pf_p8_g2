@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -38,6 +39,7 @@ public class Cabecera {
 
     // Relaciones
     @OneToOne
+    @JoinColumn(name = "cabe_rept_numDocu", referencedColumnName = "rept_numDocu")
     private Reporte reporte;
 
     // GET y SET

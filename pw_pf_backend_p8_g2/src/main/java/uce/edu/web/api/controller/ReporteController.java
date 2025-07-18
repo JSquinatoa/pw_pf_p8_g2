@@ -3,6 +3,7 @@ package uce.edu.web.api.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
 import jakarta.inject.Inject;
@@ -19,6 +20,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import uce.edu.web.api.repository.model.Cabecera;
 import uce.edu.web.api.service.ICabeceraService;
 import uce.edu.web.api.service.IDetalleService;
 import uce.edu.web.api.service.IReporteService;
@@ -68,9 +70,9 @@ public class ReporteController {
 
     @PUT
     @Path("/{numDocu}")
-    public Response modificarPorId(@RequestBody ReporteTo reporteTo, @PathParam("numDocu") Integer numDocu){
+    public Response modificarPorId(@RequestBody ReporteTo reporteTo, @PathParam("numDocu") Integer numDocu) {
         reporteTo.setNumDocu(numDocu);
-        this.iReporteService.actualizarPorId(ReporteMapper.toEntity(reporteTo));        
+        this.iReporteService.actualizarPorId(ReporteMapper.toEntity(reporteTo));
         return Response.status(200).build();
     }
 
@@ -94,14 +96,14 @@ public class ReporteController {
         }
         if (reporteTo.getTotalImpuestos() != null) {
             rTo.setTotalImpuestos(reporteTo.getTotalImpuestos());
-        }        
+        }
         this.iReporteService.actualizarParcialPorId(ReporteMapper.toEntity(rTo));
         return Response.status(200).build();
     }
 
     @DELETE
     @Path("/{numDocu}")
-    public void borrarPorId(@PathParam("numDocu") Integer numDocu){
+    public void borrarPorId(@PathParam("numDocu") Integer numDocu) {
         this.iReporteService.borrarPorId(numDocu);
     }
 
@@ -115,7 +117,29 @@ public class ReporteController {
     @GET
     @Path("/{numDocu}/detalle")
     public List<DetalleTo> obtenerDetallePorId(@PathParam("numDocu") Integer numDocu) {
-        return this.iDetalleService.buscarDetallesPorIdReporte(numDocu).stream().map(DetalleMapper::toTo).collect(Collectors.toList());
+        return this.iDetalleService.buscarDetallesPorIdReporte(numDocu).stream().map(DetalleMapper::toTo)
+                .collect(Collectors.toList());
+    }
+
+    @POST
+    @Path("/cabecera")
+    @Operation(summary = "Crear una Cabecera", description = "Este endpoint permite crear una cabecera para una factura específica.")
+    public Response crearCabecera(CabeceraTo cabeceraTo) {
+        CabeceraTo existente = null;
+        try {
+            existente = CabeceraMapper.toTo(iCabeceraService.buscarCabeceraPorIdReporte(cabeceraTo.getReporteId()));
+        } catch (jakarta.persistence.NoResultException e) {
+            // No existe cabecera, se puede crear
+        }
+
+        if (existente != null) {
+            return Response.status(Response.Status.CONFLICT)
+                    .entity("Ya existe una cabecera para el reporte con ID: " + cabeceraTo.getReporteId())
+                    .build();
+        }
+
+        iCabeceraService.guardar(CabeceraMapper.toEntity(cabeceraTo));
+        return Response.status(Response.Status.CREATED).entity(cabeceraTo).build();
     }
 
 }
