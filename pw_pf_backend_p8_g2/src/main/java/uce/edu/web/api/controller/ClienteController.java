@@ -56,7 +56,7 @@ public class ClienteController {
     @Operation(summary = "Guarda un CLiente", description = "Esta capacidad permite guardar un cliente")
     public Response guardar(@RequestBody ClienteTo clienteTo) {
         this.iClienteService.guardar(ClienteMapper.toEntity(clienteTo));
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
@@ -65,7 +65,7 @@ public class ClienteController {
     public Response actualizarPorCedula(@RequestBody ClienteTo clienteTo, @PathParam("cedula") String cedula) {
         clienteTo.setCedula(cedula);
         this.iClienteService.actualizarPorCedula(ClienteMapper.toEntity(clienteTo));
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @PATCH
@@ -97,7 +97,7 @@ public class ClienteController {
         }
 
         this.iClienteService.actualizarParcialPorCedula(ClienteMapper.toEntity(cTo));
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @DELETE
@@ -105,7 +105,7 @@ public class ClienteController {
     @Operation(summary = "Borrar un cliente por su cedula", description = "Esta capacidad me permite eliminar a un Cliente por su cedula")
     public Response borrarPorCedula(@PathParam("cedula") String cedula) {
         this.iClienteService.borrarPorCedula(cedula);
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
 }
