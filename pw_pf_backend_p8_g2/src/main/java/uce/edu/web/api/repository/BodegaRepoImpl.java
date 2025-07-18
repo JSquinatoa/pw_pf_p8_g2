@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import uce.edu.web.api.repository.model.Bodega;
 
@@ -15,60 +16,57 @@ public class BodegaRepoImpl implements IBodegaRepo {
     @PersistenceContext
     private EntityManager entityManager;
 
-        @Override
+    @Override
     public Bodega seleccionarPorId(Integer id) {
-        return entityManager.find(Bodega.class, id);
+        return this.entityManager.find(Bodega.class, id);
     }
 
     @Override
     public Bodega seleccionarPorCodigo(Integer codigo) {
-        return entityManager.createQuery("SELECT b FROM Bodega b WHERE b.codigo = :codigo", Bodega.class)
-                .setParameter("codigo", codigo)
-                .getSingleResult();
+        TypedQuery<Bodega> myQuery = this.entityManager.createQuery("SELECT b FROM Bodega b WHERE b.codigo = :codigo", Bodega.class);
+        myQuery.setParameter("codigo", codigo);
+        return myQuery.getSingleResult();
     }
-
 
     @Override
     public List<Bodega> seleccionarTodos() {
-        return entityManager.createQuery("SELECT b FROM Bodega b", Bodega.class).getResultList();
+        TypedQuery<Bodega> myQuery = this.entityManager.createQuery("SELECT b FROM Bodega b", Bodega.class);
+        return myQuery.getResultList();
     }
 
-    
     @Override
     public void actualizarPorId(Bodega bodega) {
-        entityManager.merge(bodega);
+        this.entityManager.merge(bodega);
     }
 
     @Override
     public void actualizarPorCodigo(Bodega bodega) {
-        entityManager.merge(bodega);
+        this.entityManager.merge(bodega);
     }
 
     @Override
     public void actualizarParcialPorId(Bodega bodega) {
-            entityManager.merge(bodega);
+        this.entityManager.merge(bodega);
     }
 
     @Override
     public void actualizarParcialPorCodigo(Bodega bodega) {
-            entityManager.merge(bodega);
+        this.entityManager.merge(bodega);
     }
 
     @Override
     public void insertar(Bodega bodega) {
-        entityManager.persist(bodega);
+        this.entityManager.persist(bodega);
     }
 
     @Override
     public void eliminarPorId(Integer id) {
-        entityManager.remove(this.seleccionarPorId(id));
+        this.entityManager.remove(this.seleccionarPorId(id));
     }
 
     @Override
     public void eliminarPorCodigo(Integer codigo) {
-        entityManager.remove(this.seleccionarPorCodigo(codigo));
+        this.entityManager.remove(this.seleccionarPorCodigo(codigo));
     }
-
-
 
 }

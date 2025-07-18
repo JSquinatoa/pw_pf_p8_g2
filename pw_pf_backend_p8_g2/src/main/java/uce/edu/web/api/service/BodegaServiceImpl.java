@@ -14,17 +14,17 @@ public class BodegaServiceImpl implements IBodegaService {
     private IBodegaRepo bodegaRepo;
 
     @Override
-    public Bodega seleccionarPorId(Integer id) {
+    public Bodega buscarPorId(Integer id) {
         return this.bodegaRepo.seleccionarPorId(id);
     }
 
     @Override
-    public Bodega seleccionarPorCodigo(Integer codigo) {
+    public Bodega buscarPorCodigo(Integer codigo) {
         return this.bodegaRepo.seleccionarPorCodigo(codigo);
     }
 
     @Override
-    public List<Bodega> seleccionarTodos() {
+    public List<Bodega> buscarTodos() {
         return this.bodegaRepo.seleccionarTodos();
     }
 
@@ -32,7 +32,6 @@ public class BodegaServiceImpl implements IBodegaService {
     public void actualizarPorId(Bodega bodega) {
         this.bodegaRepo.actualizarPorId(bodega);
     }
-    
 
     @Override
     public void actualizarPorCodigo(Bodega bodega) {
@@ -50,19 +49,18 @@ public class BodegaServiceImpl implements IBodegaService {
     }
 
     @Override
-    public void insertar(Bodega bodega) {
+    public void guardar(Bodega bodega) {
         this.bodegaRepo.insertar(bodega);
     }
 
     @Override
-    public void eliminarPorId(Integer id) {
+    public void borrarPorId(Integer id) {
         this.bodegaRepo.eliminarPorId(id);
     }
 
     @Override
-    public void eliminarPorCodigo(Integer codigo) {
+    public void borrarPorCodigo(Integer codigo) {
         this.bodegaRepo.eliminarPorCodigo(codigo);
     }
-
 
 }

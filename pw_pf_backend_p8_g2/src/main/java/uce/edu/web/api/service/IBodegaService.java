@@ -6,11 +6,11 @@ import uce.edu.web.api.repository.model.Bodega;
 
 public interface IBodegaService {
 
-    Bodega seleccionarPorId(Integer id);
+    Bodega buscarPorId(Integer id);
 
-    Bodega seleccionarPorCodigo(Integer codigo);
+    Bodega buscarPorCodigo(Integer codigo);
 
-    List<Bodega> seleccionarTodos();
+    List<Bodega> buscarTodos();
 
     void actualizarPorId(Bodega bodega);
 
@@ -20,9 +20,9 @@ public interface IBodegaService {
 
     void actualizarParcialPorCodigo(Bodega bodega);
 
-    void insertar(Bodega bodega);
+    void guardar(Bodega bodega);
 
-    void eliminarPorId(Integer id);
+    void borrarPorId(Integer id);
 
-    void eliminarPorCodigo(Integer codigo);
+    void borrarPorCodigo(Integer codigo);
 }

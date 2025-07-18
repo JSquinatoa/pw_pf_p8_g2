@@ -9,10 +9,9 @@ public class BodegaTo {
     private Integer codigo;
     private String nombre;
     private String ubicacion;
-
     private Map<String, String> _links = new HashMap<>();
 
-    // Getters and Setters
+    // GET y SET
 
     public Integer getId() {
         return id;

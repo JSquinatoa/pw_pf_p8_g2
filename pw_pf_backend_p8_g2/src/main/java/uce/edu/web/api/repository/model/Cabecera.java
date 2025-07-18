@@ -36,17 +36,9 @@ public class Cabecera {
     @Column(name = "cabe_correo")
     private String correo;
 
-    // Relaciones 
+    // Relaciones
     @OneToOne
     private Reporte reporte;
-    
-    public Reporte getReporte() {
-        return reporte;
-    }
-
-    public void setReporte(Reporte reporte) {
-        this.reporte = reporte;
-    }
 
     // GET y SET
     public Integer getId() {
@@ -129,4 +121,11 @@ public class Cabecera {
         this.correo = correo;
     }
 
+    public Reporte getReporte() {
+        return reporte;
+    }
+
+    public void setReporte(Reporte reporte) {
+        this.reporte = reporte;
+    }
 }

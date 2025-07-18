@@ -18,9 +18,6 @@ public class BodegaMapper {
     }
 
     public static Bodega toBodega(BodegaTo bodegaTo) {
-        if (bodegaTo == null) {
-            return null;
-        }
         Bodega bodega = new Bodega();
         bodega.setId(bodegaTo.getId());
         bodega.setCodigo(bodegaTo.getCodigo());
