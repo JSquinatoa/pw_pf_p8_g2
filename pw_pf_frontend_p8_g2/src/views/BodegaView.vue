@@ -1,20 +1,20 @@
 <template>
-  <div class="container-homeview">
-    <Home />
+  <div class="container-bodegaview">
+    <Bodega />
   </div>
 </template>
 
 <script>
-import Home from "@/components/Home.vue";
+import Bodega from "@/components/bodega/Bodega.vue";
 export default {
   components: {
-    Home,
+    Bodega,
   },
 };
 </script>
 
 <style>
-.container-homeview {
+.container-bodegaview {
   width: 100%;
   height: 100%;
 }
