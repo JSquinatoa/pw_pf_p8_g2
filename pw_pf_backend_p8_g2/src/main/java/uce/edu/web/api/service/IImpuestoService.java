@@ -10,11 +10,11 @@ public interface IImpuestoService {
 
     public List<Impuesto> buscarTodos();
 
-    public void guardar(Impuesto impuesto);
-
     public void actualizarPorId(Impuesto impuesto);
 
     public void actualizarParcialPorId(Impuesto impuesto);
 
-    public void eliminarPorId(Integer id);
+    public void borrarImpuestoConProductosPorId(Integer id);
+
+    public void guardar(Impuesto impuesto);
 }

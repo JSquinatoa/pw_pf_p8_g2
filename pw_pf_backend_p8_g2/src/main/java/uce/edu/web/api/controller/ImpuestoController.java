@@ -93,7 +93,7 @@ public class ImpuestoController {
     @Path("/{id}")
     @Operation(summary = "Borrar Impuesto por Id", description = "Permite borrar un impuesto por su Id")
     public Response borrarPorId(@PathParam("id") Integer id) {
-        this.impuestoService.eliminarPorId(id);
+        this.impuestoService.borrarImpuestoConProductosPorId(id);
         return Response.status(Response.Status.OK).build();
     }
 }

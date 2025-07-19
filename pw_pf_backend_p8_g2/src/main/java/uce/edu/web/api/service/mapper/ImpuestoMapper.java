@@ -17,9 +17,6 @@ public class ImpuestoMapper {
     }
 
     public static Impuesto toEntity(ImpuestoTo impuestoTo) {
-        if (impuestoTo == null) {
-            return null;
-        }
         Impuesto impuesto = new Impuesto();
         impuesto.setId(impuestoTo.getId());
         impuesto.setNombre(impuestoTo.getNombre());

@@ -1,5 +1,6 @@
 package uce.edu.web.api.service.to;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,12 +8,13 @@ import jakarta.ws.rs.core.UriInfo;
 import uce.edu.web.api.controller.ProductoController;
 
 public class ProductoTo {
+
     private Integer codigoBarras;
     private String nombre;
     private String categoria;
     private Integer stock;
     private Double precio;
-    private Map<String, String> _links = new HashMap<>();
+    private Map<String, String> impuestos = new HashMap<>();
 
     // GET y SET
     public Integer getCodigoBarras() {
@@ -55,22 +57,19 @@ public class ProductoTo {
         this.precio = precio;
     }
 
-    public Map<String, String> get_links() {
-        return _links;
+    public Map<String, String> getImpuestos() {
+        return impuestos;
     }
 
-    public void set_links(Map<String, String> _links) {
-        this._links = _links;
+    public void setImpuestos(Map<String, String> impuestos) {
+        this.impuestos = impuestos;
     }
 
     public void buildURI(UriInfo uriInfo) {
-        this.get_links().put("impuestos", uriInfo.getBaseUriBuilder()
-                .path(ProductoController.class)
-                .path(this.getCodigoBarras().toString())
-                .path("impuestos")
-                .build()
-                .toString());
-    }
+        URI todosImpuestos = uriInfo.getBaseUriBuilder().path(ProductoController.class)
+                .path(ProductoController.class, "obtenerImpuestosPorProducto").build(codigoBarras);
+        impuestos.put("impuestos", todosImpuestos.toString());
 
+    }
 
 }

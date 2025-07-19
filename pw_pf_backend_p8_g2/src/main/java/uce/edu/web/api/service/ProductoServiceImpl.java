@@ -5,43 +5,63 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import uce.edu.web.api.repository.IProductoRepo;
+import uce.edu.web.api.repository.model.Impuesto;
 import uce.edu.web.api.repository.model.Producto;
 
 @ApplicationScoped
 public class ProductoServiceImpl implements IProductoService {
-    
-    @Inject
-    public IProductoRepo productoRepo;
 
+    @Inject
+    public IProductoRepo iProductoRepo;
 
     @Override
-    public Producto buscarPorCodigoBarras(Integer codigoBarras) {
-        return this.productoRepo.seleccionarPorCodigoBarras(codigoBarras);
+    public Producto buscarPorId(Integer codigoBarras) {
+        return this.iProductoRepo.seleccionarPorId(codigoBarras);
     }
 
     @Override
     public List<Producto> buscarTodos() {
-        return this.productoRepo.seleccionarTodos();
+        return this.iProductoRepo.seleccionarTodos();
     }
 
     @Override
-    public void actualizarPorCodigoBarras(Producto producto) {
-        this.productoRepo.actualizarPorCodigoBarras(producto);
+    public void actualizarPorId(Producto producto) {
+        this.iProductoRepo.actualizarPorId(producto);
     }
 
     @Override
-    public void actualizarParcialPorCodigoBarras(Producto producto) {
-        this.productoRepo.actualizarParcialPorCodigoBarras(producto);
+    public void actualizarParcialPorId(Producto producto) {
+        this.iProductoRepo.actualizarParcialPorId(producto);
     }
 
     @Override
-    public void borrarPorCodigoBarras(Integer codigoBarras) {
-        this.productoRepo.eliminarPorCodigoBarras(codigoBarras);
+    public void borrarProductoConImpuestosPorId(Integer codigoBarras) {
+        this.iProductoRepo.eliminarProductoConImpuestosPorId(codigoBarras);
     }
 
     @Override
     public void guardar(Producto producto) {
-        this.productoRepo.insertar(producto);
+        this.iProductoRepo.insertar(producto);
     }
 
+    @Override
+    public List<Impuesto> buscarImpuestosPorProducto(Integer codigoBarras) {
+        return this.iProductoRepo.seleccionarImpuestosPorProducto(codigoBarras);
+    }
+
+    @Override
+    public void guardarImpuestoAProducto(Integer codigoBarras, Integer impuestoId) {
+        this.iProductoRepo.insertarImpuestoAProducto(codigoBarras, impuestoId);
+    }
+
+    @Override
+    public void borrarImpuestoDeProducto(Integer codigoBarras, Integer impuestoId) {
+        this.iProductoRepo.eliminarImpuestoDeProducto(codigoBarras, impuestoId);
+        
+    }
+
+    @Override
+    public void actualizarImpuestoDeProducto(Integer codigoBarras, Integer impuestoIdActual, Integer impuestoIdNuevo) {
+        this.iProductoRepo.actualizarImpuestoDeProducto(codigoBarras, impuestoIdActual, impuestoIdNuevo);
+    }
 }

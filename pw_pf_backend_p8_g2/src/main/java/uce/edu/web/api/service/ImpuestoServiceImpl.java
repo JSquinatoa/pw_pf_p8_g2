@@ -9,7 +9,7 @@ import uce.edu.web.api.repository.model.Impuesto;
 
 @ApplicationScoped
 public class ImpuestoServiceImpl implements IImpuestoService {
-    
+
     @Inject
     private IImpuestoRepo impuestoRepo;
 
@@ -24,16 +24,6 @@ public class ImpuestoServiceImpl implements IImpuestoService {
     }
 
     @Override
-    public void guardar(Impuesto impuesto) {
-        this.impuestoRepo.insertar(impuesto);
-    }
-
-    @Override
-    public void eliminarPorId(Integer id) {
-        this.impuestoRepo.eliminarPorId(id);
-    }
-
-    @Override
     public void actualizarPorId(Impuesto impuesto) {
         this.impuestoRepo.actualizarPorId(impuesto);
     }
@@ -41,6 +31,16 @@ public class ImpuestoServiceImpl implements IImpuestoService {
     @Override
     public void actualizarParcialPorId(Impuesto impuesto) {
         this.impuestoRepo.actualizarParcialPorId(impuesto);
+    }
+
+    @Override
+    public void borrarImpuestoConProductosPorId(Integer id) {
+        this.impuestoRepo.eliminarImpuestoConProductosPorId(id);
+    }
+
+    @Override
+    public void guardar(Impuesto impuesto) {
+        this.impuestoRepo.insertar(impuesto);
     }
 
 }

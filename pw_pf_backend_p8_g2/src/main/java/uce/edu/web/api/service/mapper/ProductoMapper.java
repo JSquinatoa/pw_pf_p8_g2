@@ -9,29 +9,22 @@ public class ProductoMapper {
         if (producto == null) {
             return null;
         }
-
         ProductoTo pTo = new ProductoTo();
         pTo.setCodigoBarras(producto.getCodigoBarras());
         pTo.setNombre(producto.getNombre());
         pTo.setCategoria(producto.getCategoria());
         pTo.setStock(producto.getStock());
         pTo.setPrecio(producto.getPrecio());
-
         return pTo;
     }
 
     public static Producto toEntity(ProductoTo productoTo) {
-        if (productoTo == null) {
-            return null;
-        }
-
         Producto p = new Producto();
         p.setCodigoBarras(productoTo.getCodigoBarras());
         p.setNombre(productoTo.getNombre());
         p.setCategoria(productoTo.getCategoria());
         p.setStock(productoTo.getStock());
         p.setPrecio(productoTo.getPrecio());
-
         return p;
     }
 

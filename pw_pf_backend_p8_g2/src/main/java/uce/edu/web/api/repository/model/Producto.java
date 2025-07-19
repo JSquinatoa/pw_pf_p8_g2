@@ -1,16 +1,15 @@
 package uce.edu.web.api.repository.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,7 +17,6 @@ import jakarta.persistence.Table;
 public class Producto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prod_codigoBarras")
     private Integer codigoBarras;
     @Column(name = "prod_nombre")
@@ -29,11 +27,14 @@ public class Producto {
     private Integer stock;
     @Column(name = "prod_precio")
     private Double precio;
-    
-    @OneToMany(mappedBy = "producto")
-    @JsonIgnore
-    private List<ProductoImpuesto> productoImpuestos = new ArrayList<>();
 
+    // Relaciones
+    @ManyToMany
+    @JoinTable(name = "productofinal", joinColumns = @JoinColumn(name = "prod_codigoBarras"), inverseJoinColumns = @JoinColumn(name = "impt_id"))
+    @JsonIgnore
+    private List<Impuesto> impuestos;
+
+    // GET y SET
     public Integer getCodigoBarras() {
         return codigoBarras;
     }
@@ -74,21 +75,12 @@ public class Producto {
         this.precio = precio;
     }
 
-    public List<ProductoImpuesto> getProductoImpuestos() {
-        return productoImpuestos;
-    }
-
-    public void setProductoImpuestos(List<ProductoImpuesto> productoImpuestos) {
-        this.productoImpuestos = productoImpuestos;
-    }
-
-    /*public List<Impuesto> getImpuestos() {
+    public List<Impuesto> getImpuestos() {
         return impuestos;
     }
 
     public void setImpuestos(List<Impuesto> impuestos) {
         this.impuestos = impuestos;
-    }*/
-    
+    }
 
 }
