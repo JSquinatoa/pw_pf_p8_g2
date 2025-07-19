@@ -1,7 +1,7 @@
 <template>
   <div class="container-home">
     <img src="logoComputacion.png" alt="">
-    <h1>Pagina principal</h1>
+    <h1>Kōmerce</h1>
     <img src="sellos-uce.png" alt="">
   </div>
 </template>
@@ -14,7 +14,6 @@ export default {};
 .container-home {
   width: 100%;
   height: 100%;
-  display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
