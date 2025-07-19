@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,10 +25,9 @@ public class Impuesto {
     @Column(name = "imp_porcentaje")
     private Double porcentaje;
 
-    // Relaciones
-    @ManyToMany(mappedBy = "impuestos")
+    @OneToMany(mappedBy = "impuesto")
     @JsonIgnore
-    private List<Producto> productos;
+    private List<ProductoImpuesto> productoImpuestos;
 
     // GET y SET
     public Integer getId() {
@@ -55,12 +54,20 @@ public class Impuesto {
         this.porcentaje = porcentaje;
     }
 
-    public List<Producto> getProductos() {
+    public List<ProductoImpuesto> getProductoImpuestos() {
+        return productoImpuestos;
+    }
+
+    public void setProductoImpuestos(List<ProductoImpuesto> productoImpuestos) {
+        this.productoImpuestos = productoImpuestos;
+    }
+
+    /*public List<Producto> getProductos() {
         return productos;
     }
 
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
-    }
+    }*/
 
 }
