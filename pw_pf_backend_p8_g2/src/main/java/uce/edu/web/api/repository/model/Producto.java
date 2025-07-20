@@ -34,6 +34,9 @@ public class Producto {
     @JsonIgnore
     private List<Impuesto> impuestos;
 
+    @ManyToMany(mappedBy = "productos")
+    private List<Bodega> bodegas;
+
     // GET y SET
     public Integer getCodigoBarras() {
         return codigoBarras;

@@ -2,9 +2,17 @@ package uce.edu.web.api.repository.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 
 @Entity
@@ -21,6 +29,12 @@ public class Bodega {
     private String nombre;
     @Column(name = "bode_ubicacion")
     private String ubicacion;
+
+    // Relaciones
+    @ManyToMany
+    @JoinTable(name = "inventario", joinColumns = @JoinColumn(name = "bode_id"), inverseJoinColumns = @JoinColumn(name = "prod_codigoBarras"))
+    @JsonIgnore
+    private List<Producto> productos;
 
     // GET y SET
     public Integer getId() {
@@ -53,6 +67,14 @@ public class Bodega {
 
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 
 }
