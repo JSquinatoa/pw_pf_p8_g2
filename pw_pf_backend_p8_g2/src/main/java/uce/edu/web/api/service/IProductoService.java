@@ -9,26 +9,24 @@ public interface IProductoService {
 
     // Producto
 
-    public Producto buscarPorId(Integer codigoBarras);
+    Producto buscarPorCodigoBarras(String codigoBarras);
 
-    public List<Producto> buscarTodos();
+    List<Producto> buscarTodos();
 
-    public void actualizarPorId(Producto producto);
+    void guardar(Producto producto);
 
-    public void actualizarParcialPorId(Producto producto);
+    void actualizarPorCodigoBarras(Producto producto);
 
-    public void borrarProductoConImpuestosPorId(Integer codigoBarras);
+    void borrarPorCodigoBarras(String codigoBarras);
 
-    public void guardar(Producto producto);
+    // Producto impuesto
 
-    // Prodcuto Impuesto
+    public List<Impuesto> buscarImpuestosPorProducto(String codigoBarras);
 
-    public List<Impuesto> buscarImpuestosPorProducto(Integer codigoBarras);
+    public void guardarImpuestoAProducto(String codigoBarras, Integer impuestoId);
 
-    public void guardarImpuestoAProducto(Integer codigoBarras, Integer impuestoId);
+    public void borrarImpuestoDeProducto(String codigoBarras, Integer impuestoId);
 
-    public void borrarImpuestoDeProducto(Integer codigoBarras, Integer impuestoId);
-
-    public void actualizarImpuestoDeProducto(Integer codigoBarras, Integer impuestoIdActual, Integer impuestoIdNuevo);
+    public void actualizarImpuestoDeProducto(String codigoBarras, Integer impuestoIdActual, Integer impuestoIdNuevo);
 
 }

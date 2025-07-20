@@ -15,8 +15,12 @@ public class ProductoServiceImpl implements IProductoService {
     public IProductoRepo iProductoRepo;
 
     @Override
-    public Producto buscarPorId(Integer codigoBarras) {
-        return this.iProductoRepo.seleccionarPorId(codigoBarras);
+    public Producto buscarPorCodigoBarras(String codigoBarras) {
+        Producto producto = this.iProductoRepo.seleccionarPorCodigoBarras(codigoBarras);
+        if (producto == null) {
+            throw new RuntimeException("Producto no encontrada");
+        }
+        return producto;
     }
 
     @Override
@@ -25,43 +29,43 @@ public class ProductoServiceImpl implements IProductoService {
     }
 
     @Override
-    public void actualizarPorId(Producto producto) {
-        this.iProductoRepo.actualizarPorId(producto);
-    }
-
-    @Override
-    public void actualizarParcialPorId(Producto producto) {
-        this.iProductoRepo.actualizarParcialPorId(producto);
-    }
-
-    @Override
-    public void borrarProductoConImpuestosPorId(Integer codigoBarras) {
-        this.iProductoRepo.eliminarProductoConImpuestosPorId(codigoBarras);
-    }
-
-    @Override
     public void guardar(Producto producto) {
+        if (this.iProductoRepo.seleccionarPorCodigoBarras(producto.getCodigoBarras()) != null) {
+            throw new RuntimeException("El código de barras del prroducto ya existe");
+        }
         this.iProductoRepo.insertar(producto);
     }
 
     @Override
-    public List<Impuesto> buscarImpuestosPorProducto(Integer codigoBarras) {
+    public void actualizarPorCodigoBarras(Producto producto) {
+        this.iProductoRepo.actualizarPorCodigoBarras(producto);
+    }
+
+    @Override
+    public void borrarPorCodigoBarras(String codigoBarras) {
+        this.iProductoRepo.eliminarPorCodigoBarras(codigoBarras);
+    }
+
+    // Relaciones ProductoFinal
+
+    @Override
+    public List<Impuesto> buscarImpuestosPorProducto(String codigoBarras) {
         return this.iProductoRepo.seleccionarImpuestosPorProducto(codigoBarras);
     }
 
     @Override
-    public void guardarImpuestoAProducto(Integer codigoBarras, Integer impuestoId) {
+    public void guardarImpuestoAProducto(String codigoBarras, Integer impuestoId) {
         this.iProductoRepo.insertarImpuestoAProducto(codigoBarras, impuestoId);
     }
 
     @Override
-    public void borrarImpuestoDeProducto(Integer codigoBarras, Integer impuestoId) {
+    public void borrarImpuestoDeProducto(String codigoBarras, Integer impuestoId) {
         this.iProductoRepo.eliminarImpuestoDeProducto(codigoBarras, impuestoId);
-        
     }
 
     @Override
-    public void actualizarImpuestoDeProducto(Integer codigoBarras, Integer impuestoIdActual, Integer impuestoIdNuevo) {
+    public void actualizarImpuestoDeProducto(String codigoBarras, Integer impuestoIdActual, Integer impuestoIdNuevo) {
         this.iProductoRepo.actualizarImpuestoDeProducto(codigoBarras, impuestoIdActual, impuestoIdNuevo);
     }
+
 }

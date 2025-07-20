@@ -16,11 +16,16 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 import uce.edu.web.api.service.IBodegaService;
+import uce.edu.web.api.service.IInventarioService;
 import uce.edu.web.api.service.mapper.BodegaMapper;
+import uce.edu.web.api.service.mapper.ProductoMapper;
 import uce.edu.web.api.service.to.BodegaTo;
+import uce.edu.web.api.service.to.ProductoTo;
 
 @Path("/bodegas")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,49 +35,41 @@ public class BodegaController {
     @Inject
     private IBodegaService iBodegaService;
 
-    // Consultar por ID, Código, Todos
+    @Inject 
+    private IInventarioService iInventarioService;
 
     @GET
-    @Path("/{id}")
-    @Operation(summary = "Consultar Bodega por ID", description = "Esta capacidad permite consultar una bodega por su ID")
-    public Response consultarPorId(@PathParam("id") Integer id) {
-        BodegaTo bTo = BodegaMapper.toTo(this.iBodegaService.buscarPorId(id));
-        return Response.status(Response.Status.OK).entity(bTo).build();
-    }
-
-    @GET
-    @Path("/codigo/{codigo}")
+    @Path("/{codigo}")
     @Operation(summary = "Consultar Bodega por Código", description = "Esta capacidad permite consultar una bodega por su código")
-    public Response consularPorCodigo(@PathParam("codigo") Integer codigo) {
+    public Response consularPorCodigo(@PathParam("codigo") String codigo, @Context UriInfo uriInfo) {
         BodegaTo bTo = BodegaMapper.toTo(this.iBodegaService.buscarPorCodigo(codigo));
+        bTo.buildURI(uriInfo);
         return Response.status(Response.Status.OK).entity(bTo).build();
     }
 
     @GET
     @Path("")
     @Operation(summary = "Consultar todas las Bodegas", description = "Esta capacidad permite consultar todas las bodegas")
-    public Response consultarTodos() {
+    public Response consultarTodos(@Context UriInfo uriInfo) {
         List<BodegaTo> bodegas = this.iBodegaService.buscarTodos().stream()
                 .map(BodegaMapper::toTo)
+                .peek(bodegaTo -> bodegaTo.buildURI(uriInfo))
                 .collect(Collectors.toList());
         return Response.status(Response.Status.OK).entity(bodegas).build();
     }
 
-    // Actualizar por ID, Código, Parcial por ID, Parcial por Código
-
-    @PUT
-    @Path("/{id}")
-    @Operation(summary = "Actualizar Bodega por ID", description = "Esta capacidad permite actualizar una bodega por su ID")
-    public Response actualizarPorId(@PathParam("id") Integer id, @RequestBody BodegaTo bodegaTo) {
-        bodegaTo.setId(id);
-        this.iBodegaService.actualizarPorId(BodegaMapper.toBodega(bodegaTo));
-        return Response.status(Response.Status.NO_CONTENT).build();
+    @POST
+    @Path("")
+    @Operation(summary = "Insertar nueva Bodega", description = "Esta capacidad permite insertar una nueva bodega")
+    public Response guardar(@RequestBody BodegaTo bodegaTo) {
+        this.iBodegaService.guardar(BodegaMapper.toBodega(bodegaTo));
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
-    @Path("/codigo/{codigo}")
+    @Path("/{codigo}")
     @Operation(summary = "Actualizar Bodega por Código", description = "Esta capacidad permite actualizar una bodega por su código")
-    public Response actualizarPorCodigo(@PathParam("codigo") Integer codigo, @RequestBody BodegaTo bodegaTo) {
+    public Response actualizarPorCodigo(@PathParam("codigo") String codigo, @RequestBody BodegaTo bodegaTo) {
         BodegaTo bTo = BodegaMapper.toTo(this.iBodegaService.buscarPorCodigo(codigo));
         bodegaTo.setId(bTo.getId());
         bodegaTo.setCodigo(bTo.getCodigo());
@@ -81,49 +78,39 @@ public class BodegaController {
     }
 
     @PATCH
-    @Path("/{id}")
-    @Operation(summary = "Actualizar parcialmente Bodega por ID", description = "Esta capacidad permite actualizar parcialmente una bodega por su ID")
-    public Response actualizarParcialPorId(@PathParam("id") Integer id, @RequestBody BodegaTo bodegaTo) {
-        bodegaTo.setId(id);
-        this.iBodegaService.actualizarParcialPorId(BodegaMapper.toBodega(bodegaTo));
-        bodegaTo.setId(id);
-        return Response.status(Response.Status.NO_CONTENT).build();
-    }
-
-    @PATCH
-    @Path("/codigo/{codigo}")
-    @Operation(summary = "Actualizar parcialmente Bodega por Código", description = "Esta capacidad permite actualizar parcialmente una bodega por su código")
-    public Response actualizarParcialPorCodigo(@PathParam("codigo") Integer codigo, @RequestBody BodegaTo bodegaTo) {
-        bodegaTo.setCodigo(codigo);
-        this.iBodegaService.actualizarParcialPorCodigo(BodegaMapper.toBodega(bodegaTo));
-        bodegaTo.setCodigo(codigo);
-        return Response.status(Response.Status.NO_CONTENT).build();
-    }
-
-    // Insertar y Eliminar por ID, Código
-
-    @POST
-    @Path("")
-    @Operation(summary = "Insertar nueva Bodega", description = "Esta capacidad permite insertar una nueva bodega")
-    public Response insertar(BodegaTo bodegaTo) {
-        this.iBodegaService.guardar(BodegaMapper.toBodega(bodegaTo));
-        return Response.status(Response.Status.CREATED).build();
-    }
-
-    @DELETE
-    @Path("/{id}")
-    @Operation(summary = "Eliminar Bodega por ID", description = "Esta capacidad permite eliminar una bodega por su ID")
-    public Response eliminarPorId(@PathParam("id") Integer id) {
-        this.iBodegaService.borrarPorId(id);
+    @Path("/{codigo}")
+    @Operation(summary = "Actualizar Bodega por Código", description = "Esta capacidad permite actualizar una bodega por su código")
+    public Response actualizarParcialPorCodigo(@PathParam("codigo") String codigo, @RequestBody BodegaTo bodegaTo) {
+        BodegaTo bTo = BodegaMapper.toTo(this.iBodegaService.buscarPorCodigo(codigo));
+        bodegaTo.setId(bTo.getId());
+        bodegaTo.setCodigo(bTo.getCodigo());
+        if (bodegaTo.getNombre() != null) {
+            bTo.setNombre(bodegaTo.getNombre());
+        }
+        if (bodegaTo.getUbicacion() != null) {
+            bTo.setUbicacion(bodegaTo.getUbicacion());
+        }
+        this.iBodegaService.actualizarPorCodigo(BodegaMapper.toBodega(bTo));
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @DELETE
-    @Path("/codigo/{codigo}")
+    @Path("/{codigo}")
     @Operation(summary = "Eliminar Bodega por Código", description = "Esta capacidad permite eliminar una bodega por su código")
-    public Response eliminarPorCodigo(@PathParam("codigo") Integer codigo) {
+    public Response eliminarPorCodigo(@PathParam("codigo") String codigo) {
         this.iBodegaService.borrarPorCodigo(codigo);
         return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @GET
+    @Path("/{codigo}/productos")
+    @Operation(summary = "Obtener productos por Bodega", description = "Esta capacidad permite consultar todos los productos de una bodega específica")
+    public Response obtenerProductosPorBodega(@PathParam("codigo") String codigo, @Context UriInfo uriInfo) {
+        List<ProductoTo> productos = this.iInventarioService.buscarProductosPorBodega(codigo).stream()
+                .map(ProductoMapper::toTo)
+                .peek(productoTo -> productoTo.buildURI(uriInfo))
+                .collect(Collectors.toList());
+        return Response.status(Response.Status.OK).entity(productos).build();
     }
 
 }

@@ -11,56 +11,38 @@ import uce.edu.web.api.repository.model.Bodega;
 public class BodegaServiceImpl implements IBodegaService {
 
     @Inject
-    private IBodegaRepo bodegaRepo;
+    private IBodegaRepo iBodegaRepo;
 
     @Override
-    public Bodega buscarPorId(Integer id) {
-        return this.bodegaRepo.seleccionarPorId(id);
-    }
-
-    @Override
-    public Bodega buscarPorCodigo(Integer codigo) {
-        return this.bodegaRepo.seleccionarPorCodigo(codigo);
+    public Bodega buscarPorCodigo(String codigo) {
+        Bodega bodega = this.iBodegaRepo.seleccionarPorCodigo(codigo);
+        if (bodega == null) {
+            throw new RuntimeException("Bodega no encontrada");
+        }
+        return bodega;
     }
 
     @Override
     public List<Bodega> buscarTodos() {
-        return this.bodegaRepo.seleccionarTodos();
-    }
-
-    @Override
-    public void actualizarPorId(Bodega bodega) {
-        this.bodegaRepo.actualizarPorId(bodega);
-    }
-
-    @Override
-    public void actualizarPorCodigo(Bodega bodega) {
-        this.bodegaRepo.actualizarPorCodigo(bodega);
-    }
-
-    @Override
-    public void actualizarParcialPorId(Bodega bodega) {
-        this.bodegaRepo.actualizarParcialPorId(bodega);
-    }
-
-    @Override
-    public void actualizarParcialPorCodigo(Bodega bodega) {
-        this.bodegaRepo.actualizarParcialPorCodigo(bodega);
+        return this.iBodegaRepo.seleccionarTodos();
     }
 
     @Override
     public void guardar(Bodega bodega) {
-        this.bodegaRepo.insertar(bodega);
+        if (this.iBodegaRepo.seleccionarPorCodigo(bodega.getCodigo()) != null) {
+            throw new RuntimeException("El código de bodega ya existe");
+        }
+        this.iBodegaRepo.insertar(bodega);
     }
 
     @Override
-    public void borrarPorId(Integer id) {
-        this.bodegaRepo.eliminarPorId(id);
+    public void actualizarPorCodigo(Bodega bodega) {
+        this.iBodegaRepo.actualizarPorCodigo(bodega);
     }
 
     @Override
-    public void borrarPorCodigo(Integer codigo) {
-        this.bodegaRepo.eliminarPorCodigo(codigo);
+    public void borrarPorCodigo(String codigo) {
+        this.iBodegaRepo.eliminarPorCodigo(codigo);
     }
 
 }

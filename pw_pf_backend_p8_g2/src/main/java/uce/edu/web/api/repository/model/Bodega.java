@@ -2,16 +2,12 @@ package uce.edu.web.api.repository.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 
@@ -23,18 +19,16 @@ public class Bodega {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bode_id")
     private Integer id;
-    @Column(name = "bode_codigo")
-    private Integer codigo;
+    @Column(name = "bode_codigo", unique = true)
+    private String codigo;
     @Column(name = "bode_nombre")
     private String nombre;
     @Column(name = "bode_ubicacion")
     private String ubicacion;
 
     // Relaciones
-    @ManyToMany
-    @JoinTable(name = "inventario", joinColumns = @JoinColumn(name = "bode_id"), inverseJoinColumns = @JoinColumn(name = "prod_codigoBarras"))
-    @JsonIgnore
-    private List<Producto> productos;
+    @OneToMany(mappedBy = "bodega")
+    private List<Inventario> inventarios;
 
     // GET y SET
     public Integer getId() {
@@ -45,11 +39,11 @@ public class Bodega {
         this.id = id;
     }
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -69,12 +63,12 @@ public class Bodega {
         this.ubicacion = ubicacion;
     }
 
-    public List<Producto> getProductos() {
-        return productos;
+    public List<Inventario> getInventarios() {
+        return inventarios;
     }
 
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
+    public void setInventarios(List<Inventario> inventarios) {
+        this.inventarios = inventarios;
     }
 
 }

@@ -21,9 +21,12 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import uce.edu.web.api.service.IInventarioService;
 import uce.edu.web.api.service.IProductoService;
+import uce.edu.web.api.service.mapper.BodegaMapper;
 import uce.edu.web.api.service.mapper.ImpuestoMapper;
 import uce.edu.web.api.service.mapper.ProductoMapper;
+import uce.edu.web.api.service.to.BodegaTo;
 import uce.edu.web.api.service.to.ImpuestoTo;
 import uce.edu.web.api.service.to.ProductoTo;
 
@@ -33,13 +36,16 @@ import uce.edu.web.api.service.to.ProductoTo;
 public class ProductoController {
 
     @Inject
-    private IProductoService productoService;
+    private IProductoService iProductoService;
+
+    @Inject
+    private IInventarioService iInventarioService;
 
     @GET
     @Path("/{codigoBarras}")
-    @Operation(summary = "Consultar Productos por id (codigo de barras)", description = "Esta capacidad permite consultar un producto por su Id")
-    public Response buscarPorIdProducto(@PathParam("codigoBarras") Integer codigoBarras, @Context UriInfo uriInfo) {
-        ProductoTo prodTo = ProductoMapper.toTo(this.productoService.buscarPorId(codigoBarras));
+    @Operation(summary = "Consultar Productos por codigo de barras", description = "Esta capacidad permite consultar un producto por su código de barras")
+    public Response buscarPorIdProducto(@PathParam("codigoBarras") String codigoBarras, @Context UriInfo uriInfo) {
+        ProductoTo prodTo = ProductoMapper.toTo(this.iProductoService.buscarPorCodigoBarras(codigoBarras));
         prodTo.buildURI(uriInfo);
         return Response.status(Response.Status.OK).entity(prodTo).build();
     }
@@ -48,7 +54,7 @@ public class ProductoController {
     @Path("")
     @Operation(summary = "Consultar todas los Productos", description = "Esta capacidad permite consultar todos las productos")
     public Response buscarTodosProductos(@Context UriInfo uriInfo) {
-        List<ProductoTo> prodToList = this.productoService.buscarTodos().stream()
+        List<ProductoTo> prodToList = this.iProductoService.buscarTodos().stream()
                 .map(ProductoMapper::toTo)
                 .peek(productoTo -> productoTo.buildURI(uriInfo))
                 .collect(Collectors.toList());
@@ -59,7 +65,7 @@ public class ProductoController {
     @Path("")
     @Operation(summary = "Crear Producto", description = "Esta capacidad permite crear un producto")
     public Response guardarProducto(@RequestBody ProductoTo productoTo) {
-        this.productoService.guardar(ProductoMapper.toEntity(productoTo));
+        this.iProductoService.guardar(ProductoMapper.toEntity(productoTo));
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -67,9 +73,11 @@ public class ProductoController {
     @Path("/{codigoBarras}")
     @Operation(summary = "Actualizar Producto Completo por Id", description = "Esta capacidad permite actualizar completamente un producto por su Id")
     public Response actualizarPorIdProducto(@RequestBody ProductoTo productoTo,
-            @PathParam("codigoBarras") Integer codigoBarras) {
-        productoTo.setCodigoBarras(codigoBarras);
-        this.productoService.actualizarPorId(ProductoMapper.toEntity(productoTo));
+            @PathParam("codigoBarras") String codigoBarras) {
+        ProductoTo pTo = ProductoMapper.toTo(this.iProductoService.buscarPorCodigoBarras(codigoBarras));
+        productoTo.setId(pTo.getId());
+        productoTo.setCodigoBarras(pTo.getCodigoBarras());
+        this.iProductoService.actualizarPorCodigoBarras(ProductoMapper.toEntity(productoTo));
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
@@ -77,49 +85,46 @@ public class ProductoController {
     @Path("/{codigoBarras}")
     @Operation(summary = "Actualizar Producto Parcial por Código de Barras")
     public Response actualizarParcialPorIdProducto(
-            @PathParam("codigoBarras") Integer codigoBarras,
+            @PathParam("codigoBarras") String codigoBarras,
             @RequestBody ProductoTo productoTo) {
 
-        ProductoTo productoExistenteTo = ProductoMapper.toTo(
-                this.productoService.buscarPorId(codigoBarras));
+        ProductoTo pTo = ProductoMapper.toTo(this.iProductoService.buscarPorCodigoBarras(codigoBarras));
 
-        if (productoExistenteTo == null) {
+        if (pTo == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
+        if (productoTo.getCodigoBarras() != null) {
+            pTo.setCodigoBarras(productoTo.getCodigoBarras());
+        }
         if (productoTo.getNombre() != null) {
-            productoExistenteTo.setNombre(productoTo.getNombre());
+            pTo.setNombre(productoTo.getNombre());
         }
         if (productoTo.getCategoria() != null) {
-            productoExistenteTo.setCategoria(productoTo.getCategoria());
-        }
-        if (productoTo.getStock() != null) {
-            productoExistenteTo.setStock(productoTo.getStock());
+            pTo.setCategoria(productoTo.getCategoria());
         }
         if (productoTo.getPrecio() != null) {
-            productoExistenteTo.setPrecio(productoTo.getPrecio());
+            pTo.setPrecio(productoTo.getPrecio());
         }
 
-        this.productoService.actualizarParcialPorId(
-                ProductoMapper.toEntity(productoExistenteTo));
+        this.iProductoService.actualizarPorCodigoBarras(ProductoMapper.toEntity(pTo));
 
-        return Response.status(Response.Status.NO_CONTENT)
-                .build();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @DELETE
     @Path("/{codigoBarras}")
     @Operation(summary = "Borrar Producto por Id", description = "Esta capacidad permite borrar un producto por su Id")
-    public Response borrarProductoConImpuestosPorIdProducto(@PathParam("codigoBarras") Integer codigoBarras) {
-        this.productoService.borrarProductoConImpuestosPorId(codigoBarras);
+    public Response borrarProductoConImpuestosPorIdProducto(@PathParam("codigoBarras") String codigoBarras) {
+        this.iProductoService.borrarPorCodigoBarras(codigoBarras);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @GET
     @Path("/{codigoBarras}/impuestos")
     @Operation(summary = "Consultar Impuestos de un Producto", description = "Esta capacidad permite consultar los impuestos asociados a un producto por su Id")
-    public Response obtenerImpuestosPorProducto(@PathParam("codigoBarras") Integer codigoBarras) {
-        List<ImpuestoTo> impuToList = this.productoService.buscarImpuestosPorProducto(codigoBarras).stream()
+    public Response obtenerImpuestosPorProducto(@PathParam("codigoBarras") String codigoBarras) {
+        List<ImpuestoTo> impuToList = this.iProductoService.buscarImpuestosPorProducto(codigoBarras).stream()
                 .map(ImpuestoMapper::toTo).collect(Collectors.toList());
         return Response.status(Response.Status.OK).entity(impuToList).build();
     }
@@ -127,10 +132,10 @@ public class ProductoController {
     @POST
     @Path("/{codigoBarras}/impuestos/{impuestoId}")
     @Operation(summary = "Asociar un impuesto a un producto", description = "Esta capacidad permite asocia un impuesto existente a un producto existente")
-    public Response asociarImpuestoAProducto(@PathParam("codigoBarras") Integer codigoBarras,
+    public Response asociarImpuestoAProducto(@PathParam("codigoBarras") String codigoBarras,
             @PathParam("impuestoId") Integer impuestoId) {
         try {
-            productoService.guardarImpuestoAProducto(codigoBarras, impuestoId);
+            iProductoService.guardarImpuestoAProducto(codigoBarras, impuestoId);
             return Response.status(Response.Status.CREATED).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
@@ -140,9 +145,9 @@ public class ProductoController {
     @DELETE
     @Path("/{codigoBarras}/impuestos/{impuestoId}")
     @Operation(summary = "Eliminar impuesto de un producto", description = "Esta capacidad elimina la asociación entre un producto y un impuesto específico")
-    public Response eliminarImpuestoDeProducto(@PathParam("codigoBarras") Integer codigoBarras,
+    public Response eliminarImpuestoDeProducto(@PathParam("codigoBarras") String codigoBarras,
             @PathParam("impuestoId") Integer impuestoId) {
-        productoService.borrarImpuestoDeProducto(codigoBarras, impuestoId);
+        iProductoService.borrarImpuestoDeProducto(codigoBarras, impuestoId);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
@@ -150,11 +155,23 @@ public class ProductoController {
     @Path("/{codigoBarras}/impuestos/{impuestoIdActual}")
     @Operation(summary = "Actualizar impuesto de un producto", description = "Reemplaza un impuesto asociado a un producto por otro impuesto")
     public Response actualizarImpuestoDeProducto(
-            @PathParam("codigoBarras") Integer codigoBarras,
+            @PathParam("codigoBarras") String codigoBarras,
             @PathParam("impuestoIdActual") Integer impuestoIdActual,
-            @QueryParam("nuevoImpuestoId") Integer nuevoImpuestoId) {     
-            productoService.actualizarImpuestoDeProducto(codigoBarras, impuestoIdActual, nuevoImpuestoId);
-            return Response.status(Response.Status.NO_CONTENT).build(); 
+            @QueryParam("nuevoImpuestoId") Integer nuevoImpuestoId) {
+        iProductoService.actualizarImpuestoDeProducto(codigoBarras, impuestoIdActual, nuevoImpuestoId);
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @GET
+    @Path("/{codigoBarras}/bodegas")
+    @Operation(summary = "Obtener Bodegas por Producto", description = "Esta capacidad permite consultar todas las bodegas de un Producto específica")
+    public Response obtenerBodegasPorProducto(@PathParam("codigoBarras") String codigoBarras,
+            @Context UriInfo uriInfo) {
+        List<BodegaTo> bodegas = this.iInventarioService.buscarBodegasPorProducto(codigoBarras).stream()
+                .map(BodegaMapper::toTo)
+                .peek(productoTo -> productoTo.buildURI(uriInfo))
+                .collect(Collectors.toList());
+        return Response.status(Response.Status.OK).entity(bodegas).build();
     }
 
 }

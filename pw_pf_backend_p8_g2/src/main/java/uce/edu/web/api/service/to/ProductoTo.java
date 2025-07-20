@@ -9,19 +9,27 @@ import uce.edu.web.api.controller.ProductoController;
 
 public class ProductoTo {
 
-    private Integer codigoBarras;
+    private Integer id;
+    private String codigoBarras;
     private String nombre;
     private String categoria;
-    private Integer stock;
     private Double precio;
-    private Map<String, String> impuestos = new HashMap<>();
+    private Map<String, String> _links = new HashMap<>();
 
     // GET y SET
-    public Integer getCodigoBarras() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCodigoBarras() {
         return codigoBarras;
     }
 
-    public void setCodigoBarras(Integer codigoBarras) {
+    public void setCodigoBarras(String codigoBarras) {
         this.codigoBarras = codigoBarras;
     }
 
@@ -41,14 +49,6 @@ public class ProductoTo {
         this.categoria = categoria;
     }
 
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
     public Double getPrecio() {
         return precio;
     }
@@ -57,19 +57,22 @@ public class ProductoTo {
         this.precio = precio;
     }
 
-    public Map<String, String> getImpuestos() {
-        return impuestos;
+    public Map<String, String> get_links() {
+        return _links;
     }
 
-    public void setImpuestos(Map<String, String> impuestos) {
-        this.impuestos = impuestos;
+    public void set_links(Map<String, String> _links) {
+        this._links = _links;
     }
 
     public void buildURI(UriInfo uriInfo) {
         URI todosImpuestos = uriInfo.getBaseUriBuilder().path(ProductoController.class)
-                .path(ProductoController.class, "obtenerImpuestosPorProducto").build(codigoBarras);
-        impuestos.put("impuestos", todosImpuestos.toString());
+                .path(ProductoController.class, "obtenerImpuestosPorProducto").build(id);
+        _links.put("impuestos", todosImpuestos.toString());
 
+        URI todasBodegas = uriInfo.getBaseUriBuilder().path(ProductoController.class)
+                .path(ProductoController.class, "obtenerBodegasPorProducto").build(id);
+        _links.put("bodegas", todasBodegas.toString());
     }
 
 }

@@ -7,28 +7,26 @@ import uce.edu.web.api.repository.model.Producto;
 
 public interface IProductoRepo {
 
-    // Prodcuto
+    // Producto
 
-    public Producto seleccionarPorId(Integer codigoBarras);
+    Producto seleccionarPorCodigoBarras(String codigoBarras);
 
-    public List<Producto> seleccionarTodos();
+    List<Producto> seleccionarTodos();
 
-    public void actualizarPorId(Producto producto);
+    void insertar(Producto producto);
 
-    public void actualizarParcialPorId(Producto producto);
+    void actualizarPorCodigoBarras(Producto producto); 
 
-    public void eliminarProductoConImpuestosPorId(Integer codigoBarras);
-
-    public void insertar(Producto producto);
+    void eliminarPorCodigoBarras(String codigoBarras); 
 
     // Producto impuesto
 
-    public List<Impuesto> seleccionarImpuestosPorProducto(Integer codigoBarras);
+    public List<Impuesto> seleccionarImpuestosPorProducto(String codigoBarras);
 
-    public void insertarImpuestoAProducto(Integer codigoBarras, Integer impuestoId);
+    public void insertarImpuestoAProducto(String codigoBarras, Integer impuestoId);
 
-    public void eliminarImpuestoDeProducto(Integer codigoBarras, Integer impuestoId);
+    public void eliminarImpuestoDeProducto(String codigoBarras, Integer impuestoId);
 
-    public void actualizarImpuestoDeProducto(Integer codigoBarras, Integer impuestoIdActual, Integer impuestoIdNuevo);
+    public void actualizarImpuestoDeProducto(String codigoBarras, Integer impuestoIdActual, Integer impuestoIdNuevo);
 
 }

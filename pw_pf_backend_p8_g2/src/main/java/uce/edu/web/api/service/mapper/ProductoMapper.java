@@ -10,20 +10,20 @@ public class ProductoMapper {
             return null;
         }
         ProductoTo pTo = new ProductoTo();
+        pTo.setId(producto.getId());
         pTo.setCodigoBarras(producto.getCodigoBarras());
         pTo.setNombre(producto.getNombre());
         pTo.setCategoria(producto.getCategoria());
-        pTo.setStock(producto.getStock());
         pTo.setPrecio(producto.getPrecio());
         return pTo;
     }
 
     public static Producto toEntity(ProductoTo productoTo) {
         Producto p = new Producto();
+        p.setId(productoTo.getId());
         p.setCodigoBarras(productoTo.getCodigoBarras());
         p.setNombre(productoTo.getNombre());
         p.setCategoria(productoTo.getCategoria());
-        p.setStock(productoTo.getStock());
         p.setPrecio(productoTo.getPrecio());
         return p;
     }
