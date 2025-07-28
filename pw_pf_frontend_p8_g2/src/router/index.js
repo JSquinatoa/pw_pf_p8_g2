@@ -1,11 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from "@/views/HomeView.vue"
-import BodegaView from "@/views/BodegaView.vue"
-import ProductoView from "@/views/ProductoView.vue"
-import ServicioView from "@/views/ServicioView.vue"
-import ClienteView from "@/views/ClienteView.vue"
-import FacturaView from "@/views/FacturaView.vue"
-import ReporteView from "@/views/ReporteView.vue"
+import BodegaView from "@/views/bodega/BodegaView.vue"
+import ProductoView from "@/views/producto/ProductoView.vue"
+import ServicioView from "@/views/servicio/ServicioView.vue"
+import ClienteView from "@/views/cliente/ClienteView.vue"
+import FacturaView from "@/views/factura/FacturaView.vue"
+import ReporteView from "@/views/reporte/ReporteView.vue"
 
 const routes = [
   {

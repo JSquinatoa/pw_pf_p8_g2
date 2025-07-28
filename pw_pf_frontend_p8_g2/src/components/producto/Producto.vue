@@ -1,7 +1,5 @@
 <template>
-  <div class="container-producto">
-    <h1>Aqui poner componetes o directamente la pagina de Productos</h1>
-  </div>
+
 </template>
 
 <script>
