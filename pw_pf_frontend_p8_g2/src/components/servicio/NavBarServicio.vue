@@ -1,5 +1,5 @@
 <template>
-    <div class="container-navbar-producto">
+    <div class="container-navbar-servicio">
         <nav>
             <router-link to="/" class="nav-item">Tienda</router-link>
             <router-link to="/crear" class="nav-item">Crear</router-link>
@@ -14,7 +14,7 @@ export default {};
 </script>
 
 <style scoped>
-.container-navbar-producto {
+.container-navbar-servicio {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +23,7 @@ export default {};
     margin: 40px auto;
 }
 
-.container-navbar-producto nav {
+.container-navbar-servicio nav {
     display: flex;
     flex-direction: row;
     justify-content: center;

@@ -7,7 +7,7 @@
     <div v-if="isMercancia" class="container_mercancia">
       <router-link class="link prod" to="/producto">Producto</router-link>
       <router-link class="link prod" to="/servicio">Servicio</router-link>
-      <router-link class="link prod" to="/servicio">Impuesto</router-link>
+      <router-link class="link prod" to="/impuesto">Impuesto</router-link>
     </div>
     <router-link class="link" to="/cliente">Cliente</router-link>
     <router-link class="link" to="/factura">Factura</router-link>

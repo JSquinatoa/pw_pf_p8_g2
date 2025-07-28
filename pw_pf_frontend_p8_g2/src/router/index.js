@@ -6,6 +6,7 @@ import ServicioView from "@/views/servicio/ServicioView.vue"
 import ClienteView from "@/views/cliente/ClienteView.vue"
 import FacturaView from "@/views/factura/FacturaView.vue"
 import ReporteView from "@/views/reporte/ReporteView.vue"
+import ImpuestoView from '@/views/impuesto/ImpuestoView.vue'
 
 const routes = [
   {
@@ -27,6 +28,11 @@ const routes = [
     path: '/servicio',
     name: 'servicio',
     component: ServicioView
+  },
+    {
+    path: '/impuesto',
+    name: 'impuesto',
+    component: ImpuestoView
   },
   {
     path: '/cliente',
