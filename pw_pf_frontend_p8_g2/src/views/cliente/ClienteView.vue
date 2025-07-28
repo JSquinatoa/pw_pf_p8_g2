@@ -6,9 +6,11 @@
 
 <script>
 import Cliente from "@/components/cliente/Cliente.vue";
+
 export default {
   components: {
     Cliente,
+
   },
 };
 </script>

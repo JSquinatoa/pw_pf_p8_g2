@@ -8,6 +8,11 @@ import FacturaView from "@/views/factura/FacturaView.vue"
 import ReporteView from "@/views/reporte/ReporteView.vue"
 import ImpuestoView from '@/views/impuesto/ImpuestoView.vue'
 
+import CrearClienteView from '@/views/cliente/CrearClienteView.vue'
+import ActualizarClienteView from '@/views/cliente/ActualizarClienteView.vue'
+import BuscarClienteView from '@/views/cliente/BuscarClienteView.vue'
+import BorrarClienteView from '@/views/cliente/BorrarClienteView.vue'
+
 const routes = [
   {
     path: '/',
@@ -38,6 +43,26 @@ const routes = [
     path: '/cliente',
     name: 'cliente',
     component: ClienteView
+  },
+  {
+    path: '/crearcliente',
+    name: 'crearcliente',
+    component: CrearClienteView
+  },
+  {
+    path: '/actualizarcliente',
+    name: 'actualizarcliente',
+    component: ActualizarClienteView
+  },
+  {
+    path: '/buscarcliente',
+    name: 'buscarcliente',
+    component: BuscarClienteView
+  },
+   {
+    path: '/borrarcliente',
+    name: 'borrarcliente',
+    component: BorrarClienteView
   },
   {
     path: '/factura',
