@@ -1,11 +1,17 @@
 <template>
   <div class="container-bodega">
-    <h1>Aqui poner componetes o directamente la pagina de Bodega</h1>
+    <!-- <h1>Aqui poner componetes o directamente la pagina de Bodega</h1> -->
+
   </div>
 </template>
 
 <script>
-export default {};
+
+export default {
+  components: {
+    
+  }
+};
 </script>
 
 <style scoped>
