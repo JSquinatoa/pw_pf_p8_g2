@@ -1,10 +1,10 @@
 <template>
-    <div class="container-navbar-servicio">
+    <div class="container-navbar-impuesto">
         <nav>
-            <router-link to="/consultarS" class="nav-item">Consultar</router-link>
-            <router-link to="/guardarS" class="nav-item">Crear</router-link>
-            <router-link to="/actualizarS" class="nav-item">Actualizar</router-link>
-            <router-link to="/borrarS" class="nav-item">Eliminar</router-link>
+            <router-link to="/" class="nav-item">Tienda</router-link>
+            <router-link to="/crear" class="nav-item">Crear</router-link>
+            <router-link to="/actualizar" class="nav-item">Actualizar</router-link>
+            <router-link to="/borrar" class="nav-item">Eliminar</router-link>
         </nav>
     </div>
 </template>
@@ -14,7 +14,7 @@ export default {};
 </script>
 
 <style scoped>
-.container-navbar-servicio {
+.container-navbar-impuesto {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +23,7 @@ export default {};
     margin: 40px auto;
 }
 
-.container-navbar-servicio  nav {
+.container-navbar-impuesto nav {
     display: flex;
     flex-direction: row;
     justify-content: center;
