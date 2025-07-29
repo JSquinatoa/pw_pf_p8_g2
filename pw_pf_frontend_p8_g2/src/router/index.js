@@ -122,6 +122,11 @@ const routes = [
     component: ImpuestoView,
   },
   {
+    path: "/cliente",
+    name: "cliente",
+    component: ClienteView,
+  },
+  {
     path: '/crearcliente',
     name: 'crearcliente',
     component: CrearClienteView

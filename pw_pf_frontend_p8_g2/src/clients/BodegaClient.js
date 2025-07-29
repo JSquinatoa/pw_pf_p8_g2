@@ -30,6 +30,21 @@ export const consultarBodegasFachada = async () => {
 }
 
 
+const consultarProductosPorBodegaUrl = async (productosUrl) => {
+  try {
+    const response = await axios.get(productosUrl).then((res) => res.data);
+    return response;
+  } catch (error) {
+    console.error(`Error obteniendo productos desde ${productosUrl}:`, error);
+    throw error; 
+  }
+};
+
+export const consultarProductosPorBodegaUrlFachada = async (productosUrl) => {
+  return await consultarProductosPorBodegaUrl(productosUrl);
+};
+
+
 const insertarBodega = async (body) => {
     try {
        await axios.post(URL_API, body).then((res) => res.data);
