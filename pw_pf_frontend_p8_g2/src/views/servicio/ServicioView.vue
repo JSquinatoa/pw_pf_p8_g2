@@ -2,7 +2,7 @@
   <div class="container_servicio">
     <Servicio />
     <NavBarServicio />
-    <router-view />
+    <router-view/>   
   </div>
 </template>
 

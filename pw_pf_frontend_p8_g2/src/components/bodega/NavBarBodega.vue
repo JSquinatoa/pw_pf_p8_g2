@@ -1,10 +1,10 @@
 <template>
-    <div class="container-navbar-servicio">
+    <div class="container-navbar-producto">
         <nav>
-            <router-link to="/consultarS" class="nav-item">Consultar</router-link>
-            <router-link to="/guardarS" class="nav-item">Crear</router-link>
-            <router-link to="/actualizarS" class="nav-item">Actualizar</router-link>
-            <router-link to="/borrarS" class="nav-item">Eliminar</router-link>
+            <router-link to="/bodega/consultar" class="nav-item">Consultar</router-link>
+            <router-link to="/bodega/crear" class="nav-item">Crear</router-link>
+            <router-link to="/bodega/modificar" class="nav-item">Actualizar</router-link>
+            <router-link to="/bodega/eliminar" class="nav-item">Eliminar</router-link>
         </nav>
     </div>
 </template>
@@ -14,7 +14,7 @@ export default {};
 </script>
 
 <style scoped>
-.container-navbar-servicio {
+.container-navbar-producto {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,13 +23,14 @@ export default {};
     margin: 40px auto;
 }
 
-.container-navbar-servicio  nav {
+.container-navbar-producto nav {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: stretch;
     border-radius: 5px;
     overflow: hidden;
+
 }
 
 .nav-item {
@@ -40,11 +41,14 @@ export default {};
     background-color: #07265c;
     color: white;
     text-decoration: none;
+    font-weight: bold;
     font-size: 1.1em;
     white-space: nowrap;
     transition: background-color 0.3s ease;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+
 }
+
 
 .nav-item:first-child {
     border-top-left-radius: 5px;
