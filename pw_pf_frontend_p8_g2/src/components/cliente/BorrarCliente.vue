@@ -42,7 +42,7 @@
     <div v-if="!existeCliente">
       <h1>El cliente con la cedula {{ identificador }} no existe</h1>
     </div>
-    <div v-if="exitoActulizar">
+    <div v-if="exitoBorrar">
       <h1>
         El cliente con la cedula {{ identificador }} Se borro Correctamente
       </h1>
@@ -102,19 +102,8 @@ export default {
   },
 
     async borrarCliente() {
-      const clienteToBody = {
-        cedula: this.cliente.cedula,
-        nombre: this.cliente.nombre,
-        apellido: this.cliente.apellido,
-        razonSocial: this.cliente.razonSocial,
-        direccion: this.cliente.direccion,
-        telefono: this.cliente.telefono,
-        correo: this.cliente.correo,
-      };
-
       if (!this.deshabilitado) {
         await borrarPorIdFachada(
-          clienteToBody,
           this.identificador
         );
       }
@@ -143,11 +132,12 @@ export default {
 .container_borrarcliente {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 80vh;
-  background: linear-gradient(135deg, #e3f0ff 0%, #f9f9f9 100%);
-  padding-top: 40px;
+  padding: 20px;
+  box-sizing: border-box;
+  gap: 20px; 
 }
 
 .container_consultar {
@@ -199,7 +189,8 @@ export default {
 }
 
 .borrar {
-  margin-top: 30px;
+  width: 90%;
+  max-width: 250px;
   background-color: #07265c;
   box-shadow: 0 2px 8px rgba(231, 76, 60, 0.08);
 }
@@ -225,9 +216,10 @@ h1 {
   max-width: 420px;
   background: #fff;
   border-radius: 18px;
+  border: 10px double #003366;
   box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
   padding: 32px 28px;
-  margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 p {
@@ -264,34 +256,102 @@ p::before {
 
 /* RESPONSIVE */
 @media (max-width: 700px) {
-    .container-navbar-cliente {
-        width: 98%;
-        margin: 20px auto;
-    }
-    .container-navbar-cliente nav {
-        flex-direction: column;
-        align-items: stretch;
-        border-radius: 8px;
-    }
-    .nav-item {
-        padding: 12px 10px;
-        font-size: 1em;
-        border-right: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 0;
-    }
-    .nav-item:first-child {
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-    .nav-item:last-child {
-        border-bottom: none;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
+  .container_consultar {
+    flex-direction: column; 
+    width: 100%;
+    gap: 15px; 
+  }
+
+  .input_consulta {
+    width: 100%; 
+    padding: 12px 16px; 
+    font-size: 0.9em; 
+  }
+
+  .boton_consulta {
+    width: 90%;
+    max-width: 250px;
+    padding: 12px 16px; 
+    font-size: 1.1em; 
+  }
+  .container-navbar-cliente {
+      width: 98%;
+      margin: 20px auto;
+  }
+  .container-navbar-cliente nav {
+      flex-direction: column;
+      align-items: stretch;
+      border-radius: 8px;
+  }
+  .nav-item {
+      padding: 12px 10px;
+      font-size: 1em;
+      border-right: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 0;
+  }
+  .nav-item:first-child {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+  }
+  .nav-item:last-child {
+      border-bottom: none;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+  }
+
+@media (max-width: 400px) {
+  .container_consultar {
+    flex-direction: column; 
+    width: 100%;
+    gap: 15px; 
+  }
+
+  .input_consulta {
+    width: 100%; 
+    padding: 12px 16px; 
+    font-size: 0.9em; 
+  }
+
+  .boton_consulta {
+    width: 90%;
+    max-width: 250px;
+    padding: 12px 16px; 
+    font-size: 1.1em; 
+  }
+  .container-navbar-cliente {
+        width: 95%; 
+        margin: 15px auto; 
+  }
+  .container-navbar-cliente nav {
+      flex-direction: column;
+      align-items: center; 
+      padding: 10px 0; 
+  }
+  .nav-item {
+      padding: 10px 8px; 
+      font-size: 0.9em; 
+      width: 100%; 
+      text-align: center; 
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+  }
+  .nav-item:first-child {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+  }
+  .nav-item:last-child {
+      border-bottom: none;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+  }
+}
 }
 </style>

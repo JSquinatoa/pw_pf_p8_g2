@@ -23,7 +23,7 @@ const guardar = async (body) => {
 }
 
 const borrarPorId = async (id) => {
-    axios.delete(`${URL_API}/${id}`).then(res => res.data)
+    await axios.delete(`${URL_API}/${id}`).then(res => res.data)
 }
 
 

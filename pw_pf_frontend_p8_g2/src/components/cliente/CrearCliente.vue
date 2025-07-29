@@ -95,39 +95,17 @@ export default {
 .container_consultarcliente {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  min-height: 80vh;
-  background: linear-gradient(135deg, #e3f0ff 0%, #f9f9f9 100%);
-  padding-top: 40px;
-}
-
-.container_consultar {
-  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 400px;
-  margin-bottom: 30px;
-  gap: 10px;
-}
-
-.input_consulta {
-  flex: 1;
-  padding: 10px 16px;
-  border: 1px solid #b0c4de;
-  border-radius: 8px;
-  font-size: 1em;
-  background: #fff;
-  transition: border-color 0.2s;
-}
-
-.input_consulta:focus {
-  outline: none;
-  border-color: #3498db;
+  padding: 20px;
+  box-sizing: border-box;
+  gap: 20px; 
 }
 
 .boton_consulta {
+  width: 90%;
+  max-width: 250px;
   padding: 10px 24px;
   border-radius: 8px;
   background-color: #07265c;
@@ -151,7 +129,6 @@ export default {
 }
 
 .crear {
-  margin-top: 30px;
   background-color: #07265c;
   box-shadow: 0 2px 8px rgba(231, 76, 60, 0.08);
 }
@@ -177,9 +154,10 @@ h1 {
   max-width: 420px;
   background: #fff;
   border-radius: 18px;
+  border: 10px double #003366;
   box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
   padding: 32px 28px;
-  margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 p {
