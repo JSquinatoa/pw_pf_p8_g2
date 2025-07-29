@@ -1,24 +1,25 @@
 <template>
-  <div class="container-cliente">
+  <div class="container-clienteview">
     <NavBarCliente />
-    <router-view />
+    <CrearCliente />
   </div>
 </template>
 
 <script>
+import CrearCliente from "@/components/cliente/CrearCliente.vue";
 import NavBarCliente from "@/components/cliente/NavBarCliente.vue";
-export default { 
-   components: {
+
+export default {
+  components: {
+    CrearCliente,
     NavBarCliente
   },
 };
 </script>
 
 <style>
-.container-cliente {
+.container-clienteview {
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
-  padding: 10px;
 }
 </style>
