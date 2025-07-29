@@ -1,8 +1,13 @@
 package uce.edu.web.api.repository.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -10,7 +15,10 @@ import jakarta.persistence.Table;
 public class Cliente {
 
     @Id
-    @Column(name = "clie_cedula")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "clie_id")
+    private Integer id;
+    @Column(name = "clie_cedula", unique = true)
     private String cedula;
     @Column(name = "clie_nombre")
     private String nombre;
@@ -25,7 +33,19 @@ public class Cliente {
     @Column(name = "clie_correo")
     private String correo;
 
+    // Relacioness
+    @OneToMany(mappedBy = "cliente")
+    private List<Factura> facturas;
+
     // GET y SET
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getCedula() {
         return cedula;
     }
@@ -80,6 +100,14 @@ public class Cliente {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public List<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<Factura> facturas) {
+        this.facturas = facturas;
     }
 
 }

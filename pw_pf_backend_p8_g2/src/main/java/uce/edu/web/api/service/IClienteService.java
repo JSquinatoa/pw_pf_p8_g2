@@ -10,9 +10,7 @@ public interface IClienteService {
 
     public List<Cliente> buscarTodos();
 
-    public void actualizarPorCedula(Cliente cliente);
-
-    public void actualizarParcialPorCedula(Cliente cliente);
+    public void actualizar(Cliente cliente);
 
     public void borrarPorCedula(String cedula);
 

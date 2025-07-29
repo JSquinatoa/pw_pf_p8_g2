@@ -24,13 +24,10 @@ public class ClienteServiceImpl implements IClienteService {
     }
 
     @Override
-    public void actualizarPorCedula(Cliente cliente) {
-        this.iClienteRepo.actualizarPorCedula(cliente);
-    }
-
-    @Override
-    public void actualizarParcialPorCedula(Cliente cliente) {
-        this.iClienteRepo.actualizarParcialPorCedula(cliente);
+    public void actualizar(Cliente cliente) {
+        Cliente c = this.iClienteRepo.seleccionarPorCedula(cliente.getCedula());
+        cliente.setId(c.getId());
+        this.iClienteRepo.actualizar(cliente);
     }
 
     @Override
@@ -42,5 +39,7 @@ public class ClienteServiceImpl implements IClienteService {
     public void guardar(Cliente cliente) {
         this.iClienteRepo.insertar(cliente);
     }
+    
+
 
 }

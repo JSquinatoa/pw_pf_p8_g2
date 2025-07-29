@@ -2,28 +2,36 @@ package uce.edu.web.api.service.to;
 
 public class DetalleTo {
 
-    private Integer numDocu;
-    private Integer codigoBarras;
+    private Integer id;
+    private Integer fact_id;
+    private String codigoBarras; 
     private String nombre;
     private Integer cantidad;
     private Double precio;
     private Double subTotal;
 
     // GET y SET
-
-    public Integer getNumDocu() {
-        return numDocu;
+    public Integer getId() {
+        return id;
     }
 
-    public void setNumDocu(Integer numDocu) {
-        this.numDocu = numDocu;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getCodigoBarras() {
+    public Integer getFact_id() {
+        return fact_id;
+    }
+
+    public void setFact_id(Integer fact_id) {
+        this.fact_id = fact_id;
+    }
+
+    public String getCodigoBarras() {
         return codigoBarras;
     }
 
-    public void setCodigoBarras(Integer codigoBarras) {
+    public void setCodigoBarras(String codigoBarras) {
         this.codigoBarras = codigoBarras;
     }
 

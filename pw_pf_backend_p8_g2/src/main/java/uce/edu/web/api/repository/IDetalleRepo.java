@@ -6,7 +6,8 @@ import uce.edu.web.api.repository.model.Detalle;
 
 public interface IDetalleRepo {
 
-    List<Detalle> seleccionarDetallesPorIdReporte(Integer numDocu);
-    
     public void insertar(Detalle detalle);
+
+    public List<Detalle> seleccionarDetallesPorIdFactura(Integer fact_id);
+
 }

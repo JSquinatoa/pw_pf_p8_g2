@@ -23,7 +23,7 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prod_id")
     private Integer id;
-    @Column(name = "prod_codigoBarras")
+    @Column(name = "prod_codigoBarras", unique = true)
     private String codigoBarras;
     @Column(name = "prod_nombre")
     private String nombre;

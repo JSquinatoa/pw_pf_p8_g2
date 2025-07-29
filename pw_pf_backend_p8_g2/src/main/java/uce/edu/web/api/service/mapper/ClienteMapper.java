@@ -10,6 +10,7 @@ public class ClienteMapper {
             return null;            
         }
         ClienteTo cTo = new ClienteTo();
+        cTo.setId(cliente.getId());
         cTo.setCedula(cliente.getCedula());
         cTo.setNombre(cliente.getNombre());
         cTo.setApellido(cliente.getApellido());
@@ -22,6 +23,7 @@ public class ClienteMapper {
 
     public static Cliente toEntity(ClienteTo clienteTo) {
         Cliente c = new Cliente();
+        c.setId(clienteTo.getId());
         c.setCedula(clienteTo.getCedula());
         c.setNombre(clienteTo.getNombre());
         c.setApellido(clienteTo.getApellido());

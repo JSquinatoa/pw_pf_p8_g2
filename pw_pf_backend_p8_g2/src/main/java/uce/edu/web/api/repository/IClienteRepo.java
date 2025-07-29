@@ -10,9 +10,7 @@ public interface IClienteRepo {
 
     public List<Cliente> seleccionarTodos();
 
-    public void actualizarPorCedula(Cliente cliente);
-
-    public void actualizarParcialPorCedula(Cliente cliente);
+    public void actualizar(Cliente cliente);
 
     public void eliminarPorCedula(String cedula);
 

@@ -1,10 +1,8 @@
 package uce.edu.web.api.service.to;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ClienteTo {
 
+    private Integer id;
     private String cedula;
     private String nombre;
     private String apellido;
@@ -12,9 +10,16 @@ public class ClienteTo {
     private String direccion;
     private String telefono;
     private String correo;
-    public Map<String, String> facturas = new HashMap<>();
 
     // GET y SET
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getCedula() {
         return cedula;
     }
@@ -69,14 +74,6 @@ public class ClienteTo {
 
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    public Map<String, String> getFacturas() {
-        return facturas;
-    }
-
-    public void setFacturas(Map<String, String> facturas) {
-        this.facturas = facturas;
     }
 
 }

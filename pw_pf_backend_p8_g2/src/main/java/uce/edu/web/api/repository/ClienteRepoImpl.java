@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -18,7 +19,13 @@ public class ClienteRepoImpl implements IClienteRepo {
 
     @Override
     public Cliente seleccionarPorCedula(String cedula) {
-        return this.entityManager.find(Cliente.class, cedula);
+        try {
+            TypedQuery<Cliente> myQuery = this.entityManager.createQuery("SELECT c FROM Cliente c WHERE c.cedula = :cedula", Cliente.class);
+            myQuery.setParameter("cedula", cedula);
+            return myQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // Si no se encuentra el cliente, retornar null
+        }
     }
 
     @Override
@@ -28,12 +35,7 @@ public class ClienteRepoImpl implements IClienteRepo {
     }
 
     @Override
-    public void actualizarPorCedula(Cliente cliente) {
-        this.entityManager.merge(cliente);
-    }
-
-    @Override
-    public void actualizarParcialPorCedula(Cliente cliente) {
+    public void actualizar(Cliente cliente) {
         this.entityManager.merge(cliente);
     }
 

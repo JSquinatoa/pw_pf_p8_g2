@@ -53,7 +53,7 @@ public class ClienteController {
 
     @POST
     @Path("")
-    @Operation(summary = "Guarda un CLiente", description = "Esta capacidad permite guardar un cliente")
+    @Operation(summary = "Guarda un Cliente", description = "Esta capacidad permite guardar un cliente")
     public Response guardar(@RequestBody ClienteTo clienteTo) {
         this.iClienteService.guardar(ClienteMapper.toEntity(clienteTo));
         return Response.status(Response.Status.CREATED).build();
@@ -64,7 +64,7 @@ public class ClienteController {
     @Operation(summary = "Actualizar un Cliente por la cedula", description = "Esta capacidad me permite actualizar un cliente por su cedula")
     public Response actualizarPorCedula(@RequestBody ClienteTo clienteTo, @PathParam("cedula") String cedula) {
         clienteTo.setCedula(cedula);
-        this.iClienteService.actualizarPorCedula(ClienteMapper.toEntity(clienteTo));
+        this.iClienteService.actualizar(ClienteMapper.toEntity(clienteTo));
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
@@ -96,7 +96,7 @@ public class ClienteController {
             cTo.setCorreo(clienteTo.getCorreo());
         }
 
-        this.iClienteService.actualizarParcialPorCedula(ClienteMapper.toEntity(cTo));
+        this.iClienteService.actualizar(ClienteMapper.toEntity(cTo));
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 

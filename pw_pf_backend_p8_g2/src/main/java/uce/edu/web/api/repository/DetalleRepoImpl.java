@@ -11,21 +11,22 @@ import uce.edu.web.api.repository.model.Detalle;
 
 @ApplicationScoped
 @Transactional
-public class DetalleRepoImpl implements IDetalleRepo{
+public class DetalleRepoImpl implements IDetalleRepo {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public List<Detalle> seleccionarDetallesPorIdReporte(Integer numDocu) {
-        TypedQuery<Detalle> myQuery = this.entityManager.createQuery("SELECT h FROM Detalle h WHERE h.reporte.numDocu =:numDocu", Detalle.class);
-        myQuery.setParameter("numDocu", numDocu);
-        return myQuery.getResultList();
-    }
-
-    @Override
     public void insertar(Detalle detalle) {
         this.entityManager.persist(detalle);
     }
-    
+
+    @Override
+    public List<Detalle> seleccionarDetallesPorIdFactura(Integer fact_id) {
+        TypedQuery<Detalle> myQuery = this.entityManager
+                .createQuery("SELECT d FROM Detalle d WHERE d.factura.id =:fact_id", Detalle.class);
+        myQuery.setParameter("fact_id", fact_id);
+        return myQuery.getResultList();
+    }
+
 }

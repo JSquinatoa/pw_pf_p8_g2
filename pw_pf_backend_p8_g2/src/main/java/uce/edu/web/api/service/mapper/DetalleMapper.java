@@ -1,7 +1,7 @@
 package uce.edu.web.api.service.mapper;
 
 import uce.edu.web.api.repository.model.Detalle;
-import uce.edu.web.api.repository.model.Reporte;
+import uce.edu.web.api.repository.model.Factura;
 import uce.edu.web.api.service.to.DetalleTo;
 
 public class DetalleMapper {
@@ -10,33 +10,30 @@ public class DetalleMapper {
         if (detalle == null) {
             return null;
         }
-        DetalleTo detalleTo = new DetalleTo();
-        detalleTo.setCodigoBarras(detalle.getCodigoBarras());
-        detalleTo.setNombre(detalle.getNombre());
-        detalleTo.setCantidad(detalle.getCantidad());
-        detalleTo.setPrecio(detalle.getPrecio());
-        detalleTo.setSubTotal(detalle.getSubTotal());
+        DetalleTo dTo = new DetalleTo();
+        dTo.setId(detalle.getId());
+        dTo.setFact_id(detalle.getFactura().getId());
+        dTo.setCodigoBarras(detalle.getCodigoBarras());
+        dTo.setNombre(detalle.getNombre());
+        dTo.setCantidad(detalle.getCantidad());
+        dTo.setPrecio(detalle.getPrecio());
+        dTo.setSubTotal(detalle.getSubTotal());
 
-        if (detalle.getReporte() != null) {
-            detalleTo.setNumDocu(detalle.getReporte().getNumDocu());
-        }
-
-        return detalleTo;
+        return dTo;
     }
 
     public static Detalle toEntity(DetalleTo detalleTo) {
         Detalle detalle = new Detalle();
+        detalle.setId(detalleTo.getId());
         detalle.setCodigoBarras(detalleTo.getCodigoBarras());
         detalle.setNombre(detalleTo.getNombre());
         detalle.setCantidad(detalleTo.getCantidad());
         detalle.setPrecio(detalleTo.getPrecio());
         detalle.setSubTotal(detalleTo.getSubTotal());
 
-        if (detalleTo.getNumDocu() != null) {
-            Reporte reporte = new Reporte();
-            reporte.setNumDocu(detalleTo.getNumDocu());
-            detalle.setReporte(reporte); 
-        }
+        Factura factura = new Factura();
+        factura.setId(detalleTo.getFact_id());
+        detalle.setFactura(factura);
 
         return detalle;
     }

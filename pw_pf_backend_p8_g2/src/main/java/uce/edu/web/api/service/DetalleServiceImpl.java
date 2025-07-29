@@ -11,16 +11,17 @@ import uce.edu.web.api.repository.model.Detalle;
 public class DetalleServiceImpl implements IDetalleService {
 
     @Inject
-    private IDetalleRepo detalleRepo;
+    private IDetalleRepo iDetalleRepo;
 
     @Override
-    public List<Detalle> buscarDetallesPorIdReporte(Integer numDocu) {
-        return this.detalleRepo.seleccionarDetallesPorIdReporte(numDocu);
+    public List<Detalle> buscarDetallesPorIdFactura(Integer fact_id) {
+        return this.iDetalleRepo.seleccionarDetallesPorIdFactura(fact_id);
     }
 
     @Override
     public void guardar(Detalle detalle) {
-        this.detalleRepo.insertar(detalle);
+
+        this.iDetalleRepo.insertar(detalle);
     }
 
 }
