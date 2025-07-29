@@ -1,16 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from "@/views/HomeView.vue"
 import BodegaView from "@/views/bodegaviews/BodegaView.vue"
-import ProductoView from "@/views/ProductoView.vue"
-import ServicioView from "@/views/ServicioView.vue"
-import ClienteView from "@/views/ClienteView.vue"
-import FacturaView from "@/views/FacturaView.vue"
-import ReporteView from "@/views/ReporteView.vue"
 import BodegaConsutlarView from "@/views/bodegaviews/BodegaConsultarView.vue"
 import BodegaCrearView from "@/views/bodegaviews/BodegaCrearView.vue"
 import BodegaModificarView from "@/views/bodegaviews/BodegaModificarView.vue"
 import BodegaEliminarView from "@/views/bodegaviews/BodegaEliminarView.vue"
-import BodegaView from "@/views/bodega/BodegaView.vue"
 import ProductoView from "@/views/producto/ProductoView.vue"
 import ServicioView from "@/views/servicio/ServicioView.vue"
 import ClienteView from "@/views/cliente/ClienteView.vue"
@@ -21,6 +15,7 @@ import ImpuestoView from '@/views/impuesto/ImpuestoView.vue'
 import CrearClienteView from '@/views/cliente/CrearClienteView.vue'
 import ActualizarClienteView from '@/views/cliente/ActualizarClienteView.vue'
 import BuscarClienteView from '@/views/cliente/BuscarClienteView.vue'
+import BuscarTodosClienteView from '@/views/cliente/BuscarTodosClienteView.vue'
 import BorrarClienteView from '@/views/cliente/BorrarClienteView.vue'
 
 const routes = [
@@ -90,6 +85,11 @@ const routes = [
     path: '/buscarcliente',
     name: 'buscarcliente',
     component: BuscarClienteView
+  },
+  {
+    path: '/buscartodosclientes',
+    name: 'buscartodosclientes',
+    component: BuscarTodosClienteView
   },
    {
     path: '/borrarcliente',

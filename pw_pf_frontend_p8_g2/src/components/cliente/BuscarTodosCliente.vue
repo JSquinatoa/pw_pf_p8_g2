@@ -1,50 +1,44 @@
 <template>
   <div class="container_consultarcliente">
     <div class="container_consultar">
-      <input
-        class="input_consulta"
-        type="number"
-        v-model="identificador"
-        placeholder="Ingrese la cédula del cliente"
-        :disabled="deshabilitado"
-      />
-      <button class="boton_consulta" @click="ObtenerClientePorId()">
-        Consultar
+      <button class="boton_consulta" @click="obtenerTodosClientes()">
+        Consultar todos
       </button>
     </div>
-    <h1>Datos del Cliente</h1>
-    <div class="containerformulario">
-      <p type="Cédula:">
-        <input type="number" v-model="cliente.cedula" :disabled="deshabilitado"/>
-      </p>
-      <p type="Nombre:">
-        <input type="text" v-model="cliente.nombre" :disabled="deshabilitado"/>
-      </p>
-      <p type="Apellido:">
-        <input type="text" v-model="cliente.apellido" :disabled="deshabilitado"/>
-      </p>
-      <p type="Razón Social:">
-        <input type="text" v-model="cliente.razonSocial" :disabled="deshabilitado"/>
-      </p>
-      <p type="Dirección:">
-        <input type="text" v-model="cliente.direccion" :disabled="deshabilitado"/>
-      </p>
-      <p type="Teléfono:">
-        <input type="number" v-model="cliente.telefono" :disabled="deshabilitado"/>
-      </p>
-      <p type="Correo electrónico:">
-        <input type="email" v-model="cliente.correo" :disabled="deshabilitado"/>
-      </p>
-    </div>
-    <div v-if="!existeCliente">
-      <h1>El cliente con la cedula {{ identificador }} no existe</h1>
+       <!-- Tabla de todos los clientes -->
+    <div v-if="clientes.length > 0">
+      <h1>Lista de Todos los Clientes</h1>
+      <table class="tabla-clientes">
+        <thead>
+          <tr>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Razón Social</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(cliente, index) in clientes" :key="index">
+            <td data-label="Cédula">{{ cliente.cedula }}</td>
+            <td data-label="Nombre">{{ cliente.nombre }}</td>
+            <td data-label="Apellido">{{ cliente.apellido }}</td>
+            <td data-label="Razón Social">{{ cliente.razonSocial }}</td>
+            <td data-label="Dirección">{{ cliente.direccion }}</td>
+            <td data-label="Teléfono">{{ cliente.telefono }}</td>
+            <td data-label="Correo">{{ cliente.correo }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
 </template>
 
 <script>
-import { consultarClientePorIdFachada } from "@/clients/ClienteClient.js";
+import { consultarTodosClientesFachada } from "@/clients/ClienteClient.js";
 
 export default {
   data() {
@@ -66,32 +60,24 @@ export default {
   },
 
  methods: {
-  async ObtenerClientePorId() {
+  async obtenerTodosClientes() {
     try {
-      let aux = await consultarClientePorIdFachada(this.identificador);
-      if (!aux) {
-        this.existeCliente = false;
-        setTimeout(() => {
-          this.existeCliente = true;
-        }, 3000);
-        return;
+      const clientes = await consultarTodosClientesFachada(); 
+      if (clientes && Array.isArray(clientes)) {
+        this.clientes = clientes.map(cliente => ({
+          cedula: cliente.cedula,
+          nombre: cliente.nombre,
+          apellido: cliente.apellido,
+          razonSocial: cliente.razonSocial,
+          direccion: cliente.direccion,
+          telefono: cliente.telefono,
+          correo: cliente.correo,
+        }));
       }
-      this.cliente.cedula = aux.cedula;
-      this.cliente.nombre = aux.nombre;
-      this.cliente.apellido = aux.apellido;
-      this.cliente.razonSocial = aux.razonSocial;
-      this.cliente.direccion = aux.direccion;
-      this.cliente.telefono = aux.telefono;
-      this.cliente.correo = aux.correo;
     } catch (error) {
-      if (error.response && error.response.status === 404) {
-        this.existeCliente = false;
-        setTimeout(() => {
-          this.existeCliente = true;
-        }, 3000);
-      }  
+      console.error('Error al obtener todos los clientes:', error);
     }
-  },
+  }
   },
 };
 </script>
@@ -114,21 +100,6 @@ export default {
   max-width: 400px;
   margin-bottom: 30px;
   gap: 10px;
-}
-
-.input_consulta {
-  flex: 1;
-  padding: 10px 16px;
-  border: 1px solid #b0c4de;
-  border-radius: 8px;
-  font-size: 1em;
-  background: #fff;
-  transition: border-color 0.2s;
-}
-
-.input_consulta:focus {
-  outline: none;
-  border-color: #3498db;
 }
 
 .boton_consulta {
@@ -163,19 +134,6 @@ h1 {
   letter-spacing: 1px;
 }
 
-.containerformulario {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  width: 100%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
-  padding: 32px 28px;
-  margin-bottom: 20px;
-}
-
 p {
   margin: 0;
   font-weight: 500;
@@ -208,6 +166,28 @@ p::before {
   outline: none;
 }
 
+.tabla-clientes {
+  width: 80%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.tabla-clientes th,
+.tabla-clientes td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.tabla-clientes th {
+  background-color: #07265c;
+  color: #ddd;
+  font-weight: bold;
+}
+
+.tabla-clientes tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
 
 /* RESPONSIVE */
 @media (max-width: 800px) {
@@ -240,6 +220,46 @@ p::before {
         border-top-left-radius: 0;
         border-top-right-radius: 0;
     }
+
+  .tabla-clientes {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .tabla-clientes thead {
+    display: none;
+  }
+
+  .tabla-clientes tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .tabla-clientes td {
+    display: flex;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .tabla-clientes td::before {
+    content: attr(data-label);
+    min-width: 100px;
+    font-weight: bold;
+    background-color: #07265c;
+    color: white;
+    padding: 8px;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 5px 0 0 5px;
+  }
+
+  .tabla-clientes td:last-child {
+    border-bottom: none;
+  }
 }
 
 </style>
