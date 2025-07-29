@@ -60,7 +60,7 @@ public class BodegaTo {
 
     public void buildURI(UriInfo uriInfo) {
         URI todosProductos = uriInfo.getBaseUriBuilder().path(BodegaController.class)
-                .path(BodegaController.class, "obtenerProductosPorBodega").build(id);
+                .path(BodegaController.class, "obtenerProductosPorBodega").build(codigo);
         _links.put("productos", todosProductos.toString());
     }
 

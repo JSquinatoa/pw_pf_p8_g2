@@ -18,6 +18,17 @@ import ServicioActualizarView from "@/views/servicio/ServicioActualizarView.vue"
 import ServicioBorrarView from "@/views/servicio/ServicioBorrarView.vue";
 import ServicioGuardarView from "@/views/servicio/ServicioGuardarView.vue";
 
+import BodegaConsutlarView from "@/views/bodegaviews/BodegaConsultarView.vue"
+import BodegaCrearView from "@/views/bodegaviews/BodegaCrearView.vue"
+import BodegaModificarView from "@/views/bodegaviews/BodegaModificarView.vue"
+import BodegaEliminarView from "@/views/bodegaviews/BodegaEliminarView.vue"
+
+import CrearClienteView from '@/views/cliente/CrearClienteView.vue'
+import ActualizarClienteView from '@/views/cliente/ActualizarClienteView.vue'
+import BuscarClienteView from '@/views/cliente/BuscarClienteView.vue'
+import BuscarTodosClienteView from '@/views/cliente/BuscarTodosClienteView.vue'
+import BorrarClienteView from '@/views/cliente/BorrarClienteView.vue'
+
 const routes = [
   {
     path: "/",
@@ -25,9 +36,31 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/bodega",
-    name: "bodega",
+    path: '/bodega',
+    name: 'bodega',
     component: BodegaView,
+    children: [
+      {
+        path: 'consultar', 
+        name: 'bodega-consultar',
+        component: BodegaConsutlarView
+      },
+      {
+        path: 'crear', 
+        name: 'bodega-crear',
+        component: BodegaCrearView
+      },
+      {
+        path: 'modificar', 
+        name: 'bodega-modificar',
+        component: BodegaModificarView
+      },
+      {
+        path: 'eliminar', 
+        name: 'bodega-eliminar',
+        component: BodegaEliminarView
+      },
+    ]
   },
   {
     path: "/producto",
@@ -89,9 +122,34 @@ const routes = [
     component: ImpuestoView,
   },
   {
-    path: "/cliente",
-    name: "cliente",
-    component: ClienteView,
+    path: '/crearcliente',
+    name: 'crearcliente',
+    component: CrearClienteView
+  },
+  {
+    path: '/actualizarcliente',
+    name: 'actualizarcliente',
+    component: ActualizarClienteView
+  },
+  {
+    path: '/buscarcliente',
+    name: 'buscarcliente',
+    component: BuscarClienteView
+  },
+  {
+    path: '/buscartodosclientes',
+    name: 'buscartodosclientes',
+    component: BuscarTodosClienteView
+  },
+   {
+    path: '/borrarcliente',
+    name: 'borrarcliente',
+    component: BorrarClienteView
+  },
+  {
+    path: '/factura',
+    name: 'factura',
+    component: FacturaView
   },
   {
     path: "/factura",
