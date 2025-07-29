@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import BodegaView from "@/views/bodega/BodegaView.vue";
 import ProductoView from "@/views/producto/ProductoView.vue";
@@ -33,6 +33,8 @@ import ImpuestoConsultarView from "@/views/impuesto/ImpuestoConsultarView.vue";
 import ImpuestoGuardarView from "@/views/impuesto/ImpuestoGuardarView.vue";
 import ImpuestoActualizarView from "@/views/impuesto/ImpuestoActualizarView.vue";
 import ImpuestoBorrarView from "@/views/impuesto/ImpuestoBorrarView.vue";
+
+import ReporteConsultar from '@/components/reporte/ReporteConsultar.vue'
 
 const routes = [
   {
@@ -188,15 +190,22 @@ const routes = [
     name: "factura",
     component: FacturaView,
   },
-  {
-    path: "/reporte",
-    name: "reporte",
+    {
+    path: '/reporte',
+    name: 'reporte',
     component: ReporteView,
+    children: [
+      {
+        path: 'todos',
+        name: 'reporte-todos',
+        component: ReporteConsultar,
+      },
+    ]
   },
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 
