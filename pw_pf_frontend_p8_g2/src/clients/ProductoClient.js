@@ -31,6 +31,10 @@ const borrarPorId = async (id) => {
     axios.delete(`${URL_API}/${id}`).then(res => res.data)
 }
 
+const buscarImpuestosPorIdProducto = async (idProducto) => {
+        const response = await axios.get(`${URL_API}/${idProducto}/impuestos`);
+        return response.data;
+};
 
 // Funciones Fachada
 export const consultarTodosProductosFachada = async () => {
@@ -52,3 +56,7 @@ export const guardarFachada = async (body) => {
 export const borrarPorIdFachada = async (id) => {
     return await borrarPorId(id)
 }
+
+export const buscarImpuestosPorIdProductoFachada = async (idProducto) => {
+    return buscarImpuestosPorIdProducto(idProducto);
+};
