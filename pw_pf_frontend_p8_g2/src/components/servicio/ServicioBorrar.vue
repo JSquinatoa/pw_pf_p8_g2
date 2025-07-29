@@ -2,8 +2,10 @@
     <div class="container_borrar_servicio">
         <div class="container_consultar">
             <input class="input_consulta" type="number" v-model="identificador"
-                :placeholder="`Ingrese el id del ${category === 'producto' ? 'Producto' : 'Servicio'}...`" :disabled="deshabilitado" />
-            <button class="boton_consulta" @click="ObtenerServicioPorId()" :disabled="deshabilitadoBotonConsultar">Consultar</button>
+                :placeholder="`Ingrese el id del ${category === 'producto' ? 'Producto' : 'Servicio'}...`"
+                :disabled="deshabilitado" />
+            <button class="boton_consulta" @click="ObtenerServicioPorId()"
+                :disabled="deshabilitadoBotonConsultar">Consultar</button>
         </div>
 
         <h1>Información del {{ category === 'producto' ? 'Producto' : 'Servicio' }} a Borrar</h1>
@@ -22,19 +24,24 @@
             </p>
         </div>
         <button class="boton_general boton_borrar" @click="borrar()" :disabled="deshabilitado">Borrar</button>
-        <div v-if="!existeServicio">
+
+        <div v-if="!existeServicio" class="mensaje-error">
             <h2>El {{ category === 'producto' ? 'producto' : 'servicio' }} con el id {{ identificador }} no existe</h2>
         </div>
-        <div v-if="exitoBorrar">
+        <div v-if="exitoBorrar" class="mensaje-exito">
             <h2>
-                El {{ category === 'producto' ? 'producto' : 'servicio' }} con el id {{ identificador }} Se Borro Correctamente
+                El {{ category === 'producto' ? 'producto' : 'servicio' }} con el id {{ identificador }} Se Borró
+                Correctamente
             </h2>
+        </div>
+        <div v-if="errorMensaje" class="mensaje-error">
+            <h2>{{ errorMensaje }}</h2>
         </div>
     </div>
 </template>
 
 <script>
-import { consultarProductosIdFachada, borrarPorIdFachada } from "@/clients/ProductoClient"; 
+import { consultarProductosIdFachada, borrarPorIdFachada } from "@/clients/ProductoClient";
 
 export default {
     props: {
@@ -47,7 +54,7 @@ export default {
     data() {
         return {
             identificador: null,
-            servicio: { 
+            servicio: {
                 id: null,
                 nombre: null,
                 categoria: null,
@@ -58,56 +65,76 @@ export default {
             exitoBorrar: false,
             deshabilitado: false,
             deshabilitadoBotonConsultar: false,
+            errorMensaje: null, 
         };
     },
 
     methods: {
         async ObtenerServicioPorId() {
             this.deshabilitadoBotonConsultar = true;
-            let aux = await consultarProductosIdFachada(this.identificador);
+            this.deshabilitado = true; 
+            this.existeServicio = true;
+            this.exitoBorrar = false;
+            this.errorMensaje = null; 
 
-            if (aux === null || aux.categoria !== this.category) {
-                this.existeServicio = false; 
-                this.deshabilitado = true;
-                setTimeout(() => {
-                    this.existeServicio = true;
-                    this.deshabilitado = false;
-                    this.reiniciarVaraibles();
-                    this.deshabilitadoBotonConsultar = false;
-                }, 3000);
-                return;
+            try {
+                let aux = await consultarProductosIdFachada(this.identificador);
+
+                if (aux === null || aux.categoria !== this.category) {
+                    this.existeServicio = false;
+                  
+                    setTimeout(() => {
+                        this.existeServicio = true;
+                        this.deshabilitado = false;
+                        this.reiniciarVaraibles();
+                        this.deshabilitadoBotonConsultar = false;
+                    }, 3000);
+                    return;
+                }
+
+                this.servicio.id = aux.id;
+                this.servicio.nombre = aux.nombre;
+                this.servicio.categoria = aux.categoria;
+                this.servicio.codigoBarras = aux.codigoBarras;
+                this.servicio.precio = aux.precio;
+                this.deshabilitado = false; 
+                this.deshabilitadoBotonConsultar = false;
+            } catch (error) {
+
+                this.mostrarMensajeError(`Error al consultar el ${this.category}. Verifique el ID e intente de nuevo.`);
+                console.error(`Error al obtener ${this.category} por ID para borrar:`, error);
+                this.reiniciarVaraibles();
+                this.deshabilitado = false;
+                this.deshabilitadoBotonConsultar = false;
+                this.existeServicio = false; // Mostrar que no existe si hay error de consulta
+                setTimeout(() => { this.existeServicio = true; }, 3000);
             }
-
-            this.servicio.id = aux.id;
-            this.servicio.nombre = aux.nombre;
-            this.servicio.categoria = aux.categoria;
-            this.servicio.codigoBarras = aux.codigoBarras;
-            this.servicio.precio = aux.precio;
-            this.deshabilitado = false;
-            this.deshabilitadoBotonConsultar = false;
         },
 
         async borrar() {
-            if (!confirm(`¿Estás seguro de que quieres borrar el ${this.category === 'producto' ? 'producto' : 'servicio'} con ID ${this.identificador}?`)) {
-                return;
-            }
+            this.errorMensaje = null; 
 
             if (!this.deshabilitado && this.identificador !== null && this.servicio.id !== null) {
-                await borrarPorIdFachada(this.identificador); 
+                try {
+                    await borrarPorIdFachada(this.identificador); 
+
+                    this.deshabilitado = true;
+                    this.deshabilitadoBotonConsultar = true;
+                    this.exitoBorrar = true;
+                    setTimeout(() => {
+                        this.exitoBorrar = false;
+                        this.deshabilitado = false;
+                        this.deshabilitadoBotonConsultar = false;
+                        this.reiniciarVaraibles();
+                    }, 3000);
+                } catch (error) {
+                    this.mostrarMensajeError(`Error al borrar el ${this.category}. Es posible que el ${this.category} ya no exista o hubo un problema en el servidor.`);
+                    console.error(`Error al borrar ${this.category}:`, error);
+                }
             } else {
-                alert(`Por favor, consulta un ${this.category === 'producto' ? 'producto' : 'servicio'} válido antes de intentar borrarlo.`);
+                this.mostrarMensajeError(`Por favor, consulte un ${this.category === 'producto' ? 'producto' : 'servicio'} válido antes de intentar borrarlo.`);
                 return;
             }
-            
-            this.deshabilitado = true;
-            this.deshabilitadoBotonConsultar = true;
-            this.exitoBorrar = true;
-            setTimeout(() => {
-                this.exitoBorrar = false;
-                this.deshabilitado = false;
-                this.deshabilitadoBotonConsultar = false;
-                this.reiniciarVaraibles();
-            }, 3000);
         },
 
         reiniciarVaraibles() {
@@ -118,6 +145,12 @@ export default {
             this.servicio.precio = null;
             this.servicio.id = null;
         },
+        mostrarMensajeError(mensaje) {
+            this.errorMensaje = mensaje;
+            setTimeout(() => {
+                this.errorMensaje = null;
+            }, 3000);
+        }
     },
 };
 </script>
@@ -151,12 +184,17 @@ h1 {
 
 h2 {
     margin-top: 15px;
-    color: #4CAF50;
     text-align: center;
     font-size: 1.2em;
 }
-.container_borrar_producto > div[v-if="!existeProducto"] h2 {
+
+
+.mensaje-error h2 {
     color: #dc3545;
+}
+
+.mensaje-exito h2 {
+    color: #4CAF50;
 }
 
 
@@ -232,9 +270,11 @@ h2 {
     white-space: nowrap;
     text-align: center;
 }
+
 .boton_general:hover {
     transform: scale(1.02);
 }
+
 .boton_general:active {
     transform: scale(0.99);
 }
@@ -303,7 +343,7 @@ p::before {
 }
 
 @media (max-width: 1024px) {
-    .container_borrar_producto {
+    .container_borrar_servicio {
         width: 95%;
         padding: 15px;
         gap: 15px;
@@ -318,20 +358,24 @@ p::before {
         padding: 25px 15px 35px 15px;
         gap: 8px;
     }
+
     p {
         margin-top: 3px;
         margin-bottom: 3px;
         padding: 0 3px;
     }
+
     p::before {
         font-size: 0.85em;
         margin-bottom: 2px;
     }
+
     .containerformulario input {
         width: 95%;
         padding: 5px 7px;
         font-size: 0.85em;
     }
+
     .boton_general {
         min-width: 150px;
         padding: 10px 20px;
@@ -339,7 +383,7 @@ p::before {
 }
 
 @media (max-width: 768px) {
-    .container_borrar_producto {
+    .container_borrar_servicio {
         margin: 20px auto;
         padding: 10px;
         gap: 15px;
@@ -393,6 +437,7 @@ p::before {
         font-size: 0.8em;
         margin-bottom: 2px;
     }
+
     p {
         padding: 0 5px;
         margin-top: 3px;
@@ -401,38 +446,47 @@ p::before {
 }
 
 @media (max-width: 480px) {
-    .container_borrar_producto {
+    .container_borrar_servicio {
         padding: 8px;
         margin: 10px auto;
         gap: 10px;
     }
+
     h1 {
         font-size: 1.2em;
         margin-bottom: 10px;
     }
-    .input_consulta, .boton_consulta {
+
+    .input_consulta,
+    .boton_consulta {
         font-size: 0.8em;
     }
+
     .boton_consulta {
         padding: 6px 8px;
     }
+
     .boton_general {
         padding: 6px 10px;
         font-size: 0.8em;
     }
+
     .containerformulario {
         padding: 12px 8px 20px 8px;
         gap: 5px;
     }
+
     .containerformulario input {
         width: 95%;
         font-size: 0.75em;
         padding: 4px 6px;
     }
+
     p::before {
         font-size: 0.75em;
         margin-bottom: 1px;
     }
+
     p {
         padding: 0;
         margin-top: 2px;

@@ -14,8 +14,12 @@
         </div>
 
         <button class="boton_general guardar_producto" @click="guardarProductos()">Crear</button>
-        <div v-if="exito">
+
+        <div v-if="exito" class="mensaje-exito">
             <h2>{{ category === 'producto' ? 'Producto' : 'Servicio' }} Correctamente Guardado</h2>
+        </div>
+        <div v-if="errorMensaje" class="mensaje-error">
+            <h2>{{ errorMensaje }}</h2>
         </div>
     </div>
 </template>
@@ -35,42 +39,50 @@ export default {
         return {
             producto: {
                 nombre: null,
-                categoria: null, 
+                categoria: null,
                 codigoBarras: null,
                 precio: null,
             },
             exito: false,
             deshabilitado: false,
+            errorMensaje: null, 
         };
     },
     methods: {
         async guardarProductos() {
+            this.errorMensaje = null; 
+            this.exito = false; 
             if (!this.producto.nombre || !this.producto.codigoBarras || this.producto.precio === null) {
-                alert("Por favor, rellene todos los campos obligatorios.");
+                this.mostrarMensajeError("Por favor, complete todos los campos (Nombre, Código de Barras, Precio).");
+                return;
+            }
+            if (this.producto.precio <= 0) {
+                this.mostrarMensajeError("El precio debe ser un número positivo.");
                 return;
             }
 
             const productoToBody = {
                 nombre: this.producto.nombre,
-                categoria: this.category, 
+                categoria: this.category,
                 codigoBarras: this.producto.codigoBarras,
                 precio: this.producto.precio,
             };
 
-            if (!this.deshabilitado) {
-                try {
-                    await guardarFachada(productoToBody);
-                    this.exito = true;
-                    this.deshabilitado = true;
-                    setTimeout(() => {
-                        this.exito = false;
-                        this.deshabilitado = false;
-                        this.reiniciarVaraibles();
-                    }, 3000);
-                } catch (error) {
-                    alert(`Error al guardar el ${this.category}. Verifique los datos e intente de nuevo.`);
-                    console.error(`Error al guardar ${this.category}:`, error);
-                }
+            this.deshabilitado = true; 
+
+            try {
+                await guardarFachada(productoToBody);
+                this.exito = true; 
+                setTimeout(() => {
+                    this.exito = false;
+                    this.deshabilitado = false;
+                    this.reiniciarVaraibles();
+                }, 3000); 
+            } catch (error) {
+                
+                this.mostrarMensajeError(`Error al guardar el ${this.category}. Verifique los datos o intente más tarde.`);
+                console.error(`Error al guardar ${this.category}:`, error);
+                this.deshabilitado = false; 
             }
         },
         reiniciarVaraibles() {
@@ -78,20 +90,33 @@ export default {
             this.producto.codigoBarras = null;
             this.producto.precio = null;
         },
+        mostrarMensajeError(mensaje) {
+            this.errorMensaje = mensaje;
+            setTimeout(() => {
+                this.errorMensaje = null;
+            }, 3000); 
+        }
     },
+    watch: {
+        category: {
+            immediate: true,
+            handler(newCategory) {
+                this.producto.categoria = newCategory;
+            }
+        }
+    }
 };
 </script>
 
 <style scoped>
-
 .container_guardar_producto {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 90%; 
-    max-width: 960px; 
-    margin: 5px; 
+    width: 90%;
+    max-width: 960px;
+    margin: 5px;
     padding: 20px;
     box-sizing: border-box;
     gap: 20px;
@@ -99,12 +124,28 @@ export default {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+h1 {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #333;
+    text-align: center;
+    font-size: 1.8em;
+    width: 100%;
+}
 
-h2 { 
+h2 {
     margin-top: 15px;
-    color: #4CAF50;
     text-align: center;
     font-size: 1.2em;
+}
+
+.mensaje-exito h2 {
+    color: #4CAF50;
+}
+
+.mensaje-error h2 {
+    color: #dc3545;
 }
 
 
@@ -114,13 +155,13 @@ h2 {
     width: 50%;
     max-width: 550px;
 
-    padding: 35px 20px 35px 20px; 
+    padding: 35px 20px 35px 20px;
     border: 10px double;
     border-end-end-radius: 100px;
     border-start-start-radius: 100px;
     background-color: #f4f6f8;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.516);
-    gap: 10px; 
+    gap: 10px;
 }
 
 
@@ -146,20 +187,20 @@ p::before {
     text-align: left;
     font-weight: bold;
     color: #333;
-    font-size: 0.9em; 
-    margin-bottom: 3px; 
+    font-size: 0.9em;
+    margin-bottom: 3px;
     width: 100%;
 }
 
 
 .containerformulario input {
-    width: 95%; 
-    padding: 6px 8px; 
+    width: 95%;
+    padding: 6px 8px;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 0.9em; 
-    box-sizing: border-box; 
+    font-size: 0.9em;
+    box-sizing: border-box;
 }
 
 
@@ -187,10 +228,10 @@ p::before {
     transform: scale(0.99);
 }
 
-.guardar_producto { 
+.guardar_producto {
     margin-top: 25px;
-    background-color: #4CAF50; 
-    width: 200px; 
+    background-color: #4CAF50;
+    width: 200px;
 }
 
 .guardar_producto:hover {
@@ -208,20 +249,24 @@ p::before {
         padding: 15px;
         gap: 15px;
     }
+
     .containerformulario {
         width: 80%;
         padding: 25px 15px 25px 15px;
         gap: 8px;
     }
+
     p {
         margin-top: 3px;
         margin-bottom: 3px;
         padding: 0 3px;
     }
+
     p::before {
         font-size: 0.85em;
         margin-bottom: 2px;
     }
+
     .containerformulario input {
         width: 95%;
         padding: 5px 7px;
@@ -235,29 +280,35 @@ p::before {
         padding: 10px;
         gap: 15px;
     }
+
     h1 {
         font-size: 1.5em;
         margin-bottom: 15px;
     }
+
     .containerformulario {
         width: 90%;
         padding: 20px 10px 20px 10px;
         gap: 8px;
     }
+
     .containerformulario input {
         width: 95%;
         padding: 5px 7px;
         font-size: 0.8em;
     }
+
     p::before {
         font-size: 0.8em;
         margin-bottom: 2px;
     }
+
     p {
         padding: 0 5px;
         margin-top: 3px;
         margin-bottom: 3px;
     }
+
     .guardar_producto {
         width: 150px;
         padding: 8px 15px;
@@ -271,28 +322,34 @@ p::before {
         margin: 10px auto;
         gap: 10px;
     }
+
     h1 {
         font-size: 1.2em;
         margin-bottom: 10px;
     }
+
     .containerformulario {
         padding: 15px 8px 15px 8px;
         gap: 5px;
     }
+
     .containerformulario input {
         width: 95%;
         font-size: 0.75em;
         padding: 4px 6px;
     }
+
     p::before {
         font-size: 0.75em;
         margin-bottom: 1px;
     }
+
     p {
         padding: 0;
         margin-top: 2px;
         margin-bottom: 2px;
     }
+
     .guardar_producto {
         width: 120px;
         padding: 6px 10px;

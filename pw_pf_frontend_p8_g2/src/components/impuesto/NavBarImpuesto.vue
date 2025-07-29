@@ -1,10 +1,10 @@
 <template>
     <div class="container-navbar-impuesto">
         <nav>
-            <router-link to="/" class="nav-item">Tienda</router-link>
-            <router-link to="/crear" class="nav-item">Crear</router-link>
-            <router-link to="/actualizar" class="nav-item">Actualizar</router-link>
-            <router-link to="/borrar" class="nav-item">Eliminar</router-link>
+            <router-link to="/consultarI" class="nav-item">Consultar</router-link>
+            <router-link to="/guardarI" class="nav-item">Crear</router-link>
+            <router-link to="/actualizarI" class="nav-item">Actualizar</router-link>
+            <router-link to="/borrarI" class="nav-item">Eliminar</router-link>
         </nav>
     </div>
 </template>

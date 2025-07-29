@@ -1,39 +1,35 @@
 <template>
-    <div class="container_borrar_producto">
-
+    <div class="container_consultar_impuesto">
         <div class="container_consultar">
-            <input class="input_consulta" type="number" v-model="identificador"
-                :placeholder="`Ingrese el id del ${category === 'producto' ? 'Producto' : 'Servicio'}...`"
-                :disabled="deshabilitado" />
-            <button class="boton_consulta" @click="ObtenerProductoPorId()"
-                :disabled="deshabilitadoBotonConsultar">Consultar</button>
+            <input
+                class="input_consulta"
+                type="number"
+                v-model="identificador"
+                placeholder="Ingrese el ID del Impuesto..."
+                :disabled="deshabilitadoBotonConsultar"
+            />
+            <button class="boton_consulta" @click="ObtenerImpuestoPorId()"
+                :disabled="deshabilitadoBotonConsultar">
+                Consultar
+            </button>
         </div>
 
-        <h1>Información del {{ category === 'producto' ? 'Producto' : 'Servicio' }} a Borrar</h1>
+        <h1>Información del Impuesto a Borrar</h1>
         <div class="containerformulario">
             <p type="Nombre:">
-                <input type="text" v-model="producto.nombre" disabled />
+                <input type="text" v-model="impuesto.nombre" disabled />
             </p>
-            <p type="Categoria:">
-                <input type="text" v-model="producto.categoria" disabled />
-            </p>
-            <p type="Codigo de Barras:">
-                <input type="text" v-model="producto.codigoBarras" disabled />
-            </p>
-            <p type="Precio:">
-                <input type="number" v-model="producto.precio" disabled />
+            <p type="Porcentaje:">
+                <input type="text" v-model="impuesto.porcentaje" disabled />
             </p>
         </div>
         <button class="boton_general boton_borrar" @click="borrar()" :disabled="deshabilitado">Borrar</button>
-        <div v-if="!existeProducto">
-            <h2>El {{ category === 'producto' ? 'producto' : 'servicio' }} con el id {{ identificador }} no existe o no
-                es un {{ category === 'producto' ? 'producto' : 'servicio' }}.</h2>
+
+        <div v-if="!existeImpuesto && !errorMensaje && identificador" class="mensaje-error">
+            <h2>El Impuesto con el ID {{ identificador }} no existe</h2>
         </div>
-        <div v-if="exitoBorrar">
-            <h2>
-                El {{ category === 'producto' ? 'Producto' : 'Servicio' }} con el id {{ identificador }} Se Borro
-                Correctamente
-            </h2>
+        <div v-if="exitoBorrar" class="mensaje-exito">
+            <h2>El Impuesto con el ID {{ identificador }} se borró correctamente</h2>
         </div>
         <div v-if="errorMensaje" class="mensaje-error">
             <h2>{{ errorMensaje }}</h2>
@@ -42,108 +38,101 @@
 </template>
 
 <script>
-import { consultarProductosIdFachada, borrarPorIdFachada } from "@/clients/ProductoClient";
+import { consultarImpuestosIdFachada, borrarPorIdFachada } from "@/clients/ImpuestoClient";
 
 export default {
-    props: {
-        category: {
-            type: String,
-            required: true,
-            validator: (value) => ['producto', 'servicio'].includes(value),
-        },
-    },
     data() {
         return {
             identificador: null,
-            producto: {
+            impuesto: {
                 id: null,
                 nombre: null,
-                categoria: null,
-                codigoBarras: null,
-                precio: null,
+                porcentaje: null,
             },
-            existeProducto: true,
+            existeImpuesto: true,
             exitoBorrar: false,
-            deshabilitado: false,
+            deshabilitado: true,
             deshabilitadoBotonConsultar: false,
-            errorMensaje: null, 
+            errorMensaje: null,
         };
     },
 
     methods: {
-        async ObtenerProductoPorId() {
+        async ObtenerImpuestoPorId() {
             this.deshabilitadoBotonConsultar = true;
             this.deshabilitado = true;
-            this.existeProducto = true;
+            this.existeImpuesto = true;
             this.exitoBorrar = false;
-            this.errorMensaje = null; 
+            this.errorMensaje = null;
+
+            if (!this.identificador) {
+                this.mostrarMensajeError("Por favor, ingrese un ID para consultar el impuesto.");
+                this.deshabilitadoBotonConsultar = false;
+                return;
+            }
 
             try {
-                let aux = await consultarProductosIdFachada(this.identificador);
-
-                if (aux === null || aux.categoria !== this.category) {
-                    this.existeProducto = false;
+                const aux = await consultarImpuestosIdFachada(this.identificador);
+                if (aux === null) {
+                    this.existeImpuesto = false;
+                    this.mostrarMensajeError(`El Impuesto con el ID ${this.identificador} no existe.`);
                     setTimeout(() => {
-                        this.existeProducto = true;
-                        this.reiniciarVaraibles();
-                        this.deshabilitado = false;
+                        this.existeImpuesto = true;
+                        this.reiniciarVariables();
                         this.deshabilitadoBotonConsultar = false;
                     }, 3000);
                     return;
                 }
 
-                this.producto.id = aux.id;
-                this.producto.nombre = aux.nombre;
-                this.producto.categoria = aux.categoria;
-                this.producto.codigoBarras = aux.codigoBarras;
-                this.producto.precio = aux.precio;
+                this.impuesto.id = aux.id;
+                this.impuesto.nombre = aux.nombre;
+                this.impuesto.porcentaje = aux.porcentaje;
+
                 this.deshabilitado = false;
                 this.deshabilitadoBotonConsultar = false;
             } catch (error) {
-                this.mostrarMensajeError(`Error al consultar el ${this.category}. Verifique el ID e intente de nuevo.`);
-                console.error(`Error al obtener ${this.category} por ID para borrar:`, error);
-                this.reiniciarVaraibles();
-                this.deshabilitado = false;
+                this.mostrarMensajeError(`Error al consultar el Impuesto. Verifique el ID e intente de nuevo.`);
+                console.error("Error al obtener Impuesto por ID:", error);
+                this.reiniciarVariables();
+                this.deshabilitado = true;
                 this.deshabilitadoBotonConsultar = false;
-                this.existeProducto = false;
-                setTimeout(() => { this.existeProducto = true; }, 3000);
             }
         },
 
         async borrar() {
-            if (!this.producto.id || !this.producto.codigoBarras || this.deshabilitado) {
-                this.mostrarMensajeError(`Por favor, consulte un ${this.category} válido antes de intentar borrarlo.`);
+            if (this.deshabilitado || !this.impuesto.id) {
+                this.mostrarMensajeError("Por favor, consulte un impuesto válido antes de intentar borrarlo.");
                 return;
             }
 
-
+            this.deshabilitado = true;
+            this.deshabilitadoBotonConsultar = true;
+            this.exitoBorrar = false;
+            this.errorMensaje = null;
 
             try {
-                await borrarPorIdFachada(this.producto.codigoBarras);
+                await borrarPorIdFachada(this.identificador);
 
-                this.deshabilitado = true;
-                this.deshabilitadoBotonConsultar = true;
                 this.exitoBorrar = true;
-                this.errorMensaje = null; 
                 setTimeout(() => {
                     this.exitoBorrar = false;
                     this.deshabilitado = false;
                     this.deshabilitadoBotonConsultar = false;
-                    this.reiniciarVaraibles();
+                    this.reiniciarVariables();
                 }, 3000);
             } catch (error) {
-                this.mostrarMensajeError(`Error al borrar el ${this.category}. Es posible que el ${this.category} ya no exista o hubo un problema en el servidor.`);
-                console.error(`Error al borrar ${this.category}:`, error);
+                this.mostrarMensajeError(`Error al borrar el Impuesto. Es posible que ya no exista o hubo un problema en el servidor.`);
+                console.error("Error al borrar Impuesto:", error);
+                this.deshabilitado = false;
+                this.deshabilitadoBotonConsultar = false;
             }
         },
 
-        reiniciarVaraibles() {
+        reiniciarVariables() {
             this.identificador = null;
-            this.producto.nombre = null;
-            this.producto.categoria = null;
-            this.producto.codigoBarras = null;
-            this.producto.precio = null;
-            this.producto.id = null;
+            this.impuesto.id = null;
+            this.impuesto.nombre = null;
+            this.impuesto.porcentaje = null;
         },
         mostrarMensajeError(mensaje) {
             this.errorMensaje = mensaje;
@@ -156,7 +145,7 @@ export default {
 </script>
 
 <style scoped>
-.container_borrar_producto {
+.container_consultar_impuesto {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -184,20 +173,17 @@ h1 {
 
 h2 {
     margin-top: 15px;
-    color: #4CAF50;
     text-align: center;
     font-size: 1.2em;
 }
 
-.container_borrar_producto>div[v-if="!existeProducto"] h2 {
-    color: #dc3545;
+.mensaje-exito h2 {
+    color: #4CAF50;
 }
-
 
 .mensaje-error h2 {
     color: #dc3545;
 }
-
 
 .container_consultar {
     display: flex;
@@ -280,7 +266,6 @@ h2 {
     transform: scale(0.99);
 }
 
-
 .boton_borrar {
     background-color: #dc3545;
 }
@@ -344,7 +329,7 @@ p::before {
 }
 
 @media (max-width: 1024px) {
-    .container_borrar_producto {
+    .container_consultar_impuesto {
         width: 95%;
         padding: 15px;
         gap: 15px;
@@ -384,7 +369,7 @@ p::before {
 }
 
 @media (max-width: 768px) {
-    .container_borrar_producto {
+    .container_consultar_impuesto {
         margin: 20px auto;
         padding: 10px;
         gap: 15px;
@@ -447,7 +432,7 @@ p::before {
 }
 
 @media (max-width: 480px) {
-    .container_borrar_producto {
+    .container_consultar_impuesto {
         padding: 8px;
         margin: 10px auto;
         gap: 10px;

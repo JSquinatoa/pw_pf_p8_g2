@@ -1,6 +1,6 @@
 <template>
   <div class="container-productoAc">
-    <ProductoActualizar />
+    <ProductoActualizar :category="'producto'"/>
   </div>
 </template>
 

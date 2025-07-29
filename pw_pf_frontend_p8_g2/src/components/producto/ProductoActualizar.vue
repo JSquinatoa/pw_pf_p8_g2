@@ -170,6 +170,15 @@ export default {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+h1 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #333;
+    text-align: center;
+    font-size: 1.8em;
+    width: 100%;
+}
 
 h2 {
     margin-top: 20px;

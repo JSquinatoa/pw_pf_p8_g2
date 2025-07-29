@@ -18,16 +18,21 @@ import ServicioActualizarView from "@/views/servicio/ServicioActualizarView.vue"
 import ServicioBorrarView from "@/views/servicio/ServicioBorrarView.vue";
 import ServicioGuardarView from "@/views/servicio/ServicioGuardarView.vue";
 
-import BodegaConsutlarView from "@/views/bodegaviews/BodegaConsultarView.vue"
-import BodegaCrearView from "@/views/bodegaviews/BodegaCrearView.vue"
-import BodegaModificarView from "@/views/bodegaviews/BodegaModificarView.vue"
-import BodegaEliminarView from "@/views/bodegaviews/BodegaEliminarView.vue"
+import BodegaConsutlarView from "@/views/bodegaviews/BodegaConsultarView.vue";
+import BodegaCrearView from "@/views/bodegaviews/BodegaCrearView.vue";
+import BodegaModificarView from "@/views/bodegaviews/BodegaModificarView.vue";
+import BodegaEliminarView from "@/views/bodegaviews/BodegaEliminarView.vue";
 
-import CrearClienteView from '@/views/cliente/CrearClienteView.vue'
-import ActualizarClienteView from '@/views/cliente/ActualizarClienteView.vue'
-import BuscarClienteView from '@/views/cliente/BuscarClienteView.vue'
-import BuscarTodosClienteView from '@/views/cliente/BuscarTodosClienteView.vue'
-import BorrarClienteView from '@/views/cliente/BorrarClienteView.vue'
+import CrearClienteView from "@/views/cliente/CrearClienteView.vue";
+import ActualizarClienteView from "@/views/cliente/ActualizarClienteView.vue";
+import BuscarClienteView from "@/views/cliente/BuscarClienteView.vue";
+import BuscarTodosClienteView from "@/views/cliente/BuscarTodosClienteView.vue";
+import BorrarClienteView from "@/views/cliente/BorrarClienteView.vue";
+
+import ImpuestoConsultarView from "@/views/impuesto/ImpuestoConsultarView.vue";
+import ImpuestoGuardarView from "@/views/impuesto/ImpuestoGuardarView.vue";
+import ImpuestoActualizarView from "@/views/impuesto/ImpuestoActualizarView.vue";
+import ImpuestoBorrarView from "@/views/impuesto/ImpuestoBorrarView.vue";
 
 const routes = [
   {
@@ -36,31 +41,31 @@ const routes = [
     component: HomeView,
   },
   {
-    path: '/bodega',
-    name: 'bodega',
+    path: "/bodega",
+    name: "bodega",
     component: BodegaView,
     children: [
       {
-        path: 'consultar', 
-        name: 'bodega-consultar',
-        component: BodegaConsutlarView
+        path: "consultar",
+        name: "bodega-consultar",
+        component: BodegaConsutlarView,
       },
       {
-        path: 'crear', 
-        name: 'bodega-crear',
-        component: BodegaCrearView
+        path: "crear",
+        name: "bodega-crear",
+        component: BodegaCrearView,
       },
       {
-        path: 'modificar', 
-        name: 'bodega-modificar',
-        component: BodegaModificarView
+        path: "modificar",
+        name: "bodega-modificar",
+        component: BodegaModificarView,
       },
       {
-        path: 'eliminar', 
-        name: 'bodega-eliminar',
-        component: BodegaEliminarView
+        path: "eliminar",
+        name: "bodega-eliminar",
+        component: BodegaEliminarView,
       },
-    ]
+    ],
   },
   {
     path: "/producto",
@@ -70,7 +75,7 @@ const routes = [
       {
         path: "/consultar",
         name: "producto-consultar",
-        component: ProductoConsultarView
+        component: ProductoConsultarView,
       },
       {
         path: "/guardar",
@@ -120,6 +125,28 @@ const routes = [
     path: "/impuesto",
     name: "impuesto",
     component: ImpuestoView,
+    children: [
+      {
+        path: "/consultarI",
+        name: "impuesto-consultar",
+        component: ImpuestoConsultarView,
+      },
+      {
+        path: "/guardarI",
+        name: "impuesto-guardar",
+        component: ImpuestoGuardarView,
+      },
+      {
+        path: "/actualizarI",
+        name: "impuesto-actualizar",
+        component: ImpuestoActualizarView,
+      },
+      {
+        path: "/borrarI",
+        name: "impuesto-borrar",
+        component: ImpuestoBorrarView,
+      },
+    ],
   },
   {
     path: "/cliente",
@@ -127,34 +154,34 @@ const routes = [
     component: ClienteView,
   },
   {
-    path: '/crearcliente',
-    name: 'crearcliente',
-    component: CrearClienteView
+    path: "/crearcliente",
+    name: "crearcliente",
+    component: CrearClienteView,
   },
   {
-    path: '/actualizarcliente',
-    name: 'actualizarcliente',
-    component: ActualizarClienteView
+    path: "/actualizarcliente",
+    name: "actualizarcliente",
+    component: ActualizarClienteView,
   },
   {
-    path: '/buscarcliente',
-    name: 'buscarcliente',
-    component: BuscarClienteView
+    path: "/buscarcliente",
+    name: "buscarcliente",
+    component: BuscarClienteView,
   },
   {
-    path: '/buscartodosclientes',
-    name: 'buscartodosclientes',
-    component: BuscarTodosClienteView
-  },
-   {
-    path: '/borrarcliente',
-    name: 'borrarcliente',
-    component: BorrarClienteView
+    path: "/buscartodosclientes",
+    name: "buscartodosclientes",
+    component: BuscarTodosClienteView,
   },
   {
-    path: '/factura',
-    name: 'factura',
-    component: FacturaView
+    path: "/borrarcliente",
+    name: "borrarcliente",
+    component: BorrarClienteView,
+  },
+  {
+    path: "/factura",
+    name: "factura",
+    component: FacturaView,
   },
   {
     path: "/factura",
