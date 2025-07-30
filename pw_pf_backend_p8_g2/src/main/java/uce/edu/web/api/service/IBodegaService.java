@@ -6,14 +6,14 @@ import uce.edu.web.api.repository.model.Bodega;
 
 public interface IBodegaService {
 
-    Bodega buscarPorCodigo(String codigo);
+    public Bodega buscarPorCodigo(String codigo);
 
-    List<Bodega> buscarTodos();
+    public List<Bodega> buscarTodos();
 
-    void guardar(Bodega bodega);
+    public void guardar(Bodega bodega);
 
-    void actualizar(Bodega bodega);
+    public void actualizar(Bodega bodega);
 
-    void borrarPorCodigo(String codigo);
+    public void borrarPorCodigo(String codigo);
 
 }

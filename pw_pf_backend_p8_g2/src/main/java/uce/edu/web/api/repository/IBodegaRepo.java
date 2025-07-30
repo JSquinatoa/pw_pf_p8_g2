@@ -6,14 +6,14 @@ import uce.edu.web.api.repository.model.Bodega;
 
 public interface IBodegaRepo {
 
-    Bodega seleccionarPorCodigo(String codigo);
+    public Bodega seleccionarPorCodigo(String codigo);
 
-    List<Bodega> seleccionarTodos();
+    public List<Bodega> seleccionarTodos();
 
-    void insertar(Bodega bodega);
+    public void insertar(Bodega bodega);
 
-    void actualizar(Bodega bodega);
+    public void actualizar(Bodega bodega);
 
-    void eliminarPorCodigo(String codigo);
+    public void eliminarPorCodigo(String codigo);
 
 }

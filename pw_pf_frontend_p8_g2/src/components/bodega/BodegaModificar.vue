@@ -3,7 +3,7 @@
     <h1>Consultar y Actualizar Bodega</h1>
 
     <div class="container_consultar">
-      <input class="input_consulta" type="number" v-model="id" placeholder="Ingrese el código de la bodega"
+      <input class="input_consulta" type="text" v-model="id" placeholder="Ingrese el código de la bodega"
         :disabled="deshabilitadoConsulta" />
       <button class="boton_consulta" @click="obtenerBodegaPorId()">
         Consultar
@@ -164,12 +164,6 @@ export default {
 </script>
 
 <style scoped>
-.container_consultarcliente h1 {
-  color: #003366;
-  margin-bottom: 15px;
-  font-size: 2.2em;
-  text-align: center;
-}
 
 .form-elementos-contenido {
   display: flex;
@@ -228,9 +222,6 @@ p[type] input:disabled {
 
 
 @media screen and (max-width: 768px) {
-  .container_consultarcliente h1 {
-    font-size: 1.8em;
-  }
 
   .containerformulario h2 {
     font-size: 1.6em;
@@ -243,10 +234,6 @@ p[type] input:disabled {
 }
 
 @media screen and (max-width: 480px) {
-  .container_consultarcliente h1 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-  }
 
   .containerformulario h2 {
     font-size: 1.4em;

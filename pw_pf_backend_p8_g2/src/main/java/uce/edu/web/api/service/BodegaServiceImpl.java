@@ -17,7 +17,7 @@ public class BodegaServiceImpl implements IBodegaService {
     public Bodega buscarPorCodigo(String codigo) {
         Bodega bodega = this.iBodegaRepo.seleccionarPorCodigo(codigo);
         if (bodega == null) {
-            return null;
+            throw new RuntimeException("EL CODIGO DE LA BODEGA NO EXISTE");
         }
         return bodega;
     }
@@ -42,6 +42,9 @@ public class BodegaServiceImpl implements IBodegaService {
 
     @Override
     public void borrarPorCodigo(String codigo) {
+        if (this.iBodegaRepo.seleccionarPorCodigo(codigo) == null) {
+            throw new RuntimeException("EL CODIGO DE LA BODEGA NO EXISTE");
+        }
         this.iBodegaRepo.eliminarPorCodigo(codigo);
     }
 

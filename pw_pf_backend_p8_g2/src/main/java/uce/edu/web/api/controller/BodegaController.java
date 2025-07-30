@@ -62,7 +62,7 @@ public class BodegaController {
     @Path("")
     @Operation(summary = "Insertar nueva Bodega", description = "Esta capacidad permite insertar una nueva bodega")
     public Response guardar(@RequestBody BodegaTo bodegaTo) {
-        this.iBodegaService.guardar(BodegaMapper.toBodega(bodegaTo));
+        this.iBodegaService.guardar(BodegaMapper.toEntity(bodegaTo));
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -73,7 +73,7 @@ public class BodegaController {
         BodegaTo bTo = BodegaMapper.toTo(this.iBodegaService.buscarPorCodigo(codigo));
         bodegaTo.setId(bTo.getId());
         bodegaTo.setCodigo(bTo.getCodigo());
-        this.iBodegaService.actualizar(BodegaMapper.toBodega(bodegaTo));
+        this.iBodegaService.actualizar(BodegaMapper.toEntity(bodegaTo));
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
@@ -90,7 +90,7 @@ public class BodegaController {
         if (bodegaTo.getUbicacion() != null) {
             bTo.setUbicacion(bodegaTo.getUbicacion());
         }
-        this.iBodegaService.actualizar(BodegaMapper.toBodega(bTo));
+        this.iBodegaService.actualizar(BodegaMapper.toEntity(bTo));
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 

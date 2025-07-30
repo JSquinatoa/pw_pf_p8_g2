@@ -147,14 +147,7 @@ export default {
 }
 
 /* Título */
-h1 {
-  font-size: 1.8em; /* Slightly larger for emphasis */
-  color: #2c3e50;
-  margin-bottom: 20px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-align: center;
-}
+
 
 /* Botón de consulta */
 .boton_consultar {

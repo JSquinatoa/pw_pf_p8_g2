@@ -1,7 +1,5 @@
 package uce.edu.web.api.controller;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;

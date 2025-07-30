@@ -4,7 +4,7 @@
     <div class="form-container-ente">
       <div class="form-elementos-contenido">
         <p type="Código:">
-          <input type="number" v-model="bodega.codigo" :disabled="deshabilitado" placeholder="Ingrese el código"/>
+          <input type="text" v-model="bodega.codigo" :disabled="deshabilitado" placeholder="Ingrese el código"/>
         </p>
         <p type="Nombre:">
           <input type="text" v-model="bodega.nombre" :disabled="deshabilitado" placeholder="Ingrese el nombre"/>
@@ -59,6 +59,9 @@ export default {
                     return;
                 }
                 this.deshabilitado = true;
+                this.bodega.codigo = this.bodega.codigo.toUpperCase().trim();
+                this.bodega.nombre = this.bodega.nombre.toUpperCase().trim();
+                this.bodega.ubicacion = this.bodega.ubicacion.toUpperCase().trim();
                 await insertarBodegaFachada(this.bodega);
                 this.exito = true;
                 console.log("Bodega creada:", this.bodega);
@@ -115,15 +118,9 @@ export default {
   gap: 20px;
 }
 
-h1 {
-  font-size: 1.3em;
-  color: #2c3e50;
-  margin-bottom: 18px;
-  margin-top: 0;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-align: center;
-}
+
+
+
 
 .form-container-ente {
   display: flex;
@@ -230,11 +227,6 @@ p[type] input:disabled {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.mensajes-exito h1 {
-  font-size: 1.8em;
-  color: #003366;
-  margin-bottom: 15px;
-}
 
 .boton_reset {
   background-color: #0056b3;

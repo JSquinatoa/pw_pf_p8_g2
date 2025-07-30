@@ -17,7 +17,7 @@ public class BodegaMapper {
         return bodegaTo;
     }
 
-    public static Bodega toBodega(BodegaTo bodegaTo) {
+    public static Bodega toEntity(BodegaTo bodegaTo) {
         Bodega bodega = new Bodega();
         bodega.setId(bodegaTo.getId());
         bodega.setCodigo(bodegaTo.getCodigo());
