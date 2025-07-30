@@ -44,6 +44,18 @@ export const consultarProductosPorBodegaUrlFachada = async (productosUrl) => {
   return await consultarProductosPorBodegaUrl(productosUrl);
 };
 
+export async function obtenerProductosPorBodegaFachada(codigoBodega) {
+  try {
+    const response = await axios.get(`http://localhost:8081/api/reportes/v1/inventarios/productos-por-bodega/${codigoBodega}`).then((res) => res.data);
+    console.log(response);
+    
+    return response;
+  } catch (error) {
+    console.error(`Error al obtener productos de la bodega ${codigoBodega}:`, error);
+    throw error;
+  }
+}
+
 
 const insertarBodega = async (body) => {
     try {
