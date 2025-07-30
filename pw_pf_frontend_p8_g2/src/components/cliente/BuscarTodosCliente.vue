@@ -33,6 +33,8 @@
         </tbody>
       </table>
     </div>
+    
+    <p v-else class="mensaje">Presiona el botón para cargar los clientes, si ya los tiene agregados.</p>
   </div>
 
 </template>
