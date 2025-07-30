@@ -130,5 +130,8 @@ export default {
 </script>
 
 <style>
+select {
+    padding: 8px;
+}
 
 </style>

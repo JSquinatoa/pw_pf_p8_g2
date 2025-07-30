@@ -1,7 +1,7 @@
 <template>
     <div class="container_consultarcliente">
         <div class="container_consultar">
-            <input class="input_consulta" type="number" v-model="identificador"
+            <input class="input_consulta" type="text" v-model="identificador"
                 :placeholder="`Ingrese el id del ${category === 'producto' ? 'Producto' : 'Servicio'}...`" :disabled="deshabilitado" />
 
             <button class="boton_consulta" @click="ObtenerServicioPorId()"

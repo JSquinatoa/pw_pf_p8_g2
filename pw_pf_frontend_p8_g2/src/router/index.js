@@ -8,15 +8,6 @@ import FacturaView from "@/views/factura/FacturaView.vue";
 import ReporteView from "@/views/reporte/ReporteView.vue";
 import ImpuestoView from "@/views/impuesto/ImpuestoView.vue";
 
-import ProductoConsultarView from "@/views/producto/ProductoConsultarView.vue";
-import ProductoActualizarView from "@/views/producto/ProductoActualizarView.vue";
-import ProductoGuardarView from "@/views/producto/ProductoGuardarView.vue";
-import ProductoBorrarView from "@/views/producto/ProductoBorrarView.vue";
-
-import ServicioConsultarView from "@/views/servicio/ServicioConsultarView.vue";
-import ServicioActualizarView from "@/views/servicio/ServicioActualizarView.vue";
-import ServicioBorrarView from "@/views/servicio/ServicioBorrarView.vue";
-import ServicioGuardarView from "@/views/servicio/ServicioGuardarView.vue";
 
 import BodegaConsutlarView from "@/views/bodegaviews/BodegaConsultarView.vue";
 import BodegaCrearView from "@/views/bodegaviews/BodegaCrearView.vue";
@@ -29,12 +20,22 @@ import BuscarCliente from "@/components/cliente/BuscarCliente.vue";
 import BuscarTodosCliente from "@/components/cliente/BuscarTodosCliente.vue";
 import BorrarCliente from "@/components/cliente/BorrarCliente.vue";
 
-import ImpuestoConsultarView from "@/views/impuesto/ImpuestoConsultarView.vue";
-import ImpuestoGuardarView from "@/views/impuesto/ImpuestoGuardarView.vue";
-import ImpuestoActualizarView from "@/views/impuesto/ImpuestoActualizarView.vue";
-import ImpuestoBorrarView from "@/views/impuesto/ImpuestoBorrarView.vue";
-
 import ReporteConsultar from '@/components/reporte/ReporteConsultar.vue'
+
+import ImpuestoConsultar from "@/components/impuesto/ImpuestoConsultar.vue";
+import ImpuestoGuardar from "@/components/impuesto/ImpuestoGuardar.vue";
+import ImpuestoActualizar from "@/components/impuesto/ImpuestoActualizar.vue";
+import ImpuestoBorrar from "@/components/impuesto/ImpuestoBorrar.vue";
+
+import ProductoConsultar from "@/components/producto/ProductoConsultar.vue";
+import ProductoGuardar from "@/components/producto/ProductoGuardar.vue";
+import ProductoActualizar from "@/components/producto/ProductoActualizar.vue";
+import ProductoBorrar from "@/components/producto/ProductoBorrar.vue";
+
+import ServicioConsultar from "@/components/servicio/ServicioConsultar.vue";
+import ServicioGuardar from "@/components/servicio/ServicioGuardar.vue";
+import ServicioActualizar from "@/components/servicio/ServicioActualizar.vue";
+import ServicioBorrar from "@/components/servicio/ServicioBorrar.vue";
 
 const routes = [
   {
@@ -77,22 +78,26 @@ const routes = [
       {
         path: "/consultar",
         name: "producto-consultar",
-        component: ProductoConsultarView,
+        component: ProductoConsultar,
+        props: { category: 'producto' }
       },
       {
         path: "/guardar",
         name: "producto-guardar",
-        component: ProductoGuardarView,
+        component: ProductoGuardar,
+        props: { category: 'producto' }
       },
       {
         path: "/actualizar",
         name: "producto-actualizar",
-        component: ProductoActualizarView,
+        component: ProductoActualizar,
+        props: { category: 'producto' }
       },
       {
         path: "/borrar",
         name: "producto-borrar",
-        component: ProductoBorrarView,
+        component: ProductoBorrar,
+        props: { category: 'producto' }
       },
     ],
   },
@@ -104,22 +109,26 @@ const routes = [
       {
         path: "/consultarS",
         name: "servicio-consultar",
-        component: ServicioConsultarView,
+        component: ServicioConsultar,
+        props: { category: 'servicio' }
       },
       {
         path: "/guardarS",
         name: "servicio-guardar",
-        component: ServicioGuardarView,
+        component: ServicioGuardar,
+        props: { category: 'servicio' }
       },
       {
         path: "/actualizarS",
         name: "servicio-actualizar",
-        component: ServicioActualizarView,
+        component: ServicioActualizar,
+        props: { category: 'servicio' }
       },
       {
         path: "/borrarS",
         name: "servicio-borrar",
-        component: ServicioBorrarView,
+        component: ServicioBorrar,
+        props: { category: 'servicio' }
       },
     ],
   },
@@ -131,22 +140,22 @@ const routes = [
       {
         path: "/consultarI",
         name: "impuesto-consultar",
-        component: ImpuestoConsultarView,
+        component: ImpuestoConsultar,
       },
       {
         path: "/guardarI",
         name: "impuesto-guardar",
-        component: ImpuestoGuardarView,
+        component: ImpuestoGuardar,
       },
       {
         path: "/actualizarI",
         name: "impuesto-actualizar",
-        component: ImpuestoActualizarView,
+        component: ImpuestoActualizar,
       },
       {
         path: "/borrarI",
         name: "impuesto-borrar",
-        component: ImpuestoBorrarView,
+        component: ImpuestoBorrar,
       },
     ],
   },
