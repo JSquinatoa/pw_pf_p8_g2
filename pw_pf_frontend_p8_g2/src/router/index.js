@@ -189,9 +189,10 @@ const routes = [
     component: FacturaView,
   },
   {
-    path: "/factura",
+    path: "/factura/:numeroDocumento",
     name: "factura",
     component: FacturaView,
+    props: true
   },
     {
     path: '/reporte',

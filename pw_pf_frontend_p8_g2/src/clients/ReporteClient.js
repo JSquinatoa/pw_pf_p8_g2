@@ -1,13 +1,21 @@
 import axios from "axios";
-const API_URL = "http://localhost:8081/api/reportes/v1/facturas/reportes";
 
-// Consultar todos
-const consultarTodosReportes = async () => {
-    const respuesta = axios.get(`${API_URL}`).then(res => res.data);
-    return respuesta;
-}
+const BASE = "http://localhost:8081/api/reportes/v1/facturas";
 
-// Funciones Fachada
+// Consultar todos los reportes (ya lo tienes)
 export const consultarTodosReportesFachada = async () => {
-    return await consultarTodosReportes();
-}
+  const { data } = await axios.get(`${BASE}/reportes`);
+  return data;
+};
+
+// Consultar la factura completa por su ID
+export const consultarFacturaCompletaFachada = async (id) => {
+  const { data } = await axios.get(`${BASE}/${id}`);
+  return data;
+};
+
+// Consultar los detalles de compra de una factura
+export const consultarDetallesCompraFachada = async (id) => {
+  const { data } = await axios.get(`${BASE}/${id}/detalles`);
+  return data;
+};
