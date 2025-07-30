@@ -114,24 +114,16 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 90%;
-    max-width: 960px;
-    margin: 5px;
+    width: 100%; 
     padding: 20px;
     box-sizing: border-box;
-    gap: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    gap: 20px; 
 }
-h1 {
-    margin-top: 5px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    color: #333;
+.container_guardar_producto h1 {
+    color: #003366; 
+    margin-bottom: 25px;
+    font-size: 2.2em;
     text-align: center;
-    font-size: 1.8em;
-    width: 100%;
 }
 
 h2 {
@@ -139,221 +131,198 @@ h2 {
     text-align: center;
     font-size: 1.2em;
 }
-
-.mensaje-exito h2 {
-    color: #4CAF50;
-}
-
-.mensaje-error h2 {
-    color: #dc3545;
-}
-
-
 .containerformulario {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    max-width: 550px;
-
-    padding: 35px 20px 35px 20px;
-    border: 10px double;
-    border-end-end-radius: 100px;
+    width: 90%; 
+    max-width: 550px; 
+    border: 10px double #003366; 
+    border-end-end-radius: 100px; 
     border-start-start-radius: 100px;
-    background-color: #f4f6f8;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.516);
-    gap: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.516); 
+    background-color: #f4f6f8; 
+    padding: 40px 30px; 
+    box-sizing: border-box;
+    display: flex; 
+    flex-direction: column;
+    gap: 15px; 
 }
 
 
-p {
+p[type] {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    box-sizing: border-box;
-    padding: 0 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
 }
 
-.containerformulario p:last-of-type {
+p[type]::before {
+    content: attr(type); 
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+p[type] input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+    background-color: white;
+}
+
+p[type] input:focus {
+    outline: none;
+    border-color: #0c3e80; 
+    box-shadow: 0 0 8px rgba(12, 62, 128, 0.3); 
+}
+
+p[type] input:disabled {
+    background-color: #e9ecef; 
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.boton_general.guardar_producto {
+    width: 90%;
+    max-width: 250px;
+    padding: 12px 25px;
+    font-size: 1.4em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background-color: #07265c; 
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease; 
+    margin-top: 20px;
+}
+
+.boton_general.guardar_producto:hover {
+    background-color: #217dbb; 
+    transform: translateY(-2px); 
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); 
+}
+
+.boton_general.guardar_producto:active {
+    background-color: #217dbb;
+    transform: translateY(0); 
+    box-shadow: none;
+}
+
+.mensaje-exito {
+    margin-top: 30px;
+    text-align: center;
+    padding: 20px;
+    background-color: #d4edda; 
+    color: #155724; 
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mensaje-exito h2 { 
+    font-size: 1.5em; 
+    color: #155724; 
+    margin-bottom: 0; 
+}
+
+
+.mensaje-error {
+    margin-top: 15px; 
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8d7da; 
+    color: #721c24; 
+    border: 1px solid #f5c6cb;
+    width: 90%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.mensaje-error h2 { 
+    font-size: 1.2em; 
+    color: #721c24; 
+    margin-top: 0;
     margin-bottom: 0;
 }
 
-
-p::before {
-    display: block;
-    content: attr(type);
-    text-align: left;
-    font-weight: bold;
-    color: #333;
-    font-size: 0.9em;
-    margin-bottom: 3px;
-    width: 100%;
-}
-
-
-.containerformulario input {
-    width: 95%;
-    padding: 6px 8px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 0.9em;
-    box-sizing: border-box;
-}
-
-
-.boton_general {
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-family: "Courier New", Courier, monospace;
-    font-weight: bold;
-    transition: all 0.1s ease;
-    cursor: pointer;
-    background-color: #2c3e50;
-    color: white;
-    border: none;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.boton_general:hover {
-    background-color: #34495e;
-    transform: scale(1.02);
-}
-
-.boton_general:active {
-    background-color: #1a252f;
-    transform: scale(0.99);
-}
-
-.guardar_producto {
-    margin-top: 25px;
-    background-color: #4CAF50;
-    width: 200px;
-}
-
-.guardar_producto:hover {
-    background-color: #45a049;
-}
-
-.guardar_producto:active {
-    background-color: #3e8e41;
-}
-
-
-@media (max-width: 1024px) {
-    .container_guardar_producto {
-        width: 95%;
-        padding: 15px;
-        gap: 15px;
+@media screen and (max-width: 768px) {
+    .container_guardar_producto h1 {
+        font-size: 1.8em;
     }
-
     .containerformulario {
-        width: 80%;
-        padding: 25px 15px 25px 15px;
-        gap: 8px;
-    }
-
-    p {
-        margin-top: 3px;
-        margin-bottom: 3px;
-        padding: 0 3px;
-    }
-
-    p::before {
-        font-size: 0.85em;
-        margin-bottom: 2px;
-    }
-
-    .containerformulario input {
         width: 95%;
-        padding: 5px 7px;
-        font-size: 0.85em;
+        max-width: 450px;
+        padding: 30px 20px;
+    }
+    p[type]::before {
+        font-size: 1em;
+    }
+    p[type] input {
+        padding: 10px;
+        font-size: 0.95em;
+    }
+    .boton_general.guardar_producto {
+        padding: 10px 20px;
+        font-size: 1.2em;
+        max-width: 200px;
+    }
+    .mensaje-exito h2 { 
+        font-size: 1.5em;
+    }
+    .mensaje-error h2 { 
+        font-size: 0.9em;
+    }
+    .mensaje-exito, .mensaje-error { 
+        padding: 8px 15px;
+        font-size: 0.9em; 
     }
 }
 
-@media (max-width: 768px) {
-    .container_guardar_producto {
-        margin: 20px auto;
-        padding: 10px;
-        gap: 15px;
-    }
-
-    h1 {
+@media screen and (max-width: 480px) {
+    .container_guardar_producto h1 {
         font-size: 1.5em;
         margin-bottom: 15px;
     }
-
     .containerformulario {
-        width: 90%;
-        padding: 20px 10px 20px 10px;
-        gap: 8px;
+        width: 100%;
+        padding: 15px;
+        border: 5px double #003366;
+        border-end-end-radius: 50px;
+        border-start-start-radius: 50px;
     }
-
-    .containerformulario input {
-        width: 95%;
-        padding: 5px 7px;
-        font-size: 0.8em;
-    }
-
-    p::before {
-        font-size: 0.8em;
-        margin-bottom: 2px;
-    }
-
-    p {
-        padding: 0 5px;
-        margin-top: 3px;
-        margin-bottom: 3px;
-    }
-
-    .guardar_producto {
-        width: 150px;
-        padding: 8px 15px;
+    p[type]::before {
         font-size: 0.9em;
     }
-}
-
-@media (max-width: 480px) {
-    .container_guardar_producto {
+    p[type] input {
         padding: 8px;
-        margin: 10px auto;
-        gap: 10px;
+        font-size: 0.9em;
     }
-
-    h1 {
-        font-size: 1.2em;
-        margin-bottom: 10px;
+    .boton_general.guardar_producto {
+        padding: 8px 15px;
+        font-size: 1em;
+        max-width: 180px;
     }
-
-    .containerformulario {
-        padding: 15px 8px 15px 8px;
-        gap: 5px;
+    .mensaje-exito {
+        padding: 15px;
+        width: 100%;
     }
-
-    .containerformulario input {
-        width: 95%;
-        font-size: 0.75em;
-        padding: 4px 6px;
+    .mensaje-exito h2 {
+        font-size: 1.3em;
     }
-
-    p::before {
-        font-size: 0.75em;
-        margin-bottom: 1px;
+    .mensaje-error {
+        padding: 7px 10px;
+        width: 100%;
     }
-
-    p {
-        padding: 0;
-        margin-top: 2px;
-        margin-bottom: 2px;
-    }
-
-    .guardar_producto {
-        width: 120px;
-        padding: 6px 10px;
-        font-size: 0.8em;
+    .mensaje-error h2 { 
+        font-size: 0.85em;
     }
 }
 </style>

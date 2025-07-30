@@ -24,27 +24,34 @@ export default {};
 }
 
 .container-navbar-producto nav {
-    display: flex;
-    flex-direction: row;
+    display: flex; 
+    flex-direction: row; 
     justify-content: center;
     align-items: stretch;
     border-radius: 5px;
-    overflow: hidden;
+    overflow: hidden; 
+    flex-wrap: wrap; 
 }
 
 .nav-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 15px 30px;
     background-color: #07265c;
     color: white;
     text-decoration: none;
-    font-size: 1.1em;
+    font-weight: bold;
     white-space: nowrap;
     transition: background-color 0.3s ease;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 15px 30px; 
+    font-size: 1.1em; 
+    flex-grow: 1; 
+    flex-basis: auto; 
 }
+
+
+
 
 .nav-item:first-child {
     border-top-left-radius: 5px;
@@ -65,4 +72,21 @@ export default {};
 .router-link-exact-active {
     background-color: #041a3d;
 }
+
+@media screen and (max-width: 768px) {
+    .container-navbar-producto nav {
+        gap: 3px 0px; 
+    }
+    
+
+}
+
+@media screen and (max-width: 480px) {
+    .nav-item {
+        font-size: 0.9em;
+        gap: 3px 2px; 
+    }
+}
+
+
 </style>

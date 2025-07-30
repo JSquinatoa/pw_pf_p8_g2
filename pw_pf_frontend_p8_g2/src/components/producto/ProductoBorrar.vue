@@ -25,17 +25,18 @@
             </p>
         </div>
         <button class="boton_general boton_borrar" @click="borrar()" :disabled="deshabilitado">Borrar</button>
-        <div v-if="!existeProducto">
+        <div v-if="!existeProducto" class="mensaje-error-general">
             <h2>El {{ category === 'producto' ? 'producto' : 'servicio' }} con el id {{ identificador }} no existe o no
                 es un {{ category === 'producto' ? 'producto' : 'servicio' }}.</h2>
         </div>
-        <div v-if="exitoBorrar">
+        
+        <div v-if="exitoBorrar" class="mensaje-exito-general">
             <h2>
                 El {{ category === 'producto' ? 'Producto' : 'Servicio' }} con el id {{ identificador }} Se Borro
                 Correctamente
             </h2>
         </div>
-        <div v-if="errorMensaje" class="mensaje-error">
+        <div v-if="errorMensaje" class="mensaje-error-general">
             <h2>{{ errorMensaje }}</h2>
         </div>
     </div>
@@ -156,65 +157,46 @@ export default {
 </script>
 
 <style scoped>
+
 .container_borrar_producto {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 90%;
-    max-width: 960px;
-    margin: 5px auto;
+    width: 100%; 
     padding: 20px;
     box-sizing: border-box;
-    gap: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    gap: 20px; 
 }
 
-h1 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    color: #333;
+
+.container_borrar_producto h1 {
+    color: #003366; 
+    margin-bottom: 25px; 
+    font-size: 2.2em; 
     text-align: center;
-    font-size: 1.8em;
-    width: 100%;
 }
-
-h2 {
-    margin-top: 15px;
-    color: #4CAF50;
-    text-align: center;
-    font-size: 1.2em;
-}
-
-.container_borrar_producto>div[v-if="!existeProducto"] h2 {
-    color: #dc3545;
-}
-
-
-.mensaje-error h2 {
-    color: #dc3545;
-}
-
 
 .container_consultar {
     display: flex;
-    width: 60%;
-    max-width: 450px;
-    justify-content: center;
     align-items: center;
     gap: 15px;
+    width: 90%;
+    max-width: 550px; 
+    margin-bottom: 20px;
+    padding: 0; 
+    box-sizing: border-box;
 }
 
 .input_consulta {
     flex-grow: 1;
-    padding: 10px 12px;
+    padding: 12px; 
     border: 1px solid #ccc;
-    border-bottom: 2px solid #2c3e50;
-    border-radius: 5px;
-    font-size: 1em;
+    border-radius: 8px; 
+    font-size: 1em; 
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
 }
 
 .input_consulta::-webkit-outer-spin-button,
@@ -225,273 +207,254 @@ h2 {
 
 .input_consulta:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+    border-color: #0c3e80; 
+    box-shadow: 0 0 8px rgba(12, 62, 128, 0.3); 
+}
+
+.input_consulta:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 .boton_consulta {
-    width: 30%;
-    min-width: 100px;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-size: 1em;
-    font-family: "Courier New", Courier, monospace;
+    
+    padding: 12px 25px;
+    font-size: 1.1em; 
     font-weight: bold;
-    transition: all 0.1s ease;
-    cursor: pointer;
-    background-color: #2c3e50;
+    letter-spacing: 1px; 
+    background-color: #07265c;
     color: white;
     border: none;
-    white-space: nowrap;
-    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    white-space: nowrap; 
 }
 
 .boton_consulta:hover {
-    background-color: #34495e;
-    transform: scale(1.02);
+    background-color: #217dbb;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .boton_consulta:active {
-    background-color: #1a252f;
-    transform: scale(0.99);
+    background-color: #217dbb;
+    transform: translateY(0);
+    box-shadow: none;
 }
-
-.boton_general {
-    padding: 12px 25px;
-    width: auto;
-    min-width: 180px;
-    margin-top: 25px;
-    border-radius: 10px;
-    font-family: "Courier New", Courier, monospace;
-    font-weight: bold;
-    transition: all 0.1s ease;
-    cursor: pointer;
-    color: white;
-    border: none;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.boton_general:hover {
-    transform: scale(1.02);
-}
-
-.boton_general:active {
-    transform: scale(0.99);
-}
-
-
-.boton_borrar {
-    background-color: #dc3545;
-}
-
-.boton_borrar:hover {
-    background-color: #c82333;
-}
-
-.boton_borrar:active {
-    background-color: #bd2130;
-}
-
 .containerformulario {
+    width: 90%; 
+    max-width: 550px; 
+    border: 10px double #003366; 
+    border-end-end-radius: 100px; 
+    border-start-start-radius: 100px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.516); 
+    background-color: #f4f6f8; 
+    padding: 40px 30px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    width: 50%;
-    max-width: 550px;
-    padding: 35px 20px 45px 20px;
-    border: 10px double;
-    border-end-end-radius: 100px;
-    border-start-start-radius: 100px;
-    background-color: #f4f6f8;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.516);
-    gap: 10px;
+    gap: 15px; 
+    margin-top: 20px; 
 }
-
-p {
+p[type] {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    box-sizing: border-box;
-    padding: 0 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
 }
 
-.containerformulario p:last-of-type {
+p[type]::before {
+    content: attr(type);
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+
+p[type] input {
+    width: 100%; 
+    padding: 12px; 
+    border: 1px solid #ccc;
+    border-radius: 8px; 
+    font-size: 1em; 
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
+}
+
+p[type] input:focus {
+    outline: none;
+    border-color: #0c3e80;
+    box-shadow: 0 0 8px rgba(12, 62, 128, 0.3);
+}
+
+p[type] input:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.boton_general.boton_borrar {
+    width: 90%;
+    max-width: 250px;
+    padding: 12px 25px;
+    font-size: 1.4em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background-color: #dc3545; 
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin-top: 20px;
+}
+
+.boton_general.boton_borrar:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.boton_general.boton_borrar:active {
+    background-color: #bd2130;
+    transform: translateY(0);
+    box-shadow: none;
+}
+.mensaje-exito-general {
+    margin-top: 30px;
+    text-align: center;
+    padding: 20px;
+    background-color: #d4edda;
+    color: #155724; 
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.mensaje-exito-general h2 {
+    font-size: 1.1em; 
+    color: #155724;
+    margin-top: 0;
     margin-bottom: 0;
 }
 
-p::before {
-    display: block;
-    content: attr(type);
-    text-align: left;
-    font-weight: bold;
-    color: #333;
-    font-size: 0.9em;
-    margin-bottom: 3px;
-    width: 100%;
-}
-
-.containerformulario input {
-    width: 95%;
-    padding: 6px 8px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 0.9em;
+.mensaje-error-general {
+    margin-top: 30px; 
+    text-align: center;
+    padding: 20px;
+    background-color: #f8d7da; 
+    color: #721c24; 
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
 
-@media (max-width: 1024px) {
-    .container_borrar_producto {
-        width: 95%;
-        padding: 15px;
-        gap: 15px;
-    }
-
-    .container_consultar {
-        width: 80%;
-    }
-
-    .containerformulario {
-        width: 80%;
-        padding: 25px 15px 35px 15px;
-        gap: 8px;
-    }
-
-    p {
-        margin-top: 3px;
-        margin-bottom: 3px;
-        padding: 0 3px;
-    }
-
-    p::before {
-        font-size: 0.85em;
-        margin-bottom: 2px;
-    }
-
-    .containerformulario input {
-        width: 95%;
-        padding: 5px 7px;
-        font-size: 0.85em;
-    }
-
-    .boton_general {
-        min-width: 150px;
-        padding: 10px 20px;
-    }
+.mensaje-error-general h2 {
+    font-size: 1.5em; 
+    color: #721c24;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-@media (max-width: 768px) {
-    .container_borrar_producto {
-        margin: 20px auto;
-        padding: 10px;
-        gap: 15px;
+@media screen and (max-width: 768px) {
+    .container_borrar_producto h1 {
+        font-size: 1.8em;
     }
-
-    h1 {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-    }
-
     .container_consultar {
-        flex-direction: column;
-        width: 90%;
+        width: 95%;
+        max-width: 400px;
         gap: 10px;
+        padding: 0;
     }
-
     .input_consulta {
-        width: 100%;
-        padding: 8px;
-        font-size: 0.9em;
-    }
-
-    .boton_consulta {
-        width: 100%;
-        min-width: auto;
-        margin-left: 0;
         padding: 8px 10px;
-        font-size: 0.9em;
+        font-size: 0.95em;
     }
-
-    .boton_general {
-        width: 80%;
-        max-width: 250px;
+    .boton_consulta {
+        padding: 8px 15px;
+        font-size: 1em;
+    }
+    .containerformulario {
+        width: 95%;
+        max-width: 450px;
+        padding: 30px 20px;
+        gap: 20px;
+    }
+    p[type]::before {
+        font-size: 1em;
+    }
+    p[type] input {
         padding: 10px;
         font-size: 0.95em;
     }
-
-    .containerformulario {
-        width: 90%;
-        padding: 20px 10px 30px 10px;
-        gap: 8px;
+    .boton_general.boton_borrar {
+        padding: 10px 20px;
+        font-size: 1.2em;
+        max-width: 200px;
     }
-
-    .containerformulario input {
-        width: 95%;
-        padding: 5px 7px;
-        font-size: 0.8em;
+    .mensaje-exito-general, .mensaje-error-general {
+        padding: 8px 15px;
+        font-size: 0.9em;
     }
-
-    p::before {
-        font-size: 0.8em;
-        margin-bottom: 2px;
-    }
-
-    p {
-        padding: 0 5px;
-        margin-top: 3px;
-        margin-bottom: 3px;
+    .mensaje-exito-general h2, .mensaje-error-general h2 {
+        font-size: 1.2em;
     }
 }
 
-@media (max-width: 480px) {
-    .container_borrar_producto {
-        padding: 8px;
-        margin: 10px auto;
-        gap: 10px;
-    }
-
-    h1 {
-        font-size: 1.2em;
+@media screen and (max-width: 480px) {
+    .container_borrar_producto h1 {
+        font-size: 1.5em;
         margin-bottom: 10px;
     }
-
-    .input_consulta,
-    .boton_consulta {
-        font-size: 0.8em;
-    }
-
-    .boton_consulta {
-        padding: 6px 8px;
-    }
-
-    .boton_general {
-        padding: 6px 10px;
-        font-size: 0.8em;
-    }
-
-    .containerformulario {
-        padding: 12px 8px 20px 8px;
-        gap: 5px;
-    }
-
-    .containerformulario input {
-        width: 95%;
-        font-size: 0.75em;
-        padding: 4px 6px;
-    }
-
-    p::before {
-        font-size: 0.75em;
-        margin-bottom: 1px;
-    }
-
-    p {
+    .container_consultar {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        gap: 10px;
         padding: 0;
-        margin-top: 2px;
-        margin-bottom: 2px;
+    }
+    .input_consulta {
+        width: 100%;
+    }
+    .boton_consulta {
+        width: 100%;
+    }
+    .containerformulario {
+        width: 100%;
+        padding: 20px 15px;
+        border: 5px double #003366;
+        border-end-end-radius: 50px;
+        border-start-start-radius: 50px;
+        gap: 15px;
+    }
+    p[type]::before {
+        font-size: 0.9em;
+    }
+    p[type] input {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+    .boton_general.boton_borrar {
+        padding: 8px 15px;
+        font-size: 1em;
+        max-width: 180px;
+    }
+    .mensaje-exito-general, .mensaje-error-general {
+        padding: 7px 10px;
+        width: 100%;
+    }
+    .mensaje-exito-general h2, .mensaje-error-general h2 {
+        font-size: 1.0em;
     }
 }
 </style>
