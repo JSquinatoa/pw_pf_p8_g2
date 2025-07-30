@@ -23,11 +23,11 @@ import BodegaCrearView from "@/views/bodegaviews/BodegaCrearView.vue";
 import BodegaModificarView from "@/views/bodegaviews/BodegaModificarView.vue";
 import BodegaEliminarView from "@/views/bodegaviews/BodegaEliminarView.vue";
 
-import CrearClienteView from "@/views/cliente/CrearClienteView.vue";
-import ActualizarClienteView from "@/views/cliente/ActualizarClienteView.vue";
-import BuscarClienteView from "@/views/cliente/BuscarClienteView.vue";
-import BuscarTodosClienteView from "@/views/cliente/BuscarTodosClienteView.vue";
-import BorrarClienteView from "@/views/cliente/BorrarClienteView.vue";
+import CrearCliente from "@/components/cliente/CrearCliente.vue";
+import ActualizarCliente from "@/components/cliente/ActualizarCliente.vue";
+import BuscarCliente from "@/components/cliente/BuscarCliente.vue";
+import BuscarTodosCliente from "@/components/cliente/BuscarTodosCliente.vue";
+import BorrarCliente from "@/components/cliente/BorrarCliente.vue";
 
 import ImpuestoConsultarView from "@/views/impuesto/ImpuestoConsultarView.vue";
 import ImpuestoGuardarView from "@/views/impuesto/ImpuestoGuardarView.vue";
@@ -154,32 +154,35 @@ const routes = [
     path: "/cliente",
     name: "cliente",
     component: ClienteView,
+    children: [
+      {
+        path: "/crearcliente",
+        name: "crearcliente",
+        component: CrearCliente,
+      },
+      {
+        path: "/actualizarcliente",
+        name: "actualizarcliente",
+        component: ActualizarCliente,
+      },
+      {
+        path: "/buscarcliente",
+        name: "buscarcliente",
+        component: BuscarCliente,
+      },
+      {
+        path: "/buscartodosclientes",
+        name: "buscartodosclientes",
+        component: BuscarTodosCliente,
+      },
+      {
+        path: "/borrarcliente",
+        name: "borrarcliente",
+        component: BorrarCliente,
+      },
+    ],
   },
-  {
-    path: "/crearcliente",
-    name: "crearcliente",
-    component: CrearClienteView,
-  },
-  {
-    path: "/actualizarcliente",
-    name: "actualizarcliente",
-    component: ActualizarClienteView,
-  },
-  {
-    path: "/buscarcliente",
-    name: "buscarcliente",
-    component: BuscarClienteView,
-  },
-  {
-    path: "/buscartodosclientes",
-    name: "buscartodosclientes",
-    component: BuscarTodosClienteView,
-  },
-  {
-    path: "/borrarcliente",
-    name: "borrarcliente",
-    component: BorrarClienteView,
-  },
+  
   {
     path: "/factura",
     name: "factura",

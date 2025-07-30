@@ -1,16 +1,16 @@
 <template>
   <div class="container-clienteview">
-    <Cliente />
+    <NavBarCliente />
+    <router-view />
   </div>
 </template>
 
 <script>
-import Cliente from "@/components/cliente/Cliente.vue";
+import NavBarCliente from "@/components/cliente/NavBarCliente.vue";
 
 export default {
   components: {
-    Cliente,
-
+    NavBarCliente
   },
 };
 </script>
