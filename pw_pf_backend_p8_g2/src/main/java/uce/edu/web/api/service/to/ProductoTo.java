@@ -77,11 +77,11 @@ public class ProductoTo {
 
     public void buildURI(UriInfo uriInfo) {
         URI todosImpuestos = uriInfo.getBaseUriBuilder().path(ProductoController.class)
-                .path(ProductoController.class, "obtenerImpuestosPorProducto").build(id);
+                .path(ProductoController.class, "obtenerImpuestosPorProducto").build(codigoBarras);
         _links.put("impuestos", todosImpuestos.toString());
 
         URI todasBodegas = uriInfo.getBaseUriBuilder().path(ProductoController.class)
-                .path(ProductoController.class, "obtenerBodegasPorProducto").build(id);
+                .path(ProductoController.class, "obtenerBodegasPorProducto").build(codigoBarras);
         _links.put("bodegas", todasBodegas.toString());
     }
 }

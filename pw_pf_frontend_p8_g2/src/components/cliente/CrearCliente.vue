@@ -27,14 +27,20 @@
     <button class="boton_opcion" @click="guardarCliente()">
       Crear
     </button>
-    <div v-if="exito">
+    <div v-if="exito" class="mensajes-exito">
       <h1>Cliente Correctamente Guardado</h1>
+    </div>
+    <div v-if="error" class="mensajes-error">
+      <h1>Datos incompletos en el formulario</h1>
+    </div>
+    <div v-if="incompleto" class="mensajes-errorduplicado">
+      <h1>Cédula ya existente</h1>
     </div>
   </div>
 </template>
 
 <script>
-import { guardarFachada } from "@/clients/ClienteClient.js";
+import { guardarFachada, consultarClientePorIdFachada } from "@/clients/ClienteClient.js";
 import "@/css/EstiloGenerico.css";
 
 export default {
@@ -52,11 +58,23 @@ export default {
       },
       exito: false,
       deshabilitado: false,
+      error: false,
+      incompleto: false,
     };
   },
 
   methods: {
+    
     async guardarCliente() {
+      // Validar si algún campo está vacío
+      if (!this.cliente.cedula || !this.cliente.nombre || !this.cliente.apellido || 
+        !this.cliente.razonSocial || !this.cliente.direccion || !this.cliente.telefono || !this.cliente.correo) {
+        this.error = true; 
+        this.limpiarError();
+        return;  
+        
+      }
+      // Si los campos están completos, crear el objeto cliente para enviar
       const clienteToBody = {
         cedula: this.cliente.cedula,
         nombre: this.cliente.nombre,
@@ -66,28 +84,44 @@ export default {
         telefono: this.cliente.telefono,
         correo: this.cliente.correo,
       };
-      if (!this.deshabilitado) {
-        await guardarFachada(clienteToBody);
+
+      try {
+        if (!this.deshabilitado) {
+          await guardarFachada(clienteToBody);
+        }
+        this.exito = true;
+        this.deshabilitado = true;
+        this.limpiarMensaje();
+      } catch (error) {
+        console.error("Error al guardar el cliente:", error);
+        this.error = true;
       }
+    },
 
-      this.exito = true;
-      this.deshabilitado = true;
+    // Método para reiniciar las variables
+    reiniciarVariables() {
+      this.cliente.cedula = null;
+      this.cliente.nombre = null;
+      this.cliente.apellido = null;
+      this.cliente.razonSocial = null;
+      this.cliente.direccion = null;
+      this.cliente.telefono = null;
+      this.cliente.correo = null;
+    },
+    limpiarError(){
       setTimeout(() => {
-        this.exito = false;
-        this.deshabilitado = false;
-        this.reiniciarVaraibles();
-      }, 3000);
+          this.error = false;
+          this.deshabilitado = false;
+          this.reiniciarVariables();
+        }, 3000)
     },
-
-    reiniciarVaraibles() {
-        this.cliente.cedula = null,
-        this.cliente.nombre = null,
-        this.cliente.apellido = null,
-        this.cliente.razonSocial = null,
-        this.cliente.direccion = null,
-        this.cliente.telefono = null,
-        this.cliente.correo = null;
-    },
+    limpiarMensaje(){
+      setTimeout(() => {
+          this.exito = false;
+          this.deshabilitado = false;
+          this.reiniciarVariables();
+        }, 3000)
+    }
   },
 };
 </script>

@@ -6,7 +6,7 @@
         type="number"
         v-model="identificador"
         placeholder="Ingrese la cédula del cliente"
-        :disabled="deshabilitado"
+        :disabled="deshabilitados"
       />
       <button class="boton_consulta" @click="ObtenerClientePorId()">
         Consultar
@@ -42,7 +42,7 @@
     <div v-if="!existeCliente">
       <h1>El cliente con la cedula {{ identificador }} no existe</h1>
     </div>
-    <div v-if="exitoBorrar">
+    <div v-if="exitoBorrar" class="mensaje-error">
       <h1>
         El cliente con la cedula {{ identificador }} Se borro Correctamente
       </h1>
@@ -69,7 +69,8 @@ export default {
       },
       existeCliente: true,
       exitoBorrar: false,
-      deshabilitado: false,
+      deshabilitados: false,
+      deshabilitado: true,
     };
   },
 
@@ -79,7 +80,9 @@ export default {
       let aux = await consultarClientePorIdFachada(this.identificador);
       if (!aux) {
         this.existeCliente = false;
+        this.reiniciarVaraibles();
         setTimeout(() => {
+          this.identificador = null,
           this.existeCliente = true;
         }, 3000);
         return;
@@ -94,26 +97,28 @@ export default {
     } catch (error) {
       if (error.response && error.response.status === 404) {
         this.existeCliente = false;
+        this.reiniciarVaraibles();
         setTimeout(() => {
+          this.identificador = null,
           this.existeCliente = true;
         }, 3000);
       }
     }
   },
 
-    async borrarCliente() {
-      if (!this.deshabilitado) {
-        await borrarPorIdFachada(
-          this.identificador
-        );
+   async borrarCliente() {
+      if (this.deshabilitado) {
+        try {
+          await borrarPorIdFachada(this.identificador);
+          this.exitoBorrar = true;
+          setTimeout(() => {
+            this.exitoBorrar = false;
+            this.reiniciarVaraibles();
+          }, 3000);
+        } catch (error) {
+          console.error("Error al borrar cliente:", error);
+        }
       }
-      this.deshabilitado = true;
-      this.exitoBorrar = true
-      setTimeout(() => {
-        this.exitoBorrar = false;
-        this.deshabilitado = false;
-        this.reiniciarVaraibles();
-      }, 3000);
     },
 
     reiniciarVaraibles() {
