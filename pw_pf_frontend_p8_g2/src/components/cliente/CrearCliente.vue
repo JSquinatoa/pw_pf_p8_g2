@@ -24,7 +24,7 @@
         <input type="email" v-model="cliente.correo" :disabled="deshabilitado"/>
       </p>
     </div>
-    <button class="boton_consulta crear" @click="guardarCliente()">
+    <button class="boton_opcion" @click="guardarCliente()">
       Crear
     </button>
     <div v-if="exito">
@@ -35,6 +35,7 @@
 
 <script>
 import { guardarFachada } from "@/clients/ClienteClient.js";
+import "@/css/EstiloGenerico.css";
 
 export default {
   data() {
@@ -91,137 +92,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.container_consultarcliente {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  gap: 20px; 
-}
+<style>
 
-.boton_consulta {
-  width: 90%;
-  max-width: 250px;
-  padding: 10px 24px;
-  border-radius: 8px;
-  background-color: #07265c;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.08);
-}
-
-.boton_consulta:hover {
-  background-color: #217dbb;
-  transform: scale(1.03);
-}
-
-.boton_consulta:active {
-  background-color: #176093;
-}
-
-.crear {
-  background-color: #07265c;
-  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.08);
-}
-
-.crear:hover {
-  background-color: #217dbb;
-}
-
-h1 {
-  font-size: 1.3em;
-  color: #2c3e50;
-  margin-bottom: 18px;
-  margin-top: 0;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.containerformulario {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  width: 100%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 18px;
-  border: 10px double #003366;
-  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
-  padding: 32px 28px;
-  box-sizing: border-box;
-}
-
-p {
-  margin: 0;
-  font-weight: 500;
-  color: #34495e;
-  font-size: 1em;
-  display: flex;
-  flex-direction: column;
-}
-
-p::before {
-  content: attr(type);
-  font-size: 0.95em;
-  color: #7f8c8d;
-  margin-bottom: 4px;
-  font-weight: 400;
-}
-
-.containerformulario input {
-  padding: 9px 12px;
-  border: 1px solid #b0c4de;
-  border-radius: 7px;
-  font-size: 1em;
-  background: #f8fafc;
-  transition: border-color 0.2s;
-}
-
-.containerformulario input:focus {
-  border-color: #3498db;
-  background: #fff;
-  outline: none;
-}
-
-/* RESPONSIVE */
-@media (max-width: 700px) {
-    .container-navbar-cliente {
-        width: 98%;
-        margin: 20px auto;
-    }
-    .container-navbar-cliente nav {
-        flex-direction: column;
-        align-items: stretch;
-        border-radius: 8px;
-    }
-    .nav-item {
-        padding: 12px 10px;
-        font-size: 1em;
-        border-right: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 0;
-    }
-    .nav-item:first-child {
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-    .nav-item:last-child {
-        border-bottom: none;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
-}
 </style>

@@ -1,19 +1,4 @@
-<template>
-  <nav class="navbar-reporte">
-    <router-link to="/reporte/todos" class="nav-item">
-      Reportes
-    </router-link>
-  </nav>
-</template>
-
-<script>
-export default {
-  name: "NavBarReporte",
-};
-</script>
-
-<style scoped>
-.navbar-reporte {
+.container-navbar-cliente {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -24,7 +9,7 @@ export default {
     top: 0;
 }
 
-.navbar-reporte nav {
+.container-navbar-cliente nav {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -71,12 +56,12 @@ export default {
 
 /* RESPONSIVE */
 @media (max-width: 700px) {
-    .navbar-reporte {
+    .container-navbar-cliente {
         width: 100%;
         margin: 0;
         padding: 0;
     }
-    .navbar-reporte nav {
+    .container-navbar-cliente nav {
         flex-direction: column;
         align-items: stretch;
         border-radius: 8px;
@@ -102,4 +87,3 @@ export default {
         border-top-right-radius: 0;
     }
 }
-</style>
