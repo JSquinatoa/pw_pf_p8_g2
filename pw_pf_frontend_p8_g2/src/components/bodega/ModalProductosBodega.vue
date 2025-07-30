@@ -78,7 +78,7 @@ export default {
         const data = await obtenerProductosPorBodegaFachada(this.bodegaCodigo);
         this.productos = data || [];
       } catch (err) {
-        this.error = 'No se pudieron cargar los productos. Verifique la conexión o el código de la bodega.';
+        this.error = 'No existen productos en la bodega';
         console.error('Detalle del error al obtener productos:', err);
       } finally {
         this.loading = false;

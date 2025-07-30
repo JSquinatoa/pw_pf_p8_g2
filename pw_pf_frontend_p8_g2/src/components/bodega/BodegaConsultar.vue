@@ -1,7 +1,7 @@
 <template>
   <div class="container_consultarcliente">
     <h1>Listado de Bodegas</h1>
-    <button class="boton_consultar" @click="consultarBodegas()">
+    <button class="boton_consulta" @click="consultarBodegas()">
       Consultar Todas las Bodegas
     </button>
 
@@ -134,49 +134,7 @@ export default {
 </script>
 
 <style scoped>
-/* Contenedor principal */
-.container-bconsultar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  gap: 20px;
-}
 
-/* Título */
-
-
-/* Botón de consulta */
-.boton_consultar {
-  width: 90%;
-  max-width: 300px; /* Adjust max-width for better fit */
-  padding: 12px 28px; /* Larger padding for better click area */
-  border-radius: 8px;
-  background-color: #07265c;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 1.1em; /* Slightly larger font */
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2); /* More prominent shadow */
-  margin-bottom: 20px; /* Space below button */
-}
-
-.boton_consultar:hover {
-  background-color: #217dbb;
-  transform: scale(1.03);
-}
-
-.boton_consultar:active {
-  background-color: #176093;
-}
-
-/* Mensajes temporales */
 .mensaje {
   padding: 12px 20px;
   border-radius: 8px;
@@ -189,24 +147,23 @@ export default {
 }
 
 .mensaje.success {
-  background-color: #e6ffe6; /* Light green */
-  color: #28a745; /* Dark green */
+  background-color: #e6ffe6; 
+  color: #28a745; 
   border: 1px solid #28a745;
 }
 
 .mensaje.error {
-  background-color: #ffe6e6; /* Light red */
-  color: #dc3545; /* Dark red */
+  background-color: #ffe6e6;
+  color: #dc3545;
   border: 1px solid #dc3545;
 }
 
 .mensaje.info {
-  background-color: #e6f7ff; /* Light blue */
-  color: #007bff; /* Dark blue */
+  background-color: #e6f7ff;
+  color: #007bff;
   border: 1px solid #007bff;
 }
 
-/* Transiciones para mensajes */
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s ease-in-out;
 }
@@ -215,47 +172,45 @@ export default {
 }
 
 
-
 table {
-  width: 90%; /* Adjust table width */
-  margin: 0 auto; /* Center the table */
+  width: 90%;
+  margin: 0 auto;
   border-collapse: collapse;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  border-radius: 10px; /* Rounded corners for the table */
-  overflow: hidden; /* Ensures rounded corners are visible */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 th, td {
-  padding: 15px; /* More padding for better readability */
+  padding: 15px; 
   text-align: left;
-  border-bottom: 1px solid #e0e0e0; /* Lighter border */
+  border-bottom: 1px solid #e0e0e0;
 }
 
 th {
   background-color: #07265c;
   color: #fff;
   font-weight: bold;
-  text-transform: uppercase; /* Uppercase table headers */
+  text-transform: uppercase;
   font-size: 0.9em;
 }
 
 tr:nth-child(even) {
-  background-color: #f8f8f8; /* Slightly different background for even rows */
+  background-color: #f8f8f8; 
 }
 
 tr:hover {
-  background-color: #f0f0f0; /* Highlight row on hover */
+  background-color: #f0f0f0; 
 }
 
 .td-boton-ver {
   text-align: center;
 }
 
-/* Botón "Ver" dentro de la tabla */
 .boton-ver-productos {
   padding: 8px 15px;
   border-radius: 5px;
-  background-color: #07265c; /* Blue color to match other buttons */
+  background-color: #07265c;
   color: #fff;
   border: none;
   font-size: 0.9em;
@@ -264,7 +219,7 @@ tr:hover {
 }
 
 .boton-ver-productos:hover {
-  background-color: #217dbb; /* Darker blue on hover */
+  background-color: #217dbb;
   transform: scale(1.05);
 }
 
