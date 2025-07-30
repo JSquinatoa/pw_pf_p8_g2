@@ -4,6 +4,7 @@ import java.util.List;
 
 import uce.edu.web.api.repository.model.Bodega;
 import uce.edu.web.api.repository.model.Producto;
+import uce.edu.web.api.service.to.InventarioTo;
 
 public interface IInventarioService {
 
@@ -18,6 +19,9 @@ public interface IInventarioService {
 
     // Relaciones
     List<Producto> buscarProductosPorBodega(String codigoBodega);
+
+    List<InventarioTo> buscarProductosInventarioBodega(String codigoBodega); 
+    
 
     List<Bodega> buscarBodegasPorProducto(String codigoBarras);
 

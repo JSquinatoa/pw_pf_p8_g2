@@ -116,6 +116,18 @@ public class InventarioRepoImpl implements IInventarioRepo {
     }
 
     @Override
+    public List<Inventario> seleccionarInventariosPorBodega(String codigoBodega) {
+        // Esta consulta retorna directamente los objetos Inventario
+        return entityManager.createQuery(
+                        "SELECT i FROM Inventario i " +
+                                "JOIN i.bodega b " +
+                                "WHERE b.codigo = :codigoBodega",
+                        Inventario.class)
+                        .setParameter("codigoBodega", codigoBodega)
+                        .getResultList();
+    }
+
+    @Override
     public List<Bodega> seleccionarBodegasPorProducto(String codigoBarras) {
         return entityManager.createQuery(
                 "SELECT b FROM Bodega b " +

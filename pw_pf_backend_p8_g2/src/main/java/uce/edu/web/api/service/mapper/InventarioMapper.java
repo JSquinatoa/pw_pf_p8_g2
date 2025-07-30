@@ -21,6 +21,8 @@ public class InventarioMapper {
         }
         if (inventario.getProducto() != null) {
             iTo.setCodigoBarras(inventario.getProducto().getCodigoBarras());
+            iTo.setNombreBodega(inventario.getBodega().getNombre());
+            iTo.setNombreProducto(inventario.getProducto().getNombre());
         }
 
         return iTo;

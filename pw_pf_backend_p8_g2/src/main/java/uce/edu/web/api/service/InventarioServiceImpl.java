@@ -1,12 +1,17 @@
 package uce.edu.web.api.service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import uce.edu.web.api.repository.IInventarioRepo;
 import uce.edu.web.api.repository.model.Bodega;
+import uce.edu.web.api.repository.model.Inventario;
 import uce.edu.web.api.repository.model.Producto;
+import uce.edu.web.api.service.mapper.InventarioMapper;
+import uce.edu.web.api.service.to.InventarioTo;
 
 @ApplicationScoped
 public class InventarioServiceImpl implements IInventarioService {
@@ -37,6 +42,17 @@ public class InventarioServiceImpl implements IInventarioService {
     @Override
     public List<Producto> buscarProductosPorBodega(String codigoBodega) {
         return this.iInventarioRepo.seleccionarProductosPorBodega(codigoBodega);
+    }
+
+    @Override
+    public List<InventarioTo> buscarProductosInventarioBodega(String codigoBodega) {
+        List<Inventario> inventarios = this.iInventarioRepo.seleccionarInventariosPorBodega(codigoBodega);
+        if (inventarios == null || inventarios.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return inventarios.stream()
+                          .map(InventarioMapper::toTo)
+                          .collect(Collectors.toList());
     }
 
     @Override

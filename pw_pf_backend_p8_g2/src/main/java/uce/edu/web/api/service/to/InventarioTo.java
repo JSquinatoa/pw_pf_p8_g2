@@ -5,6 +5,11 @@ public class InventarioTo {
     private Integer stock;
     private String codigoBodega;
     private String codigoBarras;
+    private String nombreProducto;
+    private String nombreBodega;
+    
+
+    
 
     // GET y SET
     public Integer getStock() {
@@ -30,5 +35,24 @@ public class InventarioTo {
     public void setCodigoBarras(String codigoProducto) {
         this.codigoBarras = codigoProducto;
     }
+
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public String getNombreBodega() {
+        return nombreBodega;
+    }
+
+    public void setNombreBodega(String nombreBodega) {
+        this.nombreBodega = nombreBodega;
+    }
+
+    
 
 }

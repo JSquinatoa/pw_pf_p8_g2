@@ -1,5 +1,9 @@
 package uce.edu.web.api.controller;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import jakarta.inject.Inject;
@@ -15,6 +19,8 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import uce.edu.web.api.service.IInventarioService;
+import uce.edu.web.api.service.mapper.InventarioMapper;
+import uce.edu.web.api.service.to.InventarioTo;
 
 @Path("/inventarios")
 @Produces(MediaType.APPLICATION_JSON)
@@ -31,6 +37,17 @@ public class InvetarioController {
             @QueryParam("codigoBarras") String codigoBarras) {
         Integer stockActual = this.iInventarioService.buscarStock(codigoBodega, codigoBarras);
         return Response.status(Response.Status.OK).entity(stockActual).build();
+    }
+
+    @GET
+    @Path("/productos-por-bodega/{codigoBodega}")
+    @Operation(summary = "Obtener productos y stock por bodega", description = "Obtiene todos los productos y su stock asociado a una bodega específica.")
+    public Response consultarProductosPorBodega(@PathParam("codigoBodega") String codigoBodega) {
+        List<InventarioTo> productosEnBodega = this.iInventarioService.buscarProductosInventarioBodega(codigoBodega);
+        if (productosEnBodega == null || productosEnBodega.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No se encontraron productos para la bodega " + codigoBodega).build();
+        }
+        return Response.status(Response.Status.OK).entity(productosEnBodega).build();
     }
 
     @POST
