@@ -11,6 +11,14 @@
             <p type="Precio:">
                 <input type="number" v-model="producto.precio" :disabled="deshabilitado" />
             </p>
+            <p type="Stock:">
+                <input type="number" v-model="stock">
+            </p>
+            <p type="Bodega">
+                <select v-model="bodegaSeleccionada">
+                    <option v-for="bodega in bodegas" :key="bodega.id" :value="bodega.codigo">{{ bodega.codigo }} - {{ bodega.nombre }}</option>
+                </select>
+            </p>
         </div>
 
         <button class="boton_general guardar_producto" @click="guardarProductos()">Crear</button>
@@ -25,7 +33,9 @@
 </template>
 
 <script>
-import { guardarFachada } from "@/clients/ProductoClient.js";
+import { guardarFachada as guardarProductoFachada } from "@/clients/ProductoClient.js";
+import { guardarFachada as guardarInventarioFachada } from "@/clients/InventarioClient.js"
+import { consultarBodegasFachada} from "@/clients/BodegaClient.js"
 
 export default {
     props: {
@@ -43,6 +53,9 @@ export default {
                 codigoBarras: null,
                 precio: null,
             },
+            stock: 0,
+            bodegaSeleccionada: null,
+            bodegas: [],
             exito: false,
             deshabilitado: false,
             errorMensaje: null, 
@@ -71,15 +84,15 @@ export default {
             this.deshabilitado = true; 
 
             try {
-                await guardarFachada(productoToBody);
+                await guardarProductoFachada(productoToBody)
                 this.exito = true; 
                 setTimeout(() => {
+                    this.guardarInventario(this.bodegaSeleccionada, this.producto.codigoBarras, this.stock);
                     this.exito = false;
                     this.deshabilitado = false;
-                    this.reiniciarVaraibles();
+                    this.reiniciarVaraibles();                    
                 }, 3000); 
-            } catch (error) {
-                
+            } catch (error) {                
                 this.mostrarMensajeError(`Error al guardar el ${this.category}. Verifique los datos o intente más tarde.`);
                 console.error(`Error al guardar ${this.category}:`, error);
                 this.deshabilitado = false; 
@@ -95,6 +108,9 @@ export default {
             setTimeout(() => {
                 this.errorMensaje = null;
             }, 3000); 
+        },
+        async guardarInventario(codigoBodega, codigoBarras, stock){
+            await guardarInventarioFachada(codigoBodega, codigoBarras, stock);
         }
     },
     watch: {
@@ -104,6 +120,10 @@ export default {
                 this.producto.categoria = newCategory;
             }
         }
+    },
+    async beforeMount(){
+        this.bodegas = await consultarBodegasFachada();
+        console.log("bodegas", this.bodegas);        
     }
 };
 </script>
@@ -154,7 +174,6 @@ h2 {
     flex-direction: column;
     width: 50%;
     max-width: 550px;
-
     padding: 35px 20px 35px 20px;
     border: 10px double;
     border-end-end-radius: 100px;
@@ -193,7 +212,8 @@ p::before {
 }
 
 
-.containerformulario input {
+.containerformulario input,
+.containerformulario select {
     width: 95%;
     padding: 6px 8px;
     background-color: white;
@@ -267,7 +287,8 @@ p::before {
         margin-bottom: 2px;
     }
 
-    .containerformulario input {
+    .containerformulario input,
+    .containerformulario select {
         width: 95%;
         padding: 5px 7px;
         font-size: 0.85em;
@@ -292,7 +313,8 @@ p::before {
         gap: 8px;
     }
 
-    .containerformulario input {
+    .containerformulario input,
+    .containerformulario select {
         width: 95%;
         padding: 5px 7px;
         font-size: 0.8em;
@@ -333,7 +355,8 @@ p::before {
         gap: 5px;
     }
 
-    .containerformulario input {
+    .containerformulario input,
+    .containerformulario select {
         width: 95%;
         font-size: 0.75em;
         padding: 4px 6px;
