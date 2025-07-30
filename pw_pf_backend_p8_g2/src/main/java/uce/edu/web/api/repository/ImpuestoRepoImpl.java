@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import uce.edu.web.api.repository.model.Impuesto;
+import uce.edu.web.api.repository.model.Producto;
 
 @Transactional
 @ApplicationScoped
@@ -38,10 +39,12 @@ public class ImpuestoRepoImpl implements IImpuestoRepo {
 
     @Override
     public void eliminarImpuestoConProductosPorId(Integer id) {
-        this.entityManager.createQuery("DELETE FROM Producto p WHERE p.impuesto.id = :id")        
-                .setParameter("id", id)
-                .executeUpdate();
-        entityManager.remove(seleccionarPorId(id));
+        Impuesto impuesto = seleccionarPorId(id);
+        for (Producto p : impuesto.getProductos()) {
+            p.getImpuestos().remove(impuesto);
+            this.entityManager.merge(p);
+        }
+        this.entityManager.remove(impuesto);
     }
 
     @Override

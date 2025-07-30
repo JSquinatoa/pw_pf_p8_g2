@@ -1,0 +1,14 @@
+// Comandos para compilar el backend
+
+cd .\pw_pf_backend_p8_g2\
+mvn clean package -Dquarkus.package.type=uber-jar
+cd target
+java -jar pw_pf_backend_p8_g2-1.0.0-SNAPSHOT-runner.jar
+cd ..
+cd ..
+
+
+// Comandos para compilar el frontend
+cd .\pw_pf_frontend_p8_g2\
+npm run serve
+
