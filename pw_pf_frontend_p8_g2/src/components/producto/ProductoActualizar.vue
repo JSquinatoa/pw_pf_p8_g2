@@ -25,8 +25,17 @@
             </p>
         </div>
 
-        <button class="boton_opcion" @click="actulizarParcial()"
-            :disabled="deshabilitado">Actualizar</button>
+        <h2> Actualice los impuestos </h2>
+        <div class="containerformulario">
+            <p type = "Impuestos:">
+                <div class="impuestos" v-for="impuesto in impuestos" :key="impuesto.id">
+                    <label :for="impuesto.nombre">{{ impuesto.nombre }}</label>
+                    <input type="checkbox" :id="impuesto.nombre" name="impuestos" :value="impuesto.id" v-model="impuestosSeleccionados"/>
+                </div>                
+            </p>           
+        </div>
+
+        <button class="boton_opcion" @click="actulizarParcial()" :disabled="deshabilitado">Actualizar</button>
 
         <div v-if="!existeProducto" class="mensaje-error-actualizar">
             <h1>El {{ category === 'producto' ? 'producto' : 'servicio' }} con el id {{ identificador }} no existe o no es un {{ category === 'producto' ? 'producto' : 'servicio' }}.</h1>
@@ -40,10 +49,9 @@
 </template>
 
 <script>
-import {
-    consultarProductosIdFachada,
-    actulizarParcialPorIdFachada
-} from "@/clients/ProductoClient";
+import { consultarProductosIdFachada, actulizarParcialPorIdFachada} from "@/clients/ProductoClient";
+import { consultarTodosImpuestosFachada } from "@/clients/ImpuestoClient.js"; 
+import { obtenerInformacionUrlsFachada } from "@/helpers/ObtenerInforUrls.js";
 import "@/css/EstiloGenerico.css";
 
 export default {
@@ -68,6 +76,9 @@ export default {
             exitoActulizar: false,
             deshabilitado: false,
             deshabilitadoBotonConsultar: false,
+            impuestos: [],
+            impuestosSeleccionados: [],
+            impuestosDeProducto: [],
         };
     },
 
@@ -80,6 +91,8 @@ export default {
 
             try {
                 let aux = await consultarProductosIdFachada(this.identificador);
+                this.impuestosDeProducto = await obtenerInformacionUrlsFachada(aux._links.impuestos);
+                
 
                 if (aux === null || aux.categoria !== this.category) {
                     this.existeProducto = false;
@@ -99,6 +112,11 @@ export default {
                 this.producto.precio = aux.precio;
                 this.deshabilitado = false;
                 this.deshabilitadoBotonConsultar = false;
+
+                // logica para rellenar impuestos
+                for (let impuesto of this.impuestosDeProducto){
+                    this.impuestosSeleccionados.unshift(impuesto.id);
+                }
 
             } catch (error) {
                 alert(`Error al consultar el ${this.category}. Verifique el ID e intente de nuevo.`);
@@ -122,6 +140,7 @@ export default {
                 categoria: this.category, 
                 codigoBarras: this.producto.codigoBarras,
                 precio: this.producto.precio,
+                impuestos: this.impuestosSeleccionados
             };
 
             try {
@@ -150,8 +169,13 @@ export default {
             this.producto.codigoBarras = null;
             this.producto.precio = null;
             this.producto.id = null;
+            this.impuestosSeleccionados = [];
         },
     },
+
+    async beforeMount(){
+        this.impuestos = await consultarTodosImpuestosFachada();        
+    }
 };
 </script>
 

@@ -25,6 +25,16 @@
             </p>
         </div>
 
+        <h2> Actualice los impuestos </h2>
+        <div class="containerformulario">
+            <p type = "Impuestos:">
+                <div class="impuestos" v-for="impuesto in impuestos" :key="impuesto.id">
+                    <label :for="impuesto.nombre">{{ impuesto.nombre }}</label>
+                    <input type="checkbox" :id="impuesto.nombre" name="impuestos" :value="impuesto.id" v-model="impuestosSeleccionados"/>
+                </div>                
+            </p>           
+        </div>
+
         <button class="boton_opcion" @click="actulizarParcial()"
             :disabled="deshabilitado">Actualizar</button>
 
@@ -40,10 +50,9 @@
 </template>
 
 <script>
-import {
-    consultarProductosIdFachada,
-    actulizarParcialPorIdFachada
-} from "@/clients/ProductoClient"; 
+import { consultarProductosIdFachada,actulizarParcialPorIdFachada } from "@/clients/ProductoClient"; 
+import { consultarTodosImpuestosFachada } from "@/clients/ImpuestoClient.js";
+import { obtenerInformacionUrlsFachada } from "@/helpers/ObtenerInforUrls.js";
 import "@/css/EstiloGenerico.css";
 
 export default {
@@ -68,12 +77,16 @@ export default {
             exitoActulizar: false,
             deshabilitado: false,
             deshabilitadoBotonConsultar: false,
+            impuestos: [],
+            impuestosSeleccionados: [],
+            impuestosDeServicio: [],
         };
     },
 
     methods: {
         async ObtenerServicioPorId() {
             let aux = await consultarProductosIdFachada(this.identificador);
+            this.impuestosDeServicio = await obtenerInformacionUrlsFachada(aux._links.impuestos);
 
             if (aux === null || aux.categoria !== this.category) {
                 this.existeServicio = false; 
@@ -94,6 +107,11 @@ export default {
             this.servicio.precio = aux.precio;
             this.deshabilitado = false;
             this.deshabilitadoBotonConsultar = false;
+
+            // logica para rellenar impuestos
+            for (let impuesto of this.impuestosDeServicio){
+                this.impuestosSeleccionados.unshift(impuesto.id);
+            }
         },
 
         async actulizarParcial() {
@@ -102,6 +120,7 @@ export default {
                 categoria: this.category, 
                 codigoBarras: this.servicio.codigoBarras,
                 precio: this.servicio.precio,
+                impuestos: this.impuestosSeleccionados
             };
 
             if (!this.deshabilitado) {
@@ -127,8 +146,12 @@ export default {
             this.servicio.codigoBarras = null;
             this.servicio.precio = null;
             this.servicio.id = null;
+            this.impuestosSeleccionados = [];
         },
     },
+    async beforeMount(){
+        this.impuestos = await consultarTodosImpuestosFachada();
+    }
 };
 </script>
 

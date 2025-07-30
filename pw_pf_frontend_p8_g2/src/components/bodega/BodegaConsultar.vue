@@ -255,7 +255,7 @@ tr:hover {
 .boton-ver-productos {
   padding: 8px 15px;
   border-radius: 5px;
-  background-color: #07265c; /* Blue color to match other buttons */
+  background: #07265c; /* Blue color to match other buttons */
   color: #fff;
   border: none;
   font-size: 0.9em;

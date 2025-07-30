@@ -5,15 +5,21 @@
             <p type="Nombre:">
                 <input type="text" v-model="item.nombre" :disabled="deshabilitado" />
             </p>
-            <p type="Categoria:">
-                <input type="text" v-model="item.categoria" :disabled="true" :value="category" />
-            </p>
             <p type="Codigo de Barras:">
                 <input type="text" v-model="item.codigoBarras" :disabled="deshabilitado" />
             </p>
             <p type="Precio:">
                 <input type="number" v-model="item.precio" :disabled="deshabilitado" />
             </p>
+        </div>
+
+        <div class="containerformulario">
+            <p type = "Impuestos:">
+                <div class="impuestos" v-for="impuesto in impuestos" :key="impuesto.id">
+                    <label :for="impuesto.nombre">{{ impuesto.nombre }}</label>
+                    <input type="checkbox" :id="impuesto.nombre" name="impuestos" :value="impuesto.id" v-model="impuestosSeleccionados"/>
+                </div>                
+            </p>           
         </div>
 
         <button class="boton_opcion" @click="guardarServicio()">Crear</button>
@@ -29,6 +35,7 @@
 
 <script>
 import { guardarFachada } from "@/clients/ProductoClient";
+import { consultarTodosImpuestosFachada } from "@/clients/ImpuestoClient";
 import "@/css/EstiloGenerico.css";
 
 export default {
@@ -43,13 +50,14 @@ export default {
         return {
             item: {
                 nombre: null,
-                categoria: null,
                 codigoBarras: null,
                 precio: null,
             },
             exito: false,
             deshabilitado: false,
             errorMensaje: null, 
+            impuestos: [],
+            impuestosSeleccionados: [],
         };
     },
 
@@ -57,7 +65,6 @@ export default {
         async guardarServicio() {
             this.errorMensaje = null; 
             this.exito = false; 
-
 
             if (!this.item.nombre || !this.item.codigoBarras || this.item.precio === null) {
                 this.mostrarMensajeError("Por favor, complete todos los campos (Nombre, Código de Barras, Precio).");
@@ -70,16 +77,16 @@ export default {
 
             const itemToBody = {
                 nombre: this.item.nombre,
-                categoria: this.category,
+                categoria: "servicio",
                 codigoBarras: this.item.codigoBarras,
                 precio: this.item.precio,
+                impuestos: this.impuestosSeleccionados
             };
 
             this.deshabilitado = true;
 
             try {
                 await guardarFachada(itemToBody);
-
                 this.exito = true; 
                 setTimeout(() => {
                     this.exito = false;
@@ -98,6 +105,7 @@ export default {
             this.item.categoria = null; 
             this.item.codigoBarras = null;
             this.item.precio = null;
+            this.impuestosSeleccionados = [];
         },
     
         mostrarMensajeError(mensaje) {
@@ -115,6 +123,11 @@ export default {
                 this.item.categoria = newCategory;
             }
         }
+    },
+    async beforeMount(){
+        this.impuestos = await consultarTodosImpuestosFachada();
+        console.log("Impuestos cargados:", this.impuestos);
+        
     }
 };
 </script>
