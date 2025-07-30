@@ -79,7 +79,9 @@ export default {
       let aux = await consultarClientePorIdFachada(this.identificador);
       if (!aux) {
         this.existeCliente = false;
+        this.reiniciarVaraibles();
         setTimeout(() => {
+          this.identificador = null,
           this.existeCliente = true;
         }, 3000);
         return;
@@ -94,7 +96,9 @@ export default {
     } catch (error) {
       if (error.response && error.response.status === 404) {
         this.existeCliente = false;
+        this.reiniciarVaraibles();
         setTimeout(() => {
+          this.identificador = null,
           this.existeCliente = true;
         }, 3000);
       }

@@ -6,7 +6,7 @@
         type="number"
         v-model="identificador"
         placeholder="Ingrese la cédula del cliente"
-        :disabled="deshabilitado"
+        :disabled="deshabilitados"
       />
       <button class="boton_consulta" @click="ObtenerClientePorId()">
         Consultar
@@ -36,7 +36,7 @@
         <input type="email" v-model="cliente.correo" :disabled="deshabilitado"/>
       </p>
     </div>
-    <div v-if="!existeCliente">
+    <div v-if="!existeCliente" class="mensajes-error">
       <h1>El cliente con la cedula {{ identificador }} no existe</h1>
     </div>
   </div>
@@ -62,37 +62,54 @@ export default {
       },
       clientes:[],
       existeCliente: true,
-      deshabilitado: false,
+      deshabilitados: false,
+      deshabilitado: true,
     };
   },
 
- methods: {
-  async ObtenerClientePorId() {
-    try {
-      let aux = await consultarClientePorIdFachada(this.identificador);
-      if (!aux) {
-        this.existeCliente = false;
-        setTimeout(() => {
-          this.existeCliente = true;
-        }, 3000);
-        return;
+  methods: {
+    async ObtenerClientePorId() {
+      try {
+        let aux = await consultarClientePorIdFachada(this.identificador);
+        if (!aux) {
+
+          this.reiniciarVariables();
+          this.existeCliente = false;
+          setTimeout(() => {
+            this.identificador = null,
+            this.existeCliente = true;
+          }, 3000);
+          return;
+        }
+
+        this.cliente.cedula = aux.cedula;
+        this.cliente.nombre = aux.nombre;
+        this.cliente.apellido = aux.apellido;
+        this.cliente.razonSocial = aux.razonSocial;
+        this.cliente.direccion = aux.direccion;
+        this.cliente.telefono = aux.telefono;
+        this.cliente.correo = aux.correo;
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          this.reiniciarVariables();
+          this.existeCliente = false;
+          setTimeout(() => {
+            this.identificador = null,
+            this.existeCliente = true;
+          }, 3000);
+        }  
       }
-      this.cliente.cedula = aux.cedula;
-      this.cliente.nombre = aux.nombre;
-      this.cliente.apellido = aux.apellido;
-      this.cliente.razonSocial = aux.razonSocial;
-      this.cliente.direccion = aux.direccion;
-      this.cliente.telefono = aux.telefono;
-      this.cliente.correo = aux.correo;
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        this.existeCliente = false;
-        setTimeout(() => {
-          this.existeCliente = true;
-        }, 3000);
-      }  
+    },
+
+    reiniciarVariables() {
+      this.cliente.cedula = null;
+      this.cliente.nombre = null;
+      this.cliente.apellido = null;
+      this.cliente.razonSocial = null;
+      this.cliente.direccion = null;
+      this.cliente.telefono = null;
+      this.cliente.correo = null;
     }
-  },
   },
 };
 
