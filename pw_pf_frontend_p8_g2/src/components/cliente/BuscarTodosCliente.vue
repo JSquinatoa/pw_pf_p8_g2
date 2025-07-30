@@ -33,6 +33,8 @@
         </tbody>
       </table>
     </div>
+    
+    <p v-else class="mensaje">No tiene clientes. Presiona el botón para cargar los clientes.</p>
   </div>
 
 </template>

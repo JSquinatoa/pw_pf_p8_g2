@@ -2,7 +2,7 @@
   <div class="container_consultarcliente">
     <h1>Eliminar Bodega</h1>
     <div class="container_consultar">
-      <input class="input_consulta" type="text" v-model="id" placeholder="Ingrese el código de la bodega a eliminar"
+      <input class="input_consulta" type="text" v-model="id" placeholder="Ingrese el código"
         :disabled="deshabilitadoConsulta" />
       <button class="boton_consulta" @click="obtenerBodegaPorId()">
         Consultar
@@ -94,17 +94,14 @@ export default {
         return;
       }
 
-      const confirmacion = confirm(`¿Está seguro de que desea eliminar la bodega con código ${this.id}?`);
-      if (!confirmacion) {
-        this.mensajesTemporales('Eliminación cancelada.', 'info');
-        return;
-      }
-
       try {
         this.deshabilitadoConsulta = true;
         await eliminarBodegaFachada(this.id);
         this.mensajesTemporales(`Bodega ${this.id} eliminada exitosamente.`, 'success');
-        this.resetForm();
+        setTimeout(() => {
+          this.resetForm();
+        }, 500); 
+
       } catch (error) {
         console.error("Error al eliminar la bodega:", error);
         this.mensajesTemporales('Ocurrió un error al eliminar la bodega. Inténtalo de nuevo.', 'error');
@@ -112,7 +109,6 @@ export default {
         this.deshabilitadoConsulta = false;
       }
     },
-
     resetForm() {
       this.limpiarMensajesTemporales();
       this.id = null;
@@ -123,7 +119,6 @@ export default {
       };
       this.bodegaCargada = false;
     },
-
     mensajesTemporales(mensaje, tipo) {
       this.limpiarMensajesTemporales();
       this.temporarymensaje = mensaje;
@@ -149,8 +144,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .form-elementos-contenido {
   display: flex;
   flex-direction: column;
