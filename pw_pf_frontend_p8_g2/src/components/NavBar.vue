@@ -1,6 +1,8 @@
 <template>
   <div></div>
-  <nav :class="['continaer-navbar', ocultar ? 'navbar-oculto' : 'navbar-visible']">
+  <nav
+    :class="['continaer-navbar', ocultar ? 'navbar-oculto' : 'navbar-visible']"
+  >
     <router-link class="link" to="/">Home</router-link>
     <router-link class="link" to="/bodega">Bodega</router-link>
     <a class="link" @click="isMercancia = !isMercancia">Mercancia</a>
@@ -13,7 +15,9 @@
     <router-link class="link" to="/factura">Factura</router-link>
     <router-link class="link" to="/reporte">Reporte</router-link>
   </nav>
-  <div :class="['mostrar', !ocultar ? 'container-esconder' : 'container-mostrar']">
+  <div
+    :class="['mostrar', !ocultar ? 'container-esconder' : 'container-mostrar']"
+  >
     <button @click="esconder()">
       <span v-if="ocultar" class="icon-menu">
         <span></span>

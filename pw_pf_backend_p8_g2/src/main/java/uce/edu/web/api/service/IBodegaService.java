@@ -12,7 +12,7 @@ public interface IBodegaService {
 
     void guardar(Bodega bodega);
 
-    void actualizarPorCodigo(Bodega bodega);
+    void actualizar(Bodega bodega);
 
     void borrarPorCodigo(String codigo);
 
