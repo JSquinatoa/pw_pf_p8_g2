@@ -12,4 +12,8 @@ cd ..
 cd .\pw_pf_frontend_p8_g2\
 npm run serve
 
-git checkout -b steven 
+git checkout -b rama
+git add .
+git commit -m "nombre del commit"
+git push rama
+
