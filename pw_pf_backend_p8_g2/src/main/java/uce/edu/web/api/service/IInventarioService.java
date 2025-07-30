@@ -16,6 +16,10 @@ public interface IInventarioService {
 
     void borrar(String codigoBodega, String codigoBarras);
 
+    public boolean descontarStock(String codigoBodega, String codigoBarras, Integer cantidad);
+
+    public void restaurarStock(String codigoBodega, String codigoBarras, Integer cantidad);
+
     // Relaciones
     List<Producto> buscarProductosPorBodega(String codigoBodega);
 

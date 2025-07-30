@@ -16,6 +16,11 @@ public class InventarioServiceImpl implements IInventarioService {
 
     @Override
     public void guardar(String codigoBodega, String codigoBarras, Integer stock) {
+        Integer stockActual = this.iInventarioRepo.seleccionarStock(codigoBodega, codigoBarras);
+        if (stockActual != null) {
+            this.iInventarioRepo.actualizarStock(codigoBodega, codigoBarras, stockActual + stock);
+            return;
+        }
         this.iInventarioRepo.insertar(codigoBodega, codigoBarras, stock);
     }
 
@@ -32,6 +37,24 @@ public class InventarioServiceImpl implements IInventarioService {
     @Override
     public void borrar(String codigoBodega, String codigoBarras) {
         this.iInventarioRepo.eliminar(codigoBodega, codigoBarras);
+    }
+
+    @Override
+    public boolean descontarStock(String codigoBodega, String codigoBarras, Integer cantidad) {
+        Integer stockActual = this.iInventarioRepo.seleccionarStock(codigoBodega, codigoBarras);
+        if (stockActual != null && stockActual >= cantidad) {
+            this.iInventarioRepo.actualizarStock(codigoBodega, codigoBarras, stockActual - cantidad);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void restaurarStock(String codigoBodega, String codigoBarras, Integer cantidad) {
+        Integer stockActual = this.iInventarioRepo.seleccionarStock(codigoBodega, codigoBarras);
+        if (stockActual != null) {
+            this.iInventarioRepo.actualizarStock(codigoBodega, codigoBarras, stockActual + cantidad);
+        }
     }
 
     @Override
