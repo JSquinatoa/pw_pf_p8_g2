@@ -37,8 +37,7 @@ public class InventarioRepoImpl implements IInventarioRepo {
 
         // Validar que no exista ya la relación
         Inventario existente = entityManager.createQuery(
-                "SELECT i FROM Inventario i WHERE i.bodega.id = :bodegaId AND i.producto.id = :productoId",
-                Inventario.class)
+                "SELECT i FROM Inventario i WHERE i.bodega.id = :bodegaId AND i.producto.id = :productoId",Inventario.class)
                 .setParameter("bodegaId", bodega.getId())
                 .setParameter("productoId", producto.getId())
                 .getResultStream()
@@ -69,7 +68,7 @@ public class InventarioRepoImpl implements IInventarioRepo {
             myQuery.setParameter("codigoBarras", codigoBarras);
             return myQuery.getSingleResult();
         } catch (NoResultException e) {
-            throw new IllegalArgumentException("No existe registro para esa bodega/producto");
+            return null; // Si no se encuentra, retornar null
         }
 
     }

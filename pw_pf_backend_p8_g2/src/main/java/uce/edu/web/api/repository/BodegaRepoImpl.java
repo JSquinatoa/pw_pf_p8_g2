@@ -48,7 +48,7 @@ public class BodegaRepoImpl implements IBodegaRepo {
     @Override
     public void eliminarPorCodigo(String codigo) {
         Bodega bodega = seleccionarPorCodigo(codigo);
-        this.entityManager.createQuery("DELETE i FROM Inventario i WHERE i.bodega.id = :id")
+        this.entityManager.createQuery("DELETE FROM Inventario i WHERE i.bodega.id = :id")
                 .setParameter("id", bodega.getId())
                 .executeUpdate();
         this.entityManager.remove(bodega);
