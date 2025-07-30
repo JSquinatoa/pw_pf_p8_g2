@@ -190,6 +190,7 @@ p::before {
   background-color: #f9f9f9;
 }
 
+
 /* RESPONSIVE */
 @media (max-width: 700px) {
   .container_consultar {
@@ -278,6 +279,7 @@ p::before {
   .tabla-clientes td:last-child {
     border-bottom: none;
   }
+  
 @media (max-width: 400px) {
   .container_consultar {
     flex-direction: column; 

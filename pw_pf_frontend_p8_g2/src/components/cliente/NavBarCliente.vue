@@ -17,11 +17,13 @@ export default {};
 <style scoped>
 .container-navbar-cliente {
     display: flex;
+    width: 100%;
     justify-content: center;
-    align-items: center;
-    width: 80%;
-    max-width: 960px;
-    margin: 40px auto;
+    background: #07265c;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0;
+    top: 0;
 }
 
 .container-navbar-cliente nav {
@@ -32,6 +34,7 @@ export default {};
     border-radius: 5px;
     overflow: hidden;
     width: 100%;
+    background-color: #07265c; /* Color de fondo del nav */
 }
 
 .nav-item {
@@ -71,8 +74,9 @@ export default {};
 /* RESPONSIVE */
 @media (max-width: 700px) {
     .container-navbar-cliente {
-        width: 98%;
-        margin: 20px auto;
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
     .container-navbar-cliente nav {
         flex-direction: column;
