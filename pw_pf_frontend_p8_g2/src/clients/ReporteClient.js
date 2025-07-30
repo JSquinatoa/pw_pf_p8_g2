@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "/api/reportes/v1/reportes";
+const API_URL = "http://localhost:8081/api/reportes/v1/facturas/reportes";
 
 // Consultar todos
 const consultarTodosReportes = async () => {
