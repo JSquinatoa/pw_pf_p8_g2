@@ -47,7 +47,7 @@ export default {
             deshabilitado: false,
             temporarymensaje: null,
             mensajeType: '',
-            mensajeTimeout: null,    
+            mensajeTimeout: null,
         }
     },
     methods: {
@@ -82,12 +82,12 @@ export default {
         mensajesTemporales(mensaje, tipo) {
             this.limpiarMensajesTemporales();
             this.temporarymensaje = mensaje;
-            this.mensajeType = tipo; 
+            this.mensajeType = tipo;
             this.mensajeTimeout = setTimeout(() => {
                 this.limpiarMensajesTemporales();
-            }, 3000); 
+            }, 3000);
         },
-        
+
         limpiarMensajesTemporales() {
             if (this.mensajeTimeout) {
                 clearTimeout(this.mensajeTimeout);
@@ -104,7 +104,6 @@ export default {
 </script>
 
 <style scoped>
-
 .container_bcrear {
   display: flex;
   flex-direction: column;
@@ -113,68 +112,75 @@ export default {
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
-  gap: 20px; 
+  gap: 20px;
 }
 
-
-.container_bcrear h1 {
-  color: #003366;
-  margin-bottom: 25px;
-  font-size: 2.2em;
+h1 {
+  font-size: 1.3em;
+  color: #2c3e50;
+  margin-bottom: 18px;
+  margin-top: 0;
+  font-weight: 600;
+  letter-spacing: 1px;
   text-align: center;
 }
 
-
 .form-container-ente {
-  width: 90%; 
-  max-width: 550px; 
-  border: 10px double #003366; 
-  border-end-end-radius: 100px;
-  border-start-start-radius: 100px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.516);
-  background-color: #f4f6f8;
-  padding: 40px 30px; 
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 18px;
+  border: 10px double #003366;
+  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
+  padding: 32px 28px;
   box-sizing: border-box;
+  background-color: #f4f6f8;
 }
 
 .form-elementos-contenido {
   display: flex;
   flex-direction: column;
-  gap: 15px; 
+  gap: 15px;
 }
 
-
 p[type] {
-  display: flex; 
-  flex-direction: column; 
-  align-items: flex-start; 
+  margin: 0;
+  text-align: left;
+  font-weight: 500;
+  color: #34495e;
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
 p[type]::before {
+  text-align: left;
   content: attr(type);
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 8px; 
-  font-size: 1.1em;
+  font-size: 0.95em;
+  color: #7f8c8d;
+  margin-bottom: 4px;
+  font-weight: 400;
 }
 
-
-p[type] input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px; 
+.form-container-ente input {
+  padding: 9px 12px;
+  border: 1px solid #b0c4de;
+  border-radius: 7px;
   font-size: 1em;
-  box-sizing: border-box; 
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  background-color: white; 
+  background: #f8fafc;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-p[type] input:focus {
+.form-container-ente input:focus {
+  border-color: #3498db;
+  background: #fff;
   outline: none;
-  border-color: #0c3e80; 
-  box-shadow: 0 0 8px rgba(12, 62, 128, 0.3);
 }
 
 p[type] input:disabled {
@@ -186,27 +192,27 @@ p[type] input:disabled {
 .boton_crear {
   width: 90%;
   max-width: 250px;
-  padding: 12px 25px;
-  font-size: 1.4em;
-  font-weight: bold;
-  letter-spacing: 2px;
-  background-color: #07265c;
-  color: white;
-  border: none;
+  padding: 10px 24px;
   border-radius: 8px;
+  background-color: #07265c;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 1em;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.08);
   margin-top: 20px;
 }
 
 .boton_crear:hover {
   background-color: #217dbb;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.03);
 }
 
 .boton_crear:active {
-  background-color: #217dbb;
+  background-color: #176093;
   transform: translateY(0);
   box-shadow: none;
 }
@@ -226,7 +232,7 @@ p[type] input:disabled {
 
 .mensajes-exito h1 {
   font-size: 1.8em;
-  color: #fff;
+  color: #003366;
   margin-bottom: 15px;
 }
 
@@ -246,103 +252,38 @@ p[type] input:disabled {
 }
 
 .mensaje {
+  padding: 12px 20px;
+  border-radius: 8px;
   margin-top: 15px;
-  padding: 10px 20px;
-  border-radius: 5px;
   font-weight: bold;
   text-align: center;
   width: 90%;
   max-width: 400px;
-  box-sizing: border-box;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .mensaje.success {
-  background-color: #d4edda; 
-  color: #155724; 
-  border: 1px solid #c3e6cb;
+  background-color: #e6ffe6;
+  color: #28a745;
+  border: 1px solid #28a745;
 }
 
 .mensaje.error {
-  background-color: #f8d7da; 
-  color: #721c24; 
-  border: 1px solid #f5c6cb;
+  background-color: #ffe6e6;
+  color: #dc3545;
+  border: 1px solid #dc3545;
 }
 
-/* Vue Transition Styles */
+.mensaje.info {
+  background-color: #e6f7ff;
+  color: #007bff;
+  border: 1px solid #007bff;
+}
+
 .fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.5s ease-in-out;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter-from, .fade-leave-to {
   opacity: 0;
-}
-
-
-@media screen and (max-width: 768px) {
-  .container_bcrear h1 {
-    font-size: 1.8em;
-  }
-  .form-container-ente {
-    width: 95%;
-    max-width: 450px;
-    padding: 30px 20px; 
-  }
-  p[type]::before { 
-    font-size: 1em;
-  }
-  p[type] input { 
-    padding: 10px;
-    font-size: 0.95em;
-  }
-  .boton_crear {
-    padding: 10px 20px;
-    font-size: 1.2em;
-    max-width: 200px;
-  }
-  .mensajes-exito h1 {
-    font-size: 1.5em;
-  }
-  .mensaje {
-    padding: 8px 15px;
-    font-size: 0.9em;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .container_bcrear h1 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-  }
-  .form-container-ente {
-    width: 100%;
-    padding: 15px;
-    border: 5px double #003366;
-    border-end-end-radius: 50px;
-    border-start-start-radius: 50px;
-  }
-  p[type]::before {
-    font-size: 0.9em;
-  }
-  p[type] input {
-    padding: 8px;
-    font-size: 0.9em;
-  }
-  .boton_crear {
-    padding: 8px 15px;
-    font-size: 1em;
-    max-width: 180px;
-  }
-  .mensajes-exito {
-    padding: 15px;
-    width: 100%;
-  }
-  .mensajes-exito h1 {
-    font-size: 1.3em;
-  }
-  .mensaje {
-    padding: 7px 10px;
-    font-size: 0.85em;
-  }
 }
 </style>

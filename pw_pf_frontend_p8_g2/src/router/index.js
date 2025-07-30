@@ -9,10 +9,10 @@ import ReporteView from "@/views/reporte/ReporteView.vue";
 import ImpuestoView from "@/views/impuesto/ImpuestoView.vue";
 
 
-import BodegaConsutlarView from "@/views/bodegaviews/BodegaConsultarView.vue";
-import BodegaCrearView from "@/views/bodegaviews/BodegaCrearView.vue";
-import BodegaModificarView from "@/views/bodegaviews/BodegaModificarView.vue";
-import BodegaEliminarView from "@/views/bodegaviews/BodegaEliminarView.vue";
+import BodegaConsultar from "@/components/bodega/BodegaConsultar.vue";
+import BodegaCrear from "@/components/bodega/BodegaCrear.vue";
+import BodegaModificar from "@/components/bodega/BodegaModificar.vue";
+import BodegaEliminar from "@/components/bodega/BodegaEliminar.vue";
 
 import CrearCliente from "@/components/cliente/CrearCliente.vue";
 import ActualizarCliente from "@/components/cliente/ActualizarCliente.vue";
@@ -51,22 +51,22 @@ const routes = [
       {
         path: "consultar",
         name: "bodega-consultar",
-        component: BodegaConsutlarView,
+        component: BodegaConsultar,
       },
       {
         path: "crear",
         name: "bodega-crear",
-        component: BodegaCrearView,
+        component: BodegaCrear,
       },
       {
         path: "modificar",
         name: "bodega-modificar",
-        component: BodegaModificarView,
+        component: BodegaModificar,
       },
       {
         path: "eliminar",
         name: "bodega-eliminar",
-        component: BodegaEliminarView,
+        component: BodegaEliminar,
       },
     ],
   },
