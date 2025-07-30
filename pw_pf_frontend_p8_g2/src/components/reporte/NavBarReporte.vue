@@ -14,34 +14,92 @@ export default {
 
 <style scoped>
 .navbar-reporte {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  background: #07265c;
-  border-radius: 5px;
-  overflow: hidden;
-  margin: 1rem 0;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background: #07265c;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0;
+    top: 0;
+}
+
+.navbar-reporte nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    background-color: #07265c; /* Color de fondo del nav */
 }
 
 .nav-item {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  text-align: center;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #07265c;
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.nav-item:not(:last-child) {
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
+.nav-item:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
-.router-link-active {
-  background: #041a3d;
+.nav-item:last-child {
+    border-right: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .nav-item:hover {
-  background: #0c3e80;
+    background-color: #0c3e80;
+}
+
+.router-link-active,
+.router-link-exact-active {
+    background-color: #041a3d;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+    .navbar-reporte {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .navbar-reporte nav {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 8px;
+    }
+    .nav-item {
+        padding: 12px 10px;
+        font-size: 1em;
+        border-right: none;
+        border-bottom: 2px solid rgba(248, 245, 245, 0.1);
+        border-radius: 0;
+    }
+    .nav-item:first-child {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .nav-item:last-child {
+        border-bottom: none;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
 }
 </style>
