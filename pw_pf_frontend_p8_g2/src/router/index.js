@@ -197,12 +197,12 @@ const routes = [
     name: "factura",
     component: FacturaView,
   },
-  {
+/*   {
     path: "/factura/:numeroDocumento",
     name: "factura",
     component: FacturaView,
     props: true
-  },
+  }, */
     {
     path: '/reporte',
     name: 'reporte',

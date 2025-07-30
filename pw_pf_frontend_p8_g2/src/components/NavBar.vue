@@ -142,13 +142,17 @@ button {
   align-items: center;
   width: 20px;
   height: 20px;
+  padding: 4px;
+  background-color: #07265c;
+  border-radius: 2px;
+
 }
 
 .icon-menu span {
   display: block;
   width: 22px;
   height: 3px;
-  background: black;
+  background: white;
   margin: 2px 0;
   border-radius: 2px;
 }

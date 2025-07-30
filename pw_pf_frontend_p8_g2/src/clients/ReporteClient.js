@@ -1,8 +1,5 @@
 import axios from "axios";
-<<<<<<< HEAD
-const API_URL = "http://localhost:8081/api/reportes/v1/facturas/reportes";
-=======
->>>>>>> 374574fec6e83975ac331b746f97c3720c834a00
+
 
 const BASE = "http://localhost:8081/api/reportes/v1/facturas";
 
