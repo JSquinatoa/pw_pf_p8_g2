@@ -1,5 +1,5 @@
 <template>
-    <div class="container_guardar_producto">
+    <div class="container_consultarcliente">
         <h1>Crear un nuevo {{ category === 'producto' ? 'Producto' : 'Servicio' }}</h1>
         <div class="containerformulario">
             <p type="Nombre:">
@@ -21,7 +21,7 @@
             </p>
         </div>
 
-        <button class="boton_general guardar_producto" @click="guardarProductos()">Crear</button>
+        <button class="boton_opcion" @click="guardarProductos()">Crear</button>
 
         <div v-if="exito" class="mensaje-exito">
             <h2>{{ category === 'producto' ? 'Producto' : 'Servicio' }} Correctamente Guardado</h2>
@@ -34,8 +34,9 @@
 
 <script>
 import { guardarFachada as guardarProductoFachada } from "@/clients/ProductoClient.js";
-import { guardarFachada as guardarInventarioFachada } from "@/clients/InventarioClient.js"
-import { consultarBodegasFachada} from "@/clients/BodegaClient.js"
+import { guardarFachada as guardarInventarioFachada } from "@/clients/InventarioClient.js";
+import { consultarBodegasFachada} from "@/clients/BodegaClient.js";
+import "@/css/EstiloGenerico.css";
 
 export default {
     props: {
@@ -128,6 +129,6 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 
 </style>
