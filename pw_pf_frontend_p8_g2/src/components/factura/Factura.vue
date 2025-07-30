@@ -4,6 +4,11 @@
       <div class="factura-header">
         <h1>FACTURA</h1>
         <input type="date" v-model="factura.fecha" disabled />
+        <select name="bodegas" v-model="bodegaSeleccionadaUrl" :disabled="factura.productos.length !== 0" @change="obtenerProductoPorBodega()">
+          <option v-for="bodega in bodegas" :key="bodega.id" :value="bodega._links.productos">
+            {{bodega.codigo}} - {{ bodega.nombre }}
+          </option>
+        </select>
       </div>
 
       <div class="cabecera">
@@ -18,7 +23,7 @@
             <span v-if="errores.establecimiento" class="error-msg">Campo obligatorio</span>
           </p>
           <p type="Número del documento:">
-            <input type="text" v-model="factura.empresa.numeroDocumento" />
+            <input type="number" v-model="factura.empresa.numeroDocumento" />
             <span v-if="errores.numeroDocumento" class="error-msg">Campo obligatorio</span>
           </p>
           <p type="Punto de emisión:">
@@ -46,6 +51,11 @@
       </div>
 
       <div class="agregar-producto">
+
+        <input list="productosBodegas" v-model="productoActual.nombreBuscado" @change="seleccionarCodigoBarras" placeholder="Ingrese el nombre de producto..."/>
+        <datalist id="productosBodegas" >
+          <option :value="producto.nombre" v-for="producto in productosBodegas" :key="producto.id">{{producto.nombre}}</option>
+        </datalist>
         <input
           type="text"
           v-model="productoActual.buscador"
@@ -125,6 +135,9 @@
 import { guardarFachada } from "@/clients/FacturaClient.js";
 import { consultarClientePorIdFachada } from "@/clients/ClienteClient.js";
 import { consultarProductosIdFachada, buscarImpuestosPorIdProductoFachada } from "@/clients/ProductoClient";
+import { consultarBodegasFachada } from "@/clients/BodegaClient.js";
+import { obtenerInformacionUrlsFachada } from "@/helpers/ObtenerInforUrls.js";
+import { descontarStockFachada, restaurarStockFachada } from "@/clients/InventarioClient.js";
 
 export default {
   data() {
@@ -134,7 +147,7 @@ export default {
         empresa: {
           ruc: "",
           establecimiento: "",
-          numeroDocumento: "",
+          numeroDocumento: 0,
           puntoEmision: "",
         },
         cliente: {
@@ -150,6 +163,7 @@ export default {
       },
       productoActual: {
         cantidad: 1,
+        nombreBuscado: "",
         buscador: "",
       },
       errores: {
@@ -162,6 +176,10 @@ export default {
       },
       mensajeExito: false,
       mensajeError: false,
+      bodegas: [],
+      bodegaSeleccionadaUrl: "",
+      codigoBodega: "",
+      productosBodegas: []
     };
   },
   watch: {
@@ -180,7 +198,7 @@ export default {
       this.errores = {
         ruc: !this.factura.empresa.ruc.trim(),
         establecimiento: !this.factura.empresa.establecimiento.trim(),
-        numeroDocumento: !this.factura.empresa.numeroDocumento.trim(),
+        numeroDocumento: !this.factura.empresa.numeroDocumento.toString().trim(),
         puntoEmision: !this.factura.empresa.puntoEmision.trim(),
         idCliente: !this.factura.cliente.idCliente.trim(),
         productos: this.factura.productos.length === 0,
@@ -249,8 +267,20 @@ export default {
     },
 
     async ObtenerProductoPorId() {
+      console.log("entrar para creara la logica en el backend");
+      
       if (!this.productoActual.buscador || this.productoActual.cantidad < 1) {
         return;
+      }
+
+      const descontadostock = await descontarStockFachada(this.codigoBodega, this.productoActual.buscador, this.productoActual.cantidad);
+      console.log("Descontar stock:", descontadostock);
+      
+
+      if (!descontadostock) {
+        // enviar un mnesaje que no hay estock disponible
+        console.log("No hay stock disponible para este producto");  
+        return;        
       }
 
       try {
@@ -284,13 +314,15 @@ export default {
 
         await this.calcularTotales();
         this.productoActual.buscador = "";
+        this.productoActual.nombreBuscado = "";
         this.productoActual.cantidad = 1;
       } catch (error) {
         console.error("Error al obtener producto:", error);
       }
     },
 
-    eliminarProducto(index) {
+    async eliminarProducto(index) {
+      await restaurarStockFachada(this.codigoBodega, this.factura.productos[index].codigoBarras, this.factura.productos[index].cantidad);
       this.factura.productos.splice(index, 1);
       this.calcularTotales();
     },
@@ -352,6 +384,7 @@ export default {
       };
       this.productoActual = {
         cantidad: 1,
+        nombreBuscado: "",
         buscador: "",
       };
       this.errores = {
@@ -363,7 +396,29 @@ export default {
         productos: false,
       };
     },
+
+    seleccionarCodigoBarras() {
+      const producto = this.productosBodegas.find(
+        p => p.nombre === this.productoActual.nombreBuscado
+      );
+      if (producto) {
+        this.productoActual.buscador = producto.codigoBarras;
+      } else {
+        this.productoActual.buscador = "";
+      }
+    },
+
+    async obtenerProductoPorBodega(){
+      this.productosBodegas = await obtenerInformacionUrlsFachada(this.bodegaSeleccionadaUrl);
+      this.codigoBodega = this.bodegaSeleccionadaUrl.split("/");
+      this.codigoBodega = this.codigoBodega[this.codigoBodega.length-2];
+      console.log(this.codigoBodega);      
+    }
   },
+  async beforeMount(){
+    this.bodegas = await consultarBodegasFachada();    
+    console.log("Bodegas obtenidas:", this.bodegas);
+  }
 };
 </script>
 

@@ -73,7 +73,7 @@ public class BodegaController {
         BodegaTo bTo = BodegaMapper.toTo(this.iBodegaService.buscarPorCodigo(codigo));
         bodegaTo.setId(bTo.getId());
         bodegaTo.setCodigo(bTo.getCodigo());
-        this.iBodegaService.actualizarPorCodigo(BodegaMapper.toBodega(bodegaTo));
+        this.iBodegaService.actualizar(BodegaMapper.toBodega(bodegaTo));
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
@@ -90,7 +90,7 @@ public class BodegaController {
         if (bodegaTo.getUbicacion() != null) {
             bTo.setUbicacion(bodegaTo.getUbicacion());
         }
-        this.iBodegaService.actualizarPorCodigo(BodegaMapper.toBodega(bTo));
+        this.iBodegaService.actualizar(BodegaMapper.toBodega(bTo));
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 

@@ -1,21 +1,38 @@
 <template>
   <div class="container-reporteview">
-    <Reporte />
+    <NavBarReporte />
+    <div class="content-reporte">
+
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
-import Reporte from "@/components/reporte/Reporte.vue";
+import NavBarReporte from "@/components/reporte/NavBarReporte.vue";
+
 export default {
+  name: "ReporteView",
   components: {
-    Reporte,
+    NavBarReporte,
   },
 };
 </script>
 
-<style>
+<style scoped>
 .container-reporteview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  background: #f9f9f9;
+  padding-bottom: 2rem;
+}
+
+.content-reporte {
+  width: 80%;
+  max-width: 960px;
+  margin-top: 1.5rem;
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div class="container-impuesto">
-    <Impuesto />
     <NavBarImpuesto />
     <router-view />
   </div>
@@ -8,10 +7,9 @@
 
 <script>
 import NavBarImpuesto from "@/components/impuesto/NavBarImpuesto.vue";
-import Impuesto from "@/components/impuesto/Impuesto.vue";
+
 export default {
   components: {
-    Impuesto,
     NavBarImpuesto
   },
 };

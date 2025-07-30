@@ -1,6 +1,5 @@
 <template>
   <div class="container-productoview">
-    <Producto />
     <NavBarProducto />
     <router-view />
   </div>
@@ -8,10 +7,8 @@
 
 <script>
 import NavBarProducto from "@/components/producto/NavBarProducto.vue";
-import Producto from "@/components/producto/Producto.vue";
 export default {
   components: {
-    Producto,
     NavBarProducto
   },
 };

@@ -20,10 +20,10 @@ public class BodegaRepoImpl implements IBodegaRepo {
     @Override
     public Bodega seleccionarPorCodigo(String codigo) {
         try {
-            TypedQuery<Bodega> query = this.entityManager
+            TypedQuery<Bodega> myQuery = this.entityManager
                     .createQuery("SELECT b FROM Bodega b WHERE b.codigo = :codigo", Bodega.class);
-            query.setParameter("codigo", codigo);
-            return query.getSingleResult();
+            myQuery.setParameter("codigo", codigo);
+            return myQuery.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
@@ -31,8 +31,8 @@ public class BodegaRepoImpl implements IBodegaRepo {
 
     @Override
     public List<Bodega> seleccionarTodos() {
-        TypedQuery<Bodega> query = this.entityManager.createQuery("SELECT b FROM Bodega b", Bodega.class);
-        return query.getResultList();
+        TypedQuery<Bodega> myQuery = this.entityManager.createQuery("SELECT b FROM Bodega b", Bodega.class);
+        return myQuery.getResultList();
     }
 
     @Override
@@ -41,22 +41,17 @@ public class BodegaRepoImpl implements IBodegaRepo {
     }
 
     @Override
-    public void actualizarPorCodigo(Bodega bodega) {
+    public void actualizar(Bodega bodega) {
         this.entityManager.merge(bodega);
     }
 
     @Override
     public void eliminarPorCodigo(String codigo) {
         Bodega bodega = seleccionarPorCodigo(codigo);
-        if (bodega != null) {
-            // Elimina eficientemente todos los registros relacionados en Inventario
-            this.entityManager.createQuery(
-                    "DELETE FROM Inventario i WHERE i.bodega.id = :bodegaId")
-                    .setParameter("bodegaId", bodega.getId())
-                    .executeUpdate();
-
-            this.entityManager.remove(bodega);
-        }
+        this.entityManager.createQuery("DELETE FROM Inventario i WHERE i.bodega.id = :bodegaId")
+                .setParameter("bodegaId", bodega.getId())
+                .executeUpdate();
+        this.entityManager.remove(bodega);
     }
 
 }
