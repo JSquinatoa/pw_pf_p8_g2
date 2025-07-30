@@ -16,6 +16,7 @@ public class FacturaTo {
     private Double subTotal;
     private Double totalImpuestos;
     private Double total;
+    private String estado;
     private List<DetalleTo> detalleTos;
 
     public Integer getId() {
@@ -113,5 +114,15 @@ public class FacturaTo {
     public void setDetalleTos(List<DetalleTo> detalleTos) {
         this.detalleTos = detalleTos;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    
 
 }

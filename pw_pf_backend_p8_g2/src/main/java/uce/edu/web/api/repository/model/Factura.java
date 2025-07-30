@@ -44,6 +44,8 @@ public class Factura {
     private Double totalImpuestos;
     @Column(name = "fact_total")
     private Double total;
+    @Column(name = "fact_estado")
+    private String estado;
 
     // Relaciones
     @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
@@ -150,5 +152,14 @@ public class Factura {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
 
 }

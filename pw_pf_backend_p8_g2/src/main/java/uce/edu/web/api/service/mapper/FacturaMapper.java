@@ -27,6 +27,7 @@ public class FacturaMapper {
         fTo.setSubTotal(factura.getSubTotal());
         fTo.setTotalImpuestos(factura.getTotalImpuestos());
         fTo.setTotal(factura.getTotal());
+        fTo.setEstado(factura.getEstado());
 
         return fTo;
     }
@@ -43,6 +44,7 @@ public class FacturaMapper {
         factura.setSubTotal(facturaTo.getSubTotal());
         factura.setTotalImpuestos(facturaTo.getTotalImpuestos());
         factura.setTotal(facturaTo.getTotal());
+        factura.setEstado(facturaTo.getEstado());
 
         Cliente c = new Cliente();
         c.setCedula(facturaTo.getCedulaCliente());

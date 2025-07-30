@@ -48,6 +48,12 @@
             <input type="text" v-model="factura.cliente.correoElectronico" disabled />
           </p>
         </div>
+
+        <h3>Estado factura</h3>
+        <p type = "Estado:">
+          <input type="text" v-model="factura.estado">
+          {{factura.estado}}
+        </p>
       </div>
 
       <div class="agregar-producto">
@@ -156,6 +162,7 @@ export default {
           direccion: "",
           correoElectronico: "",
         },
+        estado:"",
         productos: [],
         subtotal: 0,
         totalImpuestos: 0,
@@ -224,6 +231,7 @@ export default {
           subTotal: this.factura.subtotal,
           totalImpuestos: this.factura.totalImpuestos,
           total: this.factura.total,
+          estado: this.factura.estado,
           detalleTos: this.factura.productos.map((producto) => ({
             codigoBarras: producto.codigoBarras,
             nombre: producto.nombre,
