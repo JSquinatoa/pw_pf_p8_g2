@@ -38,15 +38,10 @@ public class ImpuestoRepoImpl implements IImpuestoRepo {
 
     @Override
     public void eliminarImpuestoConProductosPorId(Integer id) {
-        Impuesto impuesto = seleccionarPorId(id);
-        if (impuesto != null) {
-            // 1. Rompe la relación con los productos (borra filas en productofinal)
-            impuesto.getProductos().clear();
-            entityManager.flush(); // Opcional: sincroniza cambios
-
-            // 2. Ahora sí puedes borrar el impuesto
-            entityManager.remove(impuesto);
-        }
+        this.entityManager.createQuery("DELETE FROM Producto p WHERE p.impuesto.id = :id")        
+                .setParameter("id", id)
+                .executeUpdate();
+        entityManager.remove(seleccionarPorId(id));
     }
 
     @Override

@@ -21,6 +21,15 @@
             </p>
         </div>
 
+        <div class="containerformulario">
+            <p type = "Impuestos:">
+                <div class="impuestos" v-for="impuesto in impuestos" :key="impuesto.id">
+                    <label :for="impuesto.nombre">{{ impuesto.nombre }}</label>
+                    <input type="checkbox" :id="impuesto.nombre" name="impuestos" :value="impuesto.id" v-model="impuestosSeleccionados"/>
+                </div>                
+            </p>           
+        </div>
+
         <button class="boton_opcion" @click="guardarProductos()">Crear</button>
 
         <div v-if="exito" class="mensaje-exito">
@@ -36,7 +45,7 @@
 import { guardarFachada as guardarProductoFachada } from "@/clients/ProductoClient.js";
 import { guardarFachada as guardarInventarioFachada } from "@/clients/InventarioClient.js";
 import { consultarBodegasFachada} from "@/clients/BodegaClient.js";
-import "@/css/EstiloGenerico.css";
+import { consultarTodosImpuestosFachada,  } from "@/clients/ImpuestoClient.js";
 
 export default {
     props: {
@@ -59,11 +68,15 @@ export default {
             bodegas: [],
             exito: false,
             deshabilitado: false,
-            errorMensaje: null, 
+            errorMensaje: null,
+            impuestos: [],
+            impuestosSeleccionados: [],
         };
     },
     methods: {
         async guardarProductos() {
+            console.log(this.impuestosSeleccionados);
+            
             this.errorMensaje = null; 
             this.exito = false; 
             if (!this.producto.nombre || !this.producto.codigoBarras || this.producto.precio === null) {
@@ -80,6 +93,7 @@ export default {
                 categoria: this.category,
                 codigoBarras: this.producto.codigoBarras,
                 precio: this.producto.precio,
+                impuestos: this.impuestosSeleccionados,
             };
 
             this.deshabilitado = true; 
@@ -103,6 +117,7 @@ export default {
             this.producto.nombre = null;
             this.producto.codigoBarras = null;
             this.producto.precio = null;
+            this.impuestosSeleccionados = [];
         },
         mostrarMensajeError(mensaje) {
             this.errorMensaje = mensaje;
@@ -124,7 +139,9 @@ export default {
     },
     async beforeMount(){
         this.bodegas = await consultarBodegasFachada();
-        console.log("bodegas", this.bodegas);        
+        console.log("bodegas", this.bodegas); 
+        this.impuestos = await consultarTodosImpuestosFachada();
+        console.log("impuestos", this.impuestos);       
     }
 };
 </script>
@@ -132,6 +149,18 @@ export default {
 <style>
 select {
     padding: 8px;
+}
+
+.impuestos{
+    width: 100%;
+    padding: 2px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;  
+}
+.impuestos label{
+    width: 100%;
+    cursor: pointer;
 }
 
 </style>

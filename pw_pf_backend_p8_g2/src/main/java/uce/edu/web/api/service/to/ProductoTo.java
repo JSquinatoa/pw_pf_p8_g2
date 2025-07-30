@@ -2,6 +2,7 @@ package uce.edu.web.api.service.to;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import jakarta.ws.rs.core.UriInfo;
@@ -15,6 +16,7 @@ public class ProductoTo {
     private String categoria;
     private Double precio;
     private Map<String, String> _links = new HashMap<>();
+    private List<Integer> impuestos;
 
     // GET y SET
     public Integer getId() {
@@ -65,6 +67,14 @@ public class ProductoTo {
         this._links = _links;
     }
 
+    public List<Integer> getImpuestos() {
+        return impuestos;
+    }
+
+    public void setImpuestos(List<Integer> impuestos) {
+        this.impuestos = impuestos;
+    }
+
     public void buildURI(UriInfo uriInfo) {
         URI todosImpuestos = uriInfo.getBaseUriBuilder().path(ProductoController.class)
                 .path(ProductoController.class, "obtenerImpuestosPorProducto").build(id);
@@ -74,5 +84,4 @@ public class ProductoTo {
                 .path(ProductoController.class, "obtenerBodegasPorProducto").build(id);
         _links.put("bodegas", todasBodegas.toString());
     }
-
 }

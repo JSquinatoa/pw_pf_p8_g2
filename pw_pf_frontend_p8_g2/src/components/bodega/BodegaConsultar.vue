@@ -269,13 +269,4 @@ tr:hover {
 }
 
 
-/* Mensajes de carga y sin bodegas */
-h2 {
-  color: #555;
-  font-size: 1.2em;
-  margin-top: 30px;
-  text-align: center;
-}
-
-
 </style>

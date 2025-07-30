@@ -1,5 +1,9 @@
 package uce.edu.web.api.service.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import uce.edu.web.api.repository.model.Impuesto;
 import uce.edu.web.api.repository.model.Producto;
 import uce.edu.web.api.service.to.ProductoTo;
 
@@ -25,6 +29,20 @@ public class ProductoMapper {
         p.setNombre(productoTo.getNombre());
         p.setCategoria(productoTo.getCategoria());
         p.setPrecio(productoTo.getPrecio());
+
+        // Lista de impuestos del fron Integers
+        List<Integer> impuestosId = productoTo.getImpuestos();
+        // NUeva lista de impustoa para agregar al producto
+        List<Impuesto> impuestos = new ArrayList<>();
+
+        for (Integer impuestoId : impuestosId) {
+            Impuesto impuesto = new Impuesto();
+            impuesto.setId(impuestoId);
+            impuestos.add(impuesto);
+        }
+
+        p.setImpuestos(impuestos);
+
         return p;
     }
 
