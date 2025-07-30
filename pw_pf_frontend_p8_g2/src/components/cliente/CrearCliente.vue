@@ -33,11 +33,14 @@
     <div v-if="error" class="mensajes-error">
       <h1>Datos incompletos en el formulario</h1>
     </div>
+    <div v-if="incompleto" class="mensajes-errorduplicado">
+      <h1>Cédula ya existente</h1>
+    </div>
   </div>
 </template>
 
 <script>
-import { guardarFachada } from "@/clients/ClienteClient.js";
+import { guardarFachada, consultarClientePorIdFachada } from "@/clients/ClienteClient.js";
 import "@/css/EstiloGenerico.css";
 
 export default {
@@ -55,11 +58,13 @@ export default {
       },
       exito: false,
       deshabilitado: false,
-      error: false
+      error: false,
+      incompleto: false,
     };
   },
 
   methods: {
+    
     async guardarCliente() {
       // Validar si algún campo está vacío
       if (!this.cliente.cedula || !this.cliente.nombre || !this.cliente.apellido || 
