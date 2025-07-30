@@ -5,7 +5,7 @@
             <p type="Nombre:">
                 <input type="text" v-model="item.nombre" :disabled="deshabilitado" />
             </p>
-            <p type="Codigo de Barras:">
+            <p type="C&oacute;digo de Barras:">
                 <input type="text" v-model="item.codigoBarras" :disabled="deshabilitado" />
             </p>
             <p type="Precio:">

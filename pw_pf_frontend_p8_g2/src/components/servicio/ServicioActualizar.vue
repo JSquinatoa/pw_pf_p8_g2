@@ -14,10 +14,10 @@
             <p type="Nombre:">
                 <input type="text" v-model="servicio.nombre" :disabled="deshabilitado" />
             </p>
-            <p type="Categoria:">
-                <input type="text" v-model="servicio.categoria" :disabled="deshabilitado" />
+            <p type="Categor&iacute;a:">
+                <input type="text" v-model="servicio.categoria" disabled />
             </p>
-            <p type="Codigo de Barras:">
+            <p type="C&oacute;digo de Barras:">
                 <input type="text" v-model="servicio.codigoBarras" :disabled="deshabilitado" />
             </p>
             <p type="Precio:">

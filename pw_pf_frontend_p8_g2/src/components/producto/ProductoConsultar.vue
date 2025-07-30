@@ -6,9 +6,9 @@
             <thead>
                 <tr>
                     <th>Identificador</th>
-                    <th>Codigo de Barras</th>
+                    <th>C&oacute;digo de Barras</th>
                     <th>Nombre</th>
-                    <th>Categoria</th>
+                    <th>Categor&iacute;a</th>
                     <th>Precio</th>
                 </tr>
             </thead>

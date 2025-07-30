@@ -14,10 +14,10 @@
             <p type="Nombre:">
                 <input type="text" v-model="producto.nombre" :disabled="deshabilitado" />
             </p>
-            <p type="Categoria:">
+            <p type="Categor&iacute;a:">
                 <input type="text" v-model="producto.categoria" disabled />
             </p>
-            <p type="Codigo de Barras:">
+            <p type="C&oacute;digo de Barras:">
                 <input type="text" v-model="producto.codigoBarras" :disabled="deshabilitado" />
             </p>
             <p type="Precio:">
@@ -119,7 +119,7 @@ export default {
                 }
 
             } catch (error) {
-                alert(`Error al consultar el ${this.category}. Verifique el ID e intente de nuevo.`);
+                
                 console.error(`Error al obtener ${this.category} por ID:`, error);
                 this.reiniciarVaraibles();
                 this.deshabilitado = false;
@@ -131,7 +131,6 @@ export default {
 
         async actulizarParcial() {
             if (!this.producto.id || !this.producto.nombre || !this.producto.codigoBarras || this.producto.precio === null) {
-                alert(`Por favor, consulte un ${this.category} válido y complete todos los campos antes de actualizar.`);
                 return;
             }
 
@@ -157,7 +156,6 @@ export default {
                     this.reiniciarVaraibles();
                 }, 3000);
             } catch (error) {
-                alert(`Error al actualizar el ${this.category}. Verifique los datos o si el ${this.category} existe.`);
                 console.error(`Error al actualizar ${this.category}:`, error);
             }
         },

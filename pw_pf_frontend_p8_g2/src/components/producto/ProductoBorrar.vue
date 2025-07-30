@@ -14,10 +14,10 @@
             <p type="Nombre:">
                 <input type="text" v-model="producto.nombre" disabled />
             </p>
-            <p type="Categoria:">
+            <p type="Categor&iacute;a:">
                 <input type="text" v-model="producto.categoria" disabled />
             </p>
-            <p type="Codigo de Barras:">
+            <p type="C&oacute;digo de Barras:">
                 <input type="text" v-model="producto.codigoBarras" disabled />
             </p>
             <p type="Precio:">
