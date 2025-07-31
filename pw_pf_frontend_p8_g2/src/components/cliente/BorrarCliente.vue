@@ -3,7 +3,7 @@
     <div class="container_consultar">
       <input
         class="input_consulta"
-        type="number"
+        type="text"
         v-model="identificador"
         placeholder="Ingrese la cédula del cliente"
         :disabled="deshabilitados"
@@ -15,7 +15,7 @@
     <h1>Datos del Cliente a borrar</h1>
     <div class="containerformulario">
       <p type="Cédula:">
-        <input type="number" v-model="cliente.cedula" :disabled="deshabilitado"/>
+        <input type="text" v-model="cliente.cedula" :disabled="deshabilitado"/>
       </p>
       <p type="Nombre:">
         <input type="text" v-model="cliente.nombre" :disabled="deshabilitado"/>

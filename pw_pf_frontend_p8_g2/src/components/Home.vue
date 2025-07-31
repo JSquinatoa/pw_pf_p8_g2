@@ -1,7 +1,7 @@
 <template>
   <div class="container-home">
     <img src="logoComputacion.png" alt="">
-    <h1>Kōmerce</h1>
+    <h1>Tienda UCE</h1>
     <img src="sellos-uce.png" alt="">
   </div>
 </template>
