@@ -18,7 +18,7 @@
         <input type="text" v-model="cliente.direccion" :disabled="deshabilitado"/>
       </p>
       <p type="Teléfono:">
-        <input type="number" v-model="cliente.telefono" :disabled="deshabilitado"/>
+        <input type="tel" v-model="cliente.telefono" :disabled="deshabilitado"/>
       </p>
       <p type="Correo electrónico:">
         <input type="email" v-model="cliente.correo" :disabled="deshabilitado"/>
@@ -33,7 +33,7 @@
     <div v-if="error" class="mensajes-error">
       <h1>Datos incompletos en el formulario</h1>
     </div>
-    <div v-if="incompleto" class="mensajes-errorduplicado">
+    <div v-if="duplicado" class="mensajes-errorduplicado">
       <h1>Cédula ya existente</h1>
     </div>
   </div>
@@ -59,22 +59,43 @@ export default {
       exito: false,
       deshabilitado: false,
       error: false,
-      incompleto: false,
+      duplicado: false,
     };
   },
 
-  methods: {
-    
+    methods: {
     async guardarCliente() {
-      // Validar si algún campo está vacío
-      if (!this.cliente.cedula || !this.cliente.nombre || !this.cliente.apellido || 
-        !this.cliente.razonSocial || !this.cliente.direccion || !this.cliente.telefono || !this.cliente.correo) {
+      this.exito = false;
+      this.error = false;     
+      this.duplicado = false; 
+      if (
+        !this.cliente.cedula ||
+        !this.cliente.nombre ||
+        !this.cliente.apellido ||
+        !this.cliente.razonSocial ||
+        !this.cliente.direccion ||
+        !this.cliente.telefono ||
+        !this.cliente.correo
+      ) {
         this.error = true; 
-        this.limpiarError();
-        return;  
-        
+        this.limpiarMensaje();
+        return; 
       }
-      // Si los campos están completos, crear el objeto cliente para enviar
+      try {
+        const clienteExistente = await consultarClientePorIdFachada(this.cliente.cedula);
+        if (clienteExistente) {
+          this.duplicado = true; 
+          this.limpiarMensaje(); 
+          return; 
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+        } else {
+          this.error = true; 
+          this.limpiarMensaje();
+          return; 
+        }
+      }
       const clienteToBody = {
         cedula: this.cliente.cedula,
         nombre: this.cliente.nombre,
@@ -93,12 +114,11 @@ export default {
         this.deshabilitado = true;
         this.limpiarMensaje();
       } catch (error) {
-        console.error("Error al guardar el cliente:", error);
-        this.error = true;
+        this.error = true; 
+        this.limpiarMensaje(); 
       }
     },
 
-    // Método para reiniciar las variables
     reiniciarVariables() {
       this.cliente.cedula = null;
       this.cliente.nombre = null;
@@ -117,6 +137,7 @@ export default {
     },
     limpiarMensaje(){
       setTimeout(() => {
+          this.duplicado = false;
           this.exito = false;
           this.deshabilitado = false;
           this.reiniciarVariables();

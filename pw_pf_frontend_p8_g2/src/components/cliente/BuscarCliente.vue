@@ -37,7 +37,7 @@
       </p>
     </div>
     <div v-if="!existeCliente" class="mensajes-error">
-      <h1>El cliente con la cedula {{ identificador }} no existe</h1>
+      <h1>El cliente con la cédula {{ identificador }} no existe</h1>
     </div>
   </div>
 

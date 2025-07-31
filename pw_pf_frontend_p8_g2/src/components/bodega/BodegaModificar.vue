@@ -3,7 +3,7 @@
     <h1>Consultar y Actualizar Bodega</h1>
 
     <div class="container_consultar">
-      <input class="input_consulta" type="text" v-model="id" placeholder="Ingrese el código de la bodega"
+      <input class="input_consulta" type="text" v-model="id" placeholder="Ingrese el código"
         :disabled="deshabilitadoConsulta" />
       <button class="boton_consulta" @click="obtenerBodegaPorId()">
         Consultar
